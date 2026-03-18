@@ -34,6 +34,20 @@ export async function getStays(filters: {
   return data ?? [];
 }
 
+export type StayPreview = Pick<Tables<'stays'>, 'id' | 'title' | 'location' | 'price_per_night' | 'slug'>;
+
+export async function searchStaysPreview(term: string): Promise<StayPreview[]> {
+  if (!term || term.length < 2) return [];
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('stays')
+    .select('id, title, location, price_per_night, slug')
+    .or(`title.ilike.%${term}%,location.ilike.%${term}%`)
+    .limit(5);
+  if (error) return [];
+  return data ?? [];
+}
+
 export async function getStayBySlug(slug: string): Promise<Tables<'stays'> | null> {
   const supabase = await createClient();
   const { data, error } = await supabase
