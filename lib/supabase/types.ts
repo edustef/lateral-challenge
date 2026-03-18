@@ -124,6 +124,35 @@ export type Database = {
         }
         Relationships: []
       }
+      favorites: {
+        Row: {
+          created_at: string | null
+          id: string
+          stay_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          stay_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          stay_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favorites_stay_id_fkey"
+            columns: ["stay_id"]
+            isOneToOne: false
+            referencedRelation: "stays"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -156,6 +185,7 @@ export type Database = {
           comment: string | null
           created_at: string | null
           id: string
+          is_approved: boolean
           rating: number
           stay_id: string
           user_id: string
@@ -164,6 +194,7 @@ export type Database = {
           comment?: string | null
           created_at?: string | null
           id?: string
+          is_approved?: boolean
           rating: number
           stay_id: string
           user_id: string
@@ -172,6 +203,7 @@ export type Database = {
           comment?: string | null
           created_at?: string | null
           id?: string
+          is_approved?: boolean
           rating?: number
           stay_id?: string
           user_id?: string
