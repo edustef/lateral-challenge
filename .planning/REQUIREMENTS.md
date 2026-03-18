@@ -7,9 +7,9 @@
 
 ### Authentication
 
-- [ ] **AUTH-V2-01**: User can sign in via Google OAuth
-- [ ] **AUTH-V2-02**: User can sign in via GitHub OAuth
-- [ ] **AUTH-V2-03**: OAuth sessions integrate with existing magic link auth (same user profile)
+- [x] **AUTH-V2-01**: User can sign in via Google OAuth
+- [x] **AUTH-V2-02**: User can sign in via GitHub OAuth
+- [x] **AUTH-V2-03**: OAuth sessions integrate with existing magic link auth (same user profile)
 
 ### Discovery UX
 
@@ -44,9 +44,9 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-V2-01 | Phase 6 | Pending |
-| AUTH-V2-02 | Phase 6 | Pending |
-| AUTH-V2-03 | Phase 6 | Pending |
+| AUTH-V2-01 | Phase 6 | Complete |
+| AUTH-V2-02 | Phase 6 | Complete |
+| AUTH-V2-03 | Phase 6 | Complete |
 | DISC-V2-01 | Phase 6 | Pending |
 | DISC-V2-02 | Phase 7 | Pending |
 | DISC-V2-03 | Phase 7 | Pending |

@@ -1,14 +1,14 @@
 ---
 gsd_state_version: 1.0
-milestone: v2.0
+milestone: v1.0
 milestone_name: Polish & Features
-status: active
-last_updated: "2026-03-17T15:10:00.000Z"
+status: unknown
+last_updated: "2026-03-17T15:18:48.323Z"
 progress:
-  total_phases: 8
+  total_phases: 7
   completed_phases: 5
-  total_plans: 12
-  completed_plans: 12
+  total_plans: 14
+  completed_plans: 14
 ---
 
 # Project State
@@ -23,11 +23,11 @@ See: .planning/PROJECT.md (updated 2026-03-17)
 ## Current Position
 
 Phase: 6 of 8 (OAuth & Discovery Controls)
-Plan: 0 of ? in current phase
-Status: Ready to plan
-Last activity: 2026-03-17 -- v2.0 roadmap created (phases 6-8)
+Plan: 2 of 2 in current phase
+Status: Phase Complete
+Last activity: 2026-03-17 -- Completed 06-02 sticky toolbar
 
-Progress: [██████░░░░] 62%
+Progress: [████████░░] 75%
 
 ## Performance Metrics
 
@@ -45,9 +45,10 @@ Progress: [██████░░░░] 62%
 | 03-authenticated-flows | 3 | 9min | 3min |
 | 04-ship-it | 3 | 11min | 3.7min |
 | 05-bug-fixes | 1 | 4min | 4min |
+| 06-oauth-and-discovery-controls | 2 | 5min | 2.5min |
 
 **Recent Trend:**
-- Last 5 plans: 05-01 (4min), 04-03 (2min), 04-02 (4min), 04-01 (5min), 03-03 (3min)
+- Last 5 plans: 06-01 (2min), 05-01 (4min), 04-03 (2min), 04-02 (4min), 04-01 (5min)
 - Trend: Consistent
 
 ## Accumulated Context
@@ -61,6 +62,8 @@ Recent decisions affecting current work:
 - getClaims() replaces getUser() for Supabase auth
 - PUBLISHABLE_KEY replaces ANON_KEY for Supabase client
 - Google and GitHub as OAuth providers for v2 auth
+- Reuse existing /auth/callback route for OAuth code exchange
+- Server action with redirect() for OAuth flow from client components
 
 ### Pending Todos
 
@@ -73,5 +76,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-17
-Stopped at: v2.0 roadmap created, ready to plan Phase 6
+Stopped at: Completed 06-01-PLAN.md (OAuth login buttons)
 Resume file: None
