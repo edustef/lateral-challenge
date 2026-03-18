@@ -1,43 +1,67 @@
 export default function CheckoutLoading() {
   return (
-    <div className="py-6 animate-pulse">
-      {/* Back link */}
-      <div className="mb-6 h-4 w-32 rounded bg-bg-muted" />
+    <div className="mx-auto max-w-7xl animate-pulse px-4 py-10 sm:px-6 lg:px-8">
+      <div className="flex flex-col gap-6 lg:flex-row lg:gap-12">
+        {/* Form column */}
+        <div className="flex-1 space-y-6 lg:order-1 lg:space-y-8">
+          {/* Heading */}
+          <div className="h-7 w-56 rounded bg-bg-muted sm:h-8 sm:w-72" />
 
-      {/* Heading */}
-      <div className="mb-8 h-8 w-64 rounded bg-bg-muted" />
-
-      <div className="mx-auto max-w-2xl">
-        {/* Step indicators */}
-        <div className="mb-8 flex items-center justify-between">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="flex flex-1 items-center">
-              <div className="flex flex-col items-center gap-1">
-                <div className="h-8 w-8 rounded-full bg-bg-muted" />
-                <div className="h-3 w-12 rounded bg-bg-muted" />
-              </div>
-              {i < 3 && <div className="mx-2 h-px flex-1 bg-border" />}
+          {/* Date section */}
+          <div className="space-y-3">
+            <div className="h-5 w-44 rounded bg-bg-muted" />
+            <div className="hidden rounded-card border border-border p-4 lg:block">
+              <div className="h-64 w-full rounded bg-bg-muted" />
             </div>
-          ))}
+            <div className="h-11 w-full rounded-small bg-bg-muted lg:hidden" />
+          </div>
+
+          {/* Guest section */}
+          <div className="space-y-3">
+            <div className="h-5 w-36 rounded bg-bg-muted" />
+            <div className="h-11 w-40 rounded-small bg-bg-muted" />
+          </div>
+
+          {/* Contact section */}
+          <div className="space-y-3">
+            <div className="h-5 w-40 rounded bg-bg-muted" />
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <div className="h-11 flex-1 rounded-small bg-bg-muted sm:h-12" />
+              <div className="h-11 flex-1 rounded-small bg-bg-muted sm:h-12" />
+            </div>
+            <div className="h-11 w-full rounded-small bg-bg-muted sm:h-12" />
+            <div className="h-11 w-full rounded-small bg-bg-muted sm:h-12" />
+          </div>
+
+          {/* Submit button (desktop) */}
+          <div className="hidden lg:block">
+            <div className="h-12 w-40 rounded-button bg-bg-muted" />
+          </div>
         </div>
 
-        {/* Form card */}
-        <div className="rounded-card border border-border-subtle bg-bg-card p-6">
-          {/* Form heading */}
-          <div className="mb-4 h-6 w-48 rounded bg-bg-muted" />
-
-          {/* Form fields */}
-          <div className="space-y-4">
-            <div className="h-10 w-full rounded-small bg-bg-muted" />
-            <div className="h-10 w-full rounded-small bg-bg-muted" />
-            <div className="h-10 w-full rounded-small bg-bg-muted" />
+        {/* Summary sidebar */}
+        <div className="w-full lg:order-2 lg:w-[380px] lg:shrink-0">
+          <div className="rounded-card border border-border-subtle bg-bg-card p-5">
+            <div className="flex gap-4">
+              <div className="h-20 w-28 shrink-0 rounded-small bg-bg-muted" />
+              <div className="flex-1 space-y-2">
+                <div className="h-5 w-3/4 rounded bg-bg-muted" />
+                <div className="h-4 w-1/2 rounded bg-bg-muted" />
+              </div>
+            </div>
+            <div className="mt-5 space-y-3">
+              <div className="h-4 w-full rounded bg-bg-muted" />
+              <div className="h-4 w-full rounded bg-bg-muted" />
+              <div className="h-4 w-full rounded bg-bg-muted" />
+              <hr className="border-border" />
+              <div className="h-5 w-full rounded bg-bg-muted" />
+            </div>
           </div>
+        </div>
 
-          {/* Navigation buttons */}
-          <div className="mt-6 flex items-center justify-between">
-            <div className="h-10 w-20 rounded-button bg-bg-muted" />
-            <div className="h-10 w-24 rounded-button bg-bg-muted" />
-          </div>
+        {/* Submit button (mobile) */}
+        <div className="w-full lg:hidden">
+          <div className="h-12 w-full rounded-button bg-bg-muted" />
         </div>
       </div>
     </div>
