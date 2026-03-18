@@ -76,9 +76,9 @@
 
 - [x] **TEST-01**: Unit tests for complex logic (price calculation, date utilities, availability checks)
 - [x] **TEST-02**: E2E test for checkout flow (home → select stay → book → confirmation)
-- [ ] **DEPL-01**: GitHub Actions CI (lint + test + build)
-- [ ] **DEPL-02**: Deploy to Vercel with environment variables
-- [ ] **DEPL-03**: README with setup instructions, architecture notes, key decisions, tradeoffs
+- [x] **DEPL-01**: GitHub Actions CI (lint + test + build)
+- [x] **DEPL-02**: Deploy to Vercel with environment variables
+- [x] **DEPL-03**: README with setup instructions, architecture notes, key decisions, tradeoffs
 
 ## v2 Requirements
 
@@ -165,9 +165,9 @@
 | PLSH-06 | Phase 4 | Complete |
 | TEST-01 | Phase 4 | Complete |
 | TEST-02 | Phase 4 | Complete |
-| DEPL-01 | Phase 4 | Pending |
-| DEPL-02 | Phase 4 | Pending |
-| DEPL-03 | Phase 4 | Pending |
+| DEPL-01 | Phase 4 | Complete |
+| DEPL-02 | Phase 4 | Complete |
+| DEPL-03 | Phase 4 | Complete |
 
 **Coverage:**
 - v1 requirements: 33 total
