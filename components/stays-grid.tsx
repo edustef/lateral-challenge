@@ -18,7 +18,7 @@ export function StaysGrid({ stays }: { stays: StayCardType[] }) {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+    <div data-testid="stays-grid" className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
       {stays.map((stay) => (
         <StayCard key={stay.id} stay={stay} />
       ))}

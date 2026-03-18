@@ -8,7 +8,7 @@ export function StayCard({ stay }: { stay: StayCardType }) {
   const href = `/stays/${stay.slug}`;
 
   return (
-    <Link href={href} className="group block">
+    <Link href={href} className="group block" data-testid="stay-card">
       {/* Desktop: vertical card (hidden below md) */}
       <article className="hidden md:flex md:flex-col overflow-hidden rounded-card border border-border-subtle bg-bg-card transition-shadow hover:shadow-md">
         <div className="relative aspect-[4/3]">
