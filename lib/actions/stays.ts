@@ -10,7 +10,7 @@ export type StayCard = Tables<'stays'> & {
 
 export async function getStays(filters: {
   type?: string | null;
-  vibe?: string | null;
+  tags?: string[] | null;
   search?: string | null;
   country?: string | null;
   sort?: string | null;
@@ -26,7 +26,7 @@ export async function getStays(filters: {
     let query = supabase.from('stays').select('*');
 
     if (filters.type) query = query.eq('travel_type', filters.type);
-    if (filters.vibe) query = query.eq('vibe', filters.vibe);
+    if (filters.tags && filters.tags.length > 0) query = query.overlaps('tags', filters.tags);
     if (filters.country) query = query.eq('country', filters.country);
     if (filters.search) {
       const sanitized = filters.search
@@ -88,6 +88,11 @@ export async function getStays(filters: {
     console.error(`[action] ${actionName} error`, { duration: Math.round(performance.now() - start) + 'ms', error: err });
     throw err;
   }
+}
+
+export async function getFeaturedStays(): Promise<StayCard[]> {
+  const all = await getStays({ sort: 'rating-desc' });
+  return all.slice(0, 4);
 }
 
 export async function getStayBySlug(slug: string): Promise<Tables<'stays'> | null> {
