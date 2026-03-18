@@ -46,6 +46,13 @@ export function AuthButton({ user }: AuthButtonProps) {
       {open && (
         <div className="absolute right-0 top-12 z-50 w-56 rounded-card border border-border bg-bg-card p-3 shadow-lg">
           <p className="mb-2 truncate text-sm text-text-body">{user.email}</p>
+          <Link
+            href="/profile"
+            className="block w-full rounded-lg px-3 py-2 text-left text-sm text-text-primary transition-colors hover:bg-bg-page"
+            onClick={() => setOpen(false)}
+          >
+            My Bookings
+          </Link>
           <form action={signOut}>
             <button
               type="submit"
