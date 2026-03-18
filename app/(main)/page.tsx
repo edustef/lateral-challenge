@@ -17,7 +17,7 @@ export default async function DiscoveryPage({ searchParams }: PageProps) {
   return (
     <section className="py-6 space-y-6">
       {/* Toolbar row: vibe picker + search + sort */}
-      <div className="flex items-center gap-3">
+      <div className="sticky top-0 z-30 -mx-4 flex items-center gap-3 border-b border-border/50 bg-bg-page px-4 py-3 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
         <div className="hidden md:block">
           <VibePicker />
         </div>
