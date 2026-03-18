@@ -67,7 +67,7 @@ export function VibePickerMobile({ staysCount }: { staysCount: number }) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex items-center gap-2 rounded-[--radius-pill] border border-border-subtle bg-bg-surface px-4 py-2 text-sm font-medium text-text-body"
+        className="flex items-center gap-2 rounded-pill border border-border-subtle bg-bg-surface px-4 py-2 text-sm font-medium text-text-body"
       >
         <span>{typeLabel}</span>
         <span className="text-text-muted">&middot;</span>
@@ -85,7 +85,7 @@ export function VibePickerMobile({ staysCount }: { staysCount: number }) {
           />
 
           {/* Sheet */}
-          <div className="relative w-full rounded-t-[--radius-card] bg-bg-card px-6 pb-8 pt-6 shadow-xl animate-in slide-in-from-bottom duration-300">
+          <div className="relative w-full rounded-t-card bg-bg-card px-6 pb-8 pt-6 shadow-xl animate-in slide-in-from-bottom duration-300">
             {/* Close button */}
             <button
               type="button"
@@ -110,7 +110,7 @@ export function VibePickerMobile({ staysCount }: { staysCount: number }) {
                       key={t.value}
                       type="button"
                       onClick={() => handleChipToggle(type, t.value, setType)}
-                      className={`flex shrink-0 items-center gap-2 rounded-[--radius-pill] border px-4 py-2 text-sm transition-colors ${
+                      className={`flex shrink-0 items-center gap-2 rounded-pill border px-4 py-2 text-sm transition-colors ${
                         selected
                           ? 'border-accent bg-accent text-white'
                           : 'border-border bg-bg-card text-text-body hover:border-accent'
@@ -138,7 +138,7 @@ export function VibePickerMobile({ staysCount }: { staysCount: number }) {
                       key={v.value}
                       type="button"
                       onClick={() => handleChipToggle(vibe, v.value, setVibe)}
-                      className={`flex items-center gap-2 rounded-[--radius-pill] border px-4 py-2 text-sm transition-colors ${
+                      className={`flex items-center gap-2 rounded-pill border px-4 py-2 text-sm transition-colors ${
                         selected
                           ? 'border-accent bg-accent text-white'
                           : 'border-border bg-bg-card text-text-body hover:border-accent'
@@ -159,14 +159,14 @@ export function VibePickerMobile({ staysCount }: { staysCount: number }) {
                 <button
                   type="button"
                   onClick={handleReset}
-                  className="rounded-[--radius-button] border border-border px-4 py-2 text-sm font-medium text-text-body transition-colors hover:bg-bg-muted"
+                  className="rounded-button border border-border px-4 py-2 text-sm font-medium text-text-body transition-colors hover:bg-bg-muted"
                 >
                   Reset
                 </button>
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="rounded-[--radius-button] bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent/90"
+                  className="rounded-button bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent/90"
                 >
                   Show {staysCount} stays
                 </button>

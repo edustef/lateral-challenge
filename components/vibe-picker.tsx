@@ -51,7 +51,7 @@ export function VibePicker() {
       <button
         type="button"
         onClick={() => setExpanded(!expanded)}
-        className="flex items-center gap-2 rounded-[--radius-pill] border border-border-subtle bg-bg-surface px-4 py-2 text-sm font-medium text-text-body transition-colors hover:border-border"
+        className="flex items-center gap-2 rounded-pill border border-border-subtle bg-bg-surface px-4 py-2 text-sm font-medium text-text-body transition-colors hover:border-border"
       >
         <span>{typeLabel}</span>
         <span className="text-text-muted">&middot;</span>
@@ -65,7 +65,7 @@ export function VibePicker() {
 
       {/* Expanded panel */}
       {expanded && (
-        <div className="mt-3 rounded-[--radius-card] border border-border-subtle bg-bg-surface p-6 shadow-sm">
+        <div className="mt-3 rounded-card border border-border-subtle bg-bg-surface p-6 shadow-sm">
           <div className="flex flex-wrap items-start gap-10">
             {/* Who's traveling? */}
             <div>
@@ -81,7 +81,7 @@ export function VibePicker() {
                       key={t.value}
                       type="button"
                       onClick={() => handleChipToggle(type, t.value, setType)}
-                      className={`flex items-center gap-2 rounded-[--radius-pill] border px-4 py-2 text-sm transition-colors ${
+                      className={`flex items-center gap-2 rounded-pill border px-4 py-2 text-sm transition-colors ${
                         selected
                           ? 'border-accent bg-accent text-white'
                           : 'border-border bg-bg-card text-text-body hover:border-accent'
@@ -109,7 +109,7 @@ export function VibePicker() {
                       key={v.value}
                       type="button"
                       onClick={() => handleChipToggle(vibe, v.value, setVibe)}
-                      className={`flex items-center gap-2 rounded-[--radius-pill] border px-4 py-2 text-sm transition-colors ${
+                      className={`flex items-center gap-2 rounded-pill border px-4 py-2 text-sm transition-colors ${
                         selected
                           ? 'border-accent bg-accent text-white'
                           : 'border-border bg-bg-card text-text-body hover:border-accent'
@@ -128,7 +128,7 @@ export function VibePicker() {
               <button
                 type="button"
                 onClick={() => setExpanded(false)}
-                className="rounded-[--radius-button] bg-accent px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-accent/90"
+                className="rounded-button bg-accent px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-accent/90"
               >
                 Apply
               </button>

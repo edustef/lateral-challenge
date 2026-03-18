@@ -10,7 +10,7 @@ export function StayCard({ stay }: { stay: StayCardType }) {
   return (
     <Link href={href} className="group block">
       {/* Desktop: vertical card (hidden below md) */}
-      <article className="hidden md:flex md:flex-col overflow-hidden rounded-[--radius-card] border border-border-subtle bg-bg-card transition-shadow hover:shadow-md">
+      <article className="hidden md:flex md:flex-col overflow-hidden rounded-card border border-border-subtle bg-bg-card transition-shadow hover:shadow-md">
         <div className="relative aspect-[4/3]">
           <Image
             src={stay.images[0] ?? ''}
@@ -32,7 +32,7 @@ export function StayCard({ stay }: { stay: StayCardType }) {
             <span className="text-sm text-text-secondary">/ night</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="rounded-[--radius-badge] bg-bg-muted px-3 py-1 text-xs text-text-secondary capitalize">
+            <span className="rounded-badge bg-bg-muted px-3 py-1 text-xs text-text-secondary capitalize">
               {stay.type}
             </span>
             <span className="flex items-center gap-1 text-xs text-text-secondary">
@@ -44,8 +44,8 @@ export function StayCard({ stay }: { stay: StayCardType }) {
       </article>
 
       {/* Mobile: horizontal card (shown below md) */}
-      <article className="flex flex-row gap-4 rounded-[--radius-small] border border-border-subtle bg-bg-card p-3 md:hidden">
-        <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-[--radius-small]">
+      <article className="flex flex-row gap-4 rounded-small border border-border-subtle bg-bg-card p-3 md:hidden">
+        <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-small">
           <Image
             src={stay.images[0] ?? ''}
             alt={stay.title}
@@ -68,7 +68,7 @@ export function StayCard({ stay }: { stay: StayCardType }) {
               </span>
               <span className="text-xs text-text-secondary">/ night</span>
             </div>
-            <span className="rounded-[--radius-badge] bg-bg-muted px-2 py-0.5 text-xs text-text-secondary capitalize">
+            <span className="rounded-badge bg-bg-muted px-2 py-0.5 text-xs text-text-secondary capitalize">
               {stay.type}
             </span>
           </div>

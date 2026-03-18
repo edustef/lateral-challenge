@@ -15,7 +15,7 @@ export function PhotoGallery({ images }: { images: string[] }) {
   return (
     <div>
       {/* Hero image */}
-      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[--radius-card]">
+      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-card">
         <Image
           src={images[activeIndex]}
           alt="Stay photo"
@@ -34,7 +34,7 @@ export function PhotoGallery({ images }: { images: string[] }) {
               key={i}
               type="button"
               onClick={() => setActiveIndex(i)}
-              className={`relative h-20 w-28 overflow-hidden rounded-[--radius-small] border-2 transition ${
+              className={`relative h-20 w-28 overflow-hidden rounded-small border-2 transition ${
                 activeIndex === i
                   ? 'border-accent'
                   : 'border-transparent hover:border-accent/50'

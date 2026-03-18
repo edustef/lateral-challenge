@@ -39,7 +39,7 @@ export function DatePicker({
           onChange={(e) =>
             onCheckInChange(e.target.value ? new Date(e.target.value + 'T12:00:00') : undefined)
           }
-          className="w-full rounded-[--radius-small] border border-border bg-bg-card px-3 py-2 text-sm text-text-body focus:ring-2 focus:ring-accent/30 focus:outline-none"
+          className="w-full rounded-small border border-border bg-bg-card px-3 py-2 text-sm text-text-body focus:ring-2 focus:ring-accent/30 focus:outline-none"
         />
       </div>
       <div>
@@ -53,7 +53,7 @@ export function DatePicker({
           onChange={(e) =>
             onCheckOutChange(e.target.value ? new Date(e.target.value + 'T12:00:00') : undefined)
           }
-          className="w-full rounded-[--radius-small] border border-border bg-bg-card px-3 py-2 text-sm text-text-body focus:ring-2 focus:ring-accent/30 focus:outline-none"
+          className="w-full rounded-small border border-border bg-bg-card px-3 py-2 text-sm text-text-body focus:ring-2 focus:ring-accent/30 focus:outline-none"
         />
       </div>
     </div>

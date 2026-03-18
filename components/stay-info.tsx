@@ -59,7 +59,7 @@ export function StayInfo({ stay }: { stay: Tables<'stays'> }) {
       <div className="mt-2 flex items-center gap-2">
         <MapPin size={16} className="text-text-secondary" />
         <span className="text-text-secondary">{stay.location}</span>
-        <span className="rounded-[--radius-badge] bg-bg-muted px-3 py-1 text-xs text-text-secondary capitalize">
+        <span className="rounded-badge bg-bg-muted px-3 py-1 text-xs text-text-secondary capitalize">
           {stay.type}
         </span>
       </div>
@@ -84,7 +84,7 @@ export function StayInfo({ stay }: { stay: Tables<'stays'> }) {
               return (
                 <span
                   key={amenity}
-                  className="flex items-center gap-2 rounded-[--radius-badge] bg-bg-muted px-3 py-2 text-sm text-text-body border border-border-subtle"
+                  className="flex items-center gap-2 rounded-badge bg-bg-muted px-3 py-2 text-sm text-text-body border border-border-subtle"
                 >
                   <Icon size={16} />
                   {formatAmenityName(amenity)}

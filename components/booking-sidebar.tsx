@@ -45,7 +45,7 @@ export function BookingSidebar({ stay }: BookingSidebarProps) {
   }, [checkIn, checkOut]);
 
   return (
-    <div className="rounded-[--radius-card] border border-border-subtle bg-bg-card p-6 shadow-sm lg:sticky lg:top-6">
+    <div className="rounded-card border border-border-subtle bg-bg-card p-6 shadow-sm lg:sticky lg:top-6">
       {/* Price header */}
       <div className="flex items-baseline gap-1">
         <span className="font-heading text-3xl font-semibold text-text-primary">
@@ -79,7 +79,7 @@ export function BookingSidebar({ stay }: BookingSidebarProps) {
           id="guests-select"
           value={guests}
           onChange={(e) => setGuests(Number(e.target.value))}
-          className="w-full rounded-[--radius-small] border border-border bg-bg-card px-3 py-2 text-sm text-text-body focus:ring-2 focus:ring-accent/30 focus:outline-none"
+          className="w-full rounded-small border border-border bg-bg-card px-3 py-2 text-sm text-text-body focus:ring-2 focus:ring-accent/30 focus:outline-none"
         >
           {Array.from({ length: stay.max_guests }, (_, i) => i + 1).map(
             (n) => (
@@ -106,7 +106,7 @@ export function BookingSidebar({ stay }: BookingSidebarProps) {
       {/* CTA */}
       <Link
         href={`/stays/${stay.slug}/book`}
-        className="mt-6 block w-full rounded-[--radius-button] bg-accent py-3 text-center font-semibold text-white hover:bg-accent/90 transition"
+        className="mt-6 block w-full rounded-button bg-accent py-3 text-center font-semibold text-white hover:bg-accent/90 transition"
       >
         Book this stay
       </Link>

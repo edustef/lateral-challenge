@@ -18,7 +18,7 @@ export function SearchBar() {
         value={search ?? ''}
         onChange={(e) => setSearch(e.target.value || null)}
         placeholder="Search stays..."
-        className="w-full rounded-[--radius-pill] border border-border bg-bg-card py-2 pl-10 pr-9 text-sm text-text-body placeholder:text-text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
+        className="w-full rounded-pill border border-border bg-bg-card py-2 pl-10 pr-9 text-sm text-text-body placeholder:text-text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30"
       />
       {search && (
         <button
