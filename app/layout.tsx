@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Wanderly — Unique Stays",
-  description: "Discover unique stays through a vibe-first experience",
+  description: "Discover unique stays with AI-powered search",
 };
 
 export default function RootLayout({

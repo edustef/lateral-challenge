@@ -14,7 +14,7 @@ export function ConciergeSummary() {
       search: searchParamsParsers.search,
       country: searchParamsParsers.country,
       type: searchParamsParsers.type,
-      vibe: searchParamsParsers.vibe,
+      tags: searchParamsParsers.tags,
       sort: searchParamsParsers.sort,
       stayType: searchParamsParsers.stayType,
       maxPrice: searchParamsParsers.maxPrice,
@@ -27,7 +27,7 @@ export function ConciergeSummary() {
     setSummary(null);
     setParams({
       search: null, country: null, stayType: null, maxPrice: null, amenities: null,
-      type: null, vibe: null, sort: null,
+      type: null, tags: null, sort: null,
     });
   }, [setSummary, setParams]);
 

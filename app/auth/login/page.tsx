@@ -38,7 +38,7 @@ function LoginForm() {
 
         <div className="flex flex-col gap-4">
           <p className="text-lg leading-relaxed text-text-body">
-            Discover unique stays that match your vibe.
+            Discover unique stays tailored to your style.
           </p>
         </div>
 
@@ -49,7 +49,7 @@ function LoginForm() {
           </div>
           <div className="flex items-center gap-3">
             <Compass size={20} className="shrink-0 text-accent" />
-            <span className="text-sm text-text-body">Vibe-first discovery for every traveler</span>
+            <span className="text-sm text-text-body">AI-powered discovery for every traveler</span>
           </div>
           <div className="flex items-center gap-3">
             <Star size={20} className="shrink-0 text-accent" />
