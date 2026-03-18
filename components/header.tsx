@@ -3,8 +3,8 @@ import { getClaims } from '@/lib/supabase/server';
 import { AuthButton } from '@/components/auth-button';
 
 const navLinks = [
-  { href: '/', label: 'Stays', active: true },
-  { href: '/saved', label: 'Saved', active: false },
+  { href: '/', label: 'Stays' },
+  { href: '/wishlist', label: 'Wishlist' },
 ];
 
 export async function Header() {
@@ -27,11 +27,7 @@ export async function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium transition-colors ${
-                  link.active
-                    ? 'font-semibold text-text-primary'
-                    : 'text-text-body hover:text-text-primary'
-                }`}
+                className="text-sm font-medium text-text-body transition-colors hover:text-text-primary"
               >
                 {link.label}
               </Link>

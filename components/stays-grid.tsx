@@ -2,7 +2,7 @@ import { SearchX } from 'lucide-react';
 import { StayCard } from '@/components/stay-card';
 import type { StayCard as StayCardType } from '@/lib/actions/stays';
 
-export function StaysGrid({ stays }: { stays: StayCardType[] }) {
+export function StaysGrid({ stays, favoriteIds }: { stays: StayCardType[]; favoriteIds?: Set<string> }) {
   if (stays.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center gap-3 py-20 text-center">
@@ -20,7 +20,7 @@ export function StaysGrid({ stays }: { stays: StayCardType[] }) {
   return (
     <div data-testid="stays-grid" className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
       {stays.map((stay) => (
-        <StayCard key={stay.id} stay={stay} />
+        <StayCard key={stay.id} stay={stay} isFavorited={favoriteIds?.has(stay.id)} />
       ))}
     </div>
   );

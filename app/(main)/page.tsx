@@ -1,5 +1,6 @@
 import { searchParamsCache } from '@/lib/search-params';
 import { getStays } from '@/lib/actions/stays';
+import { getFavoriteStayIds } from '@/lib/actions/favorites';
 import { VibePicker } from '@/components/vibe-picker';
 import { VibePickerMobile } from '@/components/vibe-picker-mobile';
 import { SearchBar } from '@/components/search-bar';
@@ -12,7 +13,11 @@ type PageProps = { searchParams: Promise<SearchParams> };
 export default async function DiscoveryPage({ searchParams }: PageProps) {
   const { type, vibe, search, sort } = await searchParamsCache.parse(searchParams);
 
-  const stays = await getStays({ type, vibe, search, sort });
+  const [stays, favoriteIds] = await Promise.all([
+    getStays({ type, vibe, search, sort }),
+    getFavoriteStayIds(),
+  ]);
+  const favoriteSet = new Set(favoriteIds);
 
   return (
     <section className="py-6 space-y-6">
@@ -37,7 +42,7 @@ export default async function DiscoveryPage({ searchParams }: PageProps) {
       </div>
 
       {/* Stays grid */}
-      <StaysGrid stays={stays} />
+      <StaysGrid stays={stays} favoriteIds={favoriteSet} />
     </section>
   );
 }
