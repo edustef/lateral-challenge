@@ -3,12 +3,13 @@
 import { useState, useTransition, useMemo } from 'react';
 import { Calendar } from '@/components/ui/calendar';
 import type { DateRange } from 'react-day-picker';
-import { Users, Lock, ShieldCheck, Minus, Plus } from 'lucide-react';
-import { PriceBreakdown } from '@/components/price-breakdown';
-import { DatePicker } from '@/components/date-picker';
+import { Lock } from 'lucide-react';
+import { GuestCounter } from '@/components/guest-counter';
+import { CheckoutSummary } from '@/components/booking/checkout-summary';
+import { DatePicker } from '@/components/booking/date-picker';
+import { rangeOverlapsDisabled, parseDate } from '@/lib/utils/date';
 import { calculateNights, calculateTotal, formatPrice } from '@/lib/utils/price';
 import { createBooking } from '@/lib/actions/bookings';
-import Image from 'next/image';
 
 interface CheckoutFormProps {
   stay: {
@@ -35,23 +36,6 @@ interface CheckoutFormProps {
   disabledDates?: { from: string; to: string }[];
 }
 
-function rangeOverlapsDisabled(
-  checkIn: Date,
-  checkOut: Date,
-  disabledDates: { from: string; to: string }[]
-): boolean {
-  return disabledDates.some((range) => {
-    const from = new Date(range.from + 'T00:00:00');
-    const to = new Date(range.to + 'T00:00:00');
-    return checkIn < to && checkOut > from;
-  });
-}
-
-function parseDate(str?: string): Date | undefined {
-  if (!str) return undefined;
-  const d = new Date(str + 'T12:00:00');
-  return isNaN(d.getTime()) ? undefined : d;
-}
 
 export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: CheckoutFormProps) {
   const disabledMatchers = disabledDates.map((range) => ({
@@ -199,37 +183,7 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
           <h2 className="text-sm font-medium text-text-primary sm:text-base">
             How many guests?
           </h2>
-          <div className="flex items-center justify-between rounded-small border border-border bg-bg-card px-4 h-11 sm:h-12">
-            <div className="flex items-center gap-2.5">
-              <Users size={16} className="text-text-muted" />
-              <span className="text-sm text-text-primary">
-                {guests} adult{guests !== 1 ? 's' : ''}
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() => setGuests((g) => Math.max(1, g - 1))}
-                disabled={guests <= 1}
-                aria-label="Decrease guests"
-                className="flex h-7 w-7 items-center justify-center rounded-full border border-border text-text-secondary hover:bg-bg-muted disabled:opacity-40 transition"
-              >
-                <Minus size={14} />
-              </button>
-              <span className="min-w-[1.25rem] text-center text-sm font-medium text-text-primary">
-                {guests}
-              </span>
-              <button
-                type="button"
-                onClick={() => setGuests((g) => Math.min(stay.max_guests, g + 1))}
-                disabled={guests >= stay.max_guests}
-                aria-label="Increase guests"
-                className="flex h-7 w-7 items-center justify-center rounded-full bg-accent text-white disabled:opacity-40 transition"
-              >
-                <Plus size={14} />
-              </button>
-            </div>
-          </div>
+          <GuestCounter value={guests} max={stay.max_guests} onChange={setGuests} />
         </div>
 
         {/* Contact Section — only show if user is not signed in */}
@@ -324,45 +278,7 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
 
       {/* Summary */}
       <div className="w-full lg:order-2 lg:w-[380px] lg:shrink-0">
-        <div className="lg:sticky lg:top-6">
-          <div className="rounded-card border border-border bg-bg-card p-4 space-y-3">
-            <div className="flex items-center gap-3 lg:flex-col lg:items-stretch lg:gap-0">
-              {stay.images[0] && (
-                <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-small lg:h-[180px] lg:w-full">
-                  <Image
-                    src={stay.images[0]}
-                    alt={stay.title}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              )}
-
-              <div className="min-w-0 lg:mt-4">
-                <h3 className="font-heading text-sm font-medium text-text-primary lg:text-lg">
-                  {stay.title}
-                </h3>
-                <p className="text-xs text-text-secondary">{stay.location}</p>
-              </div>
-            </div>
-
-            <div className="h-px bg-bg-muted" />
-
-            <PriceBreakdown
-              pricePerNight={stay.price_per_night}
-              nights={nights || 1}
-              cleaningFee={stay.cleaning_fee}
-              serviceFee={stay.service_fee}
-            />
-
-            <div className="flex items-start gap-2">
-              <ShieldCheck size={14} className="mt-0.5 shrink-0 text-accent" />
-              <p className="text-xs text-text-secondary">
-                Secure checkout · No payment until confirmation
-              </p>
-            </div>
-          </div>
-        </div>
+        <CheckoutSummary stay={stay} nights={nights} />
       </div>
 
       {/* Submit — mobile only (below summary card) */}

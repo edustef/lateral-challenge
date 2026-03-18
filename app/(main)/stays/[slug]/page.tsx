@@ -6,7 +6,7 @@ import { PhotoGallery } from '@/components/photo-gallery';
 import { StayInfo } from '@/components/stay-info';
 import { ReviewsList } from '@/components/reviews-list';
 import { ReviewForm } from '@/components/review-form';
-import { BookingSidebar } from '@/components/booking-sidebar';
+import { BookingSidebar } from '@/components/booking/booking-sidebar';
 import { BackButton } from '@/components/back-button';
 
 type Props = { params: Promise<{ slug: string }> };

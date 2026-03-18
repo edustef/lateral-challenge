@@ -2,9 +2,10 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { Users, Minus, Plus } from 'lucide-react';
-import { DatePicker } from '@/components/date-picker';
-import { PriceBreakdown } from '@/components/price-breakdown';
+import { GuestCounter } from '@/components/guest-counter';
+import { DatePicker } from '@/components/booking/date-picker';
+import { PriceBreakdown } from '@/components/booking/price-breakdown';
+import { rangeOverlapsDisabled } from '@/lib/utils/date';
 import { formatPrice } from '@/lib/utils/price';
 
 function getDefaultCheckIn(): Date {
@@ -44,21 +45,8 @@ interface BookingSidebarProps {
   disabledDates?: { from: string; to: string }[];
 }
 
-function defaultsOverlapDisabled(
-  disabledDates: { from: string; to: string }[]
-): boolean {
-  if (disabledDates.length === 0) return false;
-  const checkIn = getDefaultCheckIn();
-  const checkOut = getDefaultCheckOut();
-  return disabledDates.some((range) => {
-    const from = new Date(range.from + 'T00:00:00');
-    const to = new Date(range.to + 'T00:00:00');
-    return checkIn < to && checkOut > from;
-  });
-}
-
 export function BookingSidebar({ stay, disabledDates = [] }: BookingSidebarProps) {
-  const hasOverlap = defaultsOverlapDisabled(disabledDates);
+  const hasOverlap = rangeOverlapsDisabled(getDefaultCheckIn(), getDefaultCheckOut(), disabledDates);
   const [checkIn, setCheckIn] = useState<Date | undefined>(
     hasOverlap ? undefined : getDefaultCheckIn
   );
@@ -76,11 +64,7 @@ export function BookingSidebar({ stay, disabledDates = [] }: BookingSidebarProps
 
   const hasDateConflict = useMemo(() => {
     if (!checkIn || !checkOut) return false;
-    return disabledDates.some((range) => {
-      const from = new Date(range.from + 'T00:00:00');
-      const to = new Date(range.to + 'T00:00:00');
-      return checkIn < to && checkOut > from;
-    });
+    return rangeOverlapsDisabled(checkIn, checkOut, disabledDates);
   }, [checkIn, checkOut, disabledDates]);
 
   const bookingUrl = `/stays/${stay.slug}/book?${new URLSearchParams({
@@ -120,37 +104,12 @@ export function BookingSidebar({ stay, disabledDates = [] }: BookingSidebarProps
           <label className="mb-2 block text-sm font-medium text-text-primary">
             Guests
           </label>
-          <div className="flex items-center justify-between rounded-small border border-border bg-bg-card px-4 h-12">
-            <div className="flex items-center gap-2.5">
-              <Users size={16} className="text-text-muted" />
-              <span className="text-sm text-text-primary">
-                {guests} adult{guests !== 1 ? 's' : ''}
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() => setGuests((g) => Math.max(1, g - 1))}
-                disabled={guests <= 1}
-                aria-label="Decrease guests"
-                className="flex h-7 w-7 items-center justify-center rounded-full border border-border text-text-secondary hover:bg-bg-muted disabled:opacity-40 transition"
-              >
-                <Minus size={14} />
-              </button>
-              <span className="min-w-[1.25rem] text-center text-sm font-medium text-text-primary">
-                {guests}
-              </span>
-              <button
-                type="button"
-                onClick={() => setGuests((g) => Math.min(stay.max_guests, g + 1))}
-                disabled={guests >= stay.max_guests}
-                aria-label="Increase guests"
-                className="flex h-7 w-7 items-center justify-center rounded-full bg-accent text-white disabled:opacity-40 transition"
-              >
-                <Plus size={14} />
-              </button>
-            </div>
-          </div>
+          <GuestCounter
+            value={guests}
+            max={stay.max_guests}
+            onChange={setGuests}
+            className="flex items-center justify-between rounded-small border border-border bg-bg-card px-4 h-12"
+          />
         </div>
 
         {/* Price breakdown */}

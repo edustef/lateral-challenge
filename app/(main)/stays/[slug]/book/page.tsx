@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { getStayBySlug } from '@/lib/actions/stays';
 import { getUnavailableDates } from '@/lib/actions/availability';
 import { getClaims } from '@/lib/supabase/server';
-import { CheckoutForm } from '@/components/checkout-form';
+import { CheckoutForm } from '@/components/booking/checkout-form';
 
 type Props = {
   params: Promise<{ slug: string }>;

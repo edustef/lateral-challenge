@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import { createClient, getClaims } from '@/lib/supabase/server';
-import { BookingCard, BookingCardCompact } from '@/components/booking-card';
+import { BookingCard, BookingCardCompact } from '@/components/booking/booking-card';
 import { getFavoriteStays } from '@/lib/actions/favorites';
 import { StayCard } from '@/components/stay-card';
 import { MapPin, Heart, ArrowRight } from 'lucide-react';
