@@ -34,11 +34,7 @@ export async function moderateContent(text: string): Promise<boolean> {
     });
 
     if (!res.ok) {
-      console.error(
-        "[moderation] OpenAI API error:",
-        res.status,
-        res.statusText
-      );
+      console.error("[moderation] OpenAI API error:", res.status, res.statusText);
       return true; // fail open
     }
 
