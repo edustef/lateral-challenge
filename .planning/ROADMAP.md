@@ -81,8 +81,9 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 04-01: TBD
-- [ ] 04-02: TBD
+- [ ] 04-01-PLAN.md — Polish: loading skeletons, error boundaries, empty states, responsive, a11y, structured logging
+- [ ] 04-02-PLAN.md — Testing: Vitest unit tests for price/date utils, Playwright E2E checkout flow
+- [ ] 04-03-PLAN.md — CI/CD: GitHub Actions pipeline, Vercel config, comprehensive README
 
 ## Progress
 
