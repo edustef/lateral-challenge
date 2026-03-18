@@ -155,6 +155,12 @@
   --radius-pill: var(--radius-pill);
   --radius-small: var(--radius-small);
 
+  /* Font sizes */
+  --text-chip: 13px;
+
+  /* Border widths */
+  --border-w-active: 1.5px;
+
   /* Fonts */
   --font-sans: var(--font-body);
   --font-heading: var(--font-heading);

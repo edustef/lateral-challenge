@@ -4,7 +4,6 @@ import { AuthButton } from '@/components/auth-button';
 
 const navLinks = [
   { href: '/', label: 'Stays', active: true },
-  { href: '/experiences', label: 'Experiences', active: false },
   { href: '/saved', label: 'Saved', active: false },
 ];
 

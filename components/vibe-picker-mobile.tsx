@@ -6,12 +6,12 @@ import { searchParamsParsers } from '@/lib/search-params';
 import {
   User,
   Users,
-  Baby,
-  UsersRound,
+  Globe,
+  House,
   Mountain,
   Landmark,
-  TreePine,
-  PartyPopper,
+  WifiOff,
+  Sparkles,
   ChevronDown,
 } from 'lucide-react';
 import {
@@ -27,15 +27,15 @@ import {
 const travelTypes = [
   { value: 'solo', label: 'Solo', icon: User },
   { value: 'duo', label: 'Duo', icon: Users },
-  { value: 'family', label: 'Family', icon: Baby },
-  { value: 'group', label: 'Group', icon: UsersRound },
+  { value: 'family', label: 'Family', icon: House },
+  { value: 'group', label: 'Group', icon: Globe },
 ] as const;
 
 const vibes = [
   { value: 'adventure', label: 'Adventure', icon: Mountain },
   { value: 'culture', label: 'Culture', icon: Landmark },
-  { value: 'disconnect', label: 'Disconnect', icon: TreePine },
-  { value: 'celebration', label: 'Celebration', icon: PartyPopper },
+  { value: 'disconnect', label: 'Disconnect', icon: WifiOff },
+  { value: 'celebration', label: 'Celebration', icon: Sparkles },
 ] as const;
 
 export function VibePickerMobile({ staysCount }: { staysCount: number }) {
@@ -77,7 +77,7 @@ export function VibePickerMobile({ staysCount }: { staysCount: number }) {
           <button
             type="button"
             aria-label="Open vibe filter"
-            className="flex items-center gap-2 rounded-pill border border-border-subtle bg-bg-surface px-4 py-2 text-sm font-medium text-text-body"
+            className="flex items-center gap-2 rounded-button border border-border bg-white px-4 h-10 text-chip font-medium text-text-primary"
           >
             <span>{typeLabel}</span>
             <span className="text-text-muted">&middot;</span>
@@ -108,10 +108,10 @@ export function VibePickerMobile({ staysCount }: { staysCount: number }) {
                       onClick={() => handleChipToggle(type, t.value, setType)}
                       aria-label={`Filter by ${t.label}`}
                       aria-pressed={selected}
-                      className={`flex items-center gap-2 rounded-pill border px-4 py-2 text-sm transition-colors ${
+                      className={`flex items-center gap-1.5 rounded-button border h-9 px-3.5 text-chip font-medium transition-colors ${
                         selected
-                          ? 'border-accent bg-accent text-white'
-                          : 'border-border bg-bg-card text-text-body hover:border-accent'
+                          ? 'border-accent border-w-active bg-accent-tint text-accent'
+                          : 'border-border bg-white text-text-secondary hover:border-accent'
                       }`}
                     >
                       <Icon className="h-4 w-4" />
@@ -138,10 +138,10 @@ export function VibePickerMobile({ staysCount }: { staysCount: number }) {
                       onClick={() => handleChipToggle(vibe, v.value, setVibe)}
                       aria-label={`Filter by ${v.label}`}
                       aria-pressed={selected}
-                      className={`flex items-center gap-2 rounded-pill border px-4 py-2 text-sm transition-colors ${
+                      className={`flex items-center gap-1.5 rounded-button border h-9 px-3.5 text-chip font-medium transition-colors ${
                         selected
-                          ? 'border-accent bg-accent text-white'
-                          : 'border-border bg-bg-card text-text-body hover:border-accent'
+                          ? 'border-accent border-w-active bg-accent-tint text-accent'
+                          : 'border-border bg-white text-text-secondary hover:border-accent'
                       }`}
                     >
                       <Icon className="h-4 w-4" />

@@ -44,14 +44,14 @@ export async function getStays(filters: {
   }
 }
 
-export type StayPreview = Pick<Tables<'stays'>, 'id' | 'title' | 'location' | 'price_per_night' | 'slug'>;
+export type StayPreview = Pick<Tables<'stays'>, 'id' | 'title' | 'location' | 'price_per_night' | 'slug' | 'images'>;
 
 export async function searchStaysPreview(term: string): Promise<StayPreview[]> {
   if (!term || term.length < 2) return [];
   const supabase = await createClient();
   const { data, error } = await supabase
     .from('stays')
-    .select('id, title, location, price_per_night, slug')
+    .select('id, title, location, price_per_night, slug, images')
     .or(`title.ilike.%${term}%,location.ilike.%${term}%`)
     .limit(5);
   if (error) return [];
