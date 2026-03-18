@@ -56,7 +56,7 @@ export function CheckoutForm({ stay }: CheckoutFormProps) {
       cleaningFee: stay.cleaning_fee,
       serviceFee: stay.service_fee,
     });
-  }, [nights, stay]);
+  }, [nights, stay.price_per_night, stay.cleaning_fee, stay.service_fee]);
 
   const canAdvance = () => {
     switch (step) {

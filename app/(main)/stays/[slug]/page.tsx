@@ -13,12 +13,14 @@ type Props = { params: Promise<{ slug: string }> };
 
 export default async function StayDetailPage({ params }: Props) {
   const { slug } = await params;
+  const claimsPromise = getClaims();
   const stay = await getStayBySlug(slug);
   if (!stay) notFound();
 
-  const reviews = await getReviewsForStay(stay.id);
-
-  const user = await getClaims();
+  const [reviews, user] = await Promise.all([
+    getReviewsForStay(stay.id),
+    claimsPromise,
+  ]);
 
   return (
     <div className="py-6">

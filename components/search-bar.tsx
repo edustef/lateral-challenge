@@ -29,6 +29,13 @@ export function SearchBar() {
   const [isPending, startTransition] = useTransition();
   const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
 
+  // Clear debounce timer on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
+
   // Sync query when dialog opens
   useEffect(() => {
     if (open) {
@@ -76,11 +83,6 @@ export function SearchBar() {
   function handleSelectStay(slug: string) {
     setOpen(false);
     router.push(`/stays/${slug}`);
-  }
-
-  // Apply search filter from preview
-  function handleSearchAll() {
-    handleSubmit();
   }
 
   return (
@@ -152,7 +154,7 @@ export function SearchBar() {
 
               <CommandGroup>
                 <CommandItem
-                  onSelect={handleSearchAll}
+                  onSelect={handleSubmit}
                   className="cursor-pointer justify-center text-accent"
                 >
                   <Search className="h-3.5 w-3.5" />

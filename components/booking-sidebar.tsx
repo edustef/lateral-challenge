@@ -4,10 +4,7 @@ import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { DatePicker } from '@/components/date-picker';
 import { PriceBreakdown } from '@/components/price-breakdown';
-
-function formatPrice(cents: number): string {
-  return '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 0 });
-}
+import { formatPrice } from '@/lib/utils/price';
 
 function getDefaultCheckIn(): Date {
   const d = new Date();

@@ -1,6 +1,6 @@
 'use server'
 
-import { createClient, getClaims } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 
 export async function createReview(formData: FormData): Promise<{ error?: string; success?: boolean }> {
@@ -18,7 +18,8 @@ export async function createReview(formData: FormData): Promise<{ error?: string
   }
 
   const supabase = await createClient()
-  const user = await getClaims()
+  const { data: { session } } = await supabase.auth.getSession()
+  const user = session?.user ?? null
 
   if (!user) {
     return { error: 'You must be signed in to leave a review' }

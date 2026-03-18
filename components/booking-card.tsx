@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { CalendarDays, Users } from 'lucide-react';
+import { formatPrice } from '@/lib/utils/price';
 
 type BookingCardProps = {
   booking: {
@@ -29,10 +30,6 @@ function formatDateRange(checkIn: string, checkOut: string): string {
     year: 'numeric',
   });
   return `${startStr} - ${endStr}`;
-}
-
-function formatPrice(cents: number): string {
-  return `$${(cents / 100).toLocaleString('en-US', { minimumFractionDigits: 0 })}`;
 }
 
 export function BookingCard({ booking }: BookingCardProps) {

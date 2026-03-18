@@ -1,6 +1,6 @@
 'use server';
 
-import { createClient, getClaims } from '@/lib/supabase/server';
+import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 
 export async function createBooking(
@@ -17,8 +17,8 @@ export async function createBooking(
   const totalPrice = Number(formData.get('totalPrice'));
 
   const supabase = await createClient();
-
-  const user = await getClaims();
+  const { data: { session } } = await supabase.auth.getSession();
+  const user = session?.user ?? null;
 
   if (!user) {
     return { error: 'Not authenticated' };

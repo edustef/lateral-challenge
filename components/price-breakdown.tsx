@@ -1,6 +1,4 @@
-function formatPrice(cents: number): string {
-  return '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 0 });
-}
+import { formatPrice } from '@/lib/utils/price';
 
 interface PriceBreakdownProps {
   pricePerNight: number;
