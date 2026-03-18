@@ -22,7 +22,7 @@
 
 - [x] **Phase 6: OAuth & Discovery Controls** - Social login and persistent browsing controls
 - [ ] **Phase 7: Favorites & Moderation** - Save stays and AI-powered review quality
-- [ ] **Phase 8: Motion & Polish** - Animated transitions and micro-interactions
+- [x] **Phase 8: Motion & Polish** - Animated transitions and micro-interactions
 
 ## Phase Details
 
@@ -58,7 +58,7 @@
 **Success Criteria** (what must be TRUE):
   1. Navigating between pages shows a smooth fade/slide transition instead of hard cuts
   2. Buttons, cards, and toggles respond to hover/tap with subtle animations
-**Plans**: TBD
+**Plans**: 1 (08-01 Page transitions + micro-interactions)
 
 ## Progress
 
@@ -73,4 +73,4 @@
 | 5. Bug Fixes & Wiring | v1.0 | 1/1 | Complete | 2026-03-17 |
 | 6. OAuth & Discovery Controls | v2.0 | 2/2 | Complete | 2026-03-17 |
 | 7. Favorites & Moderation | v2.0 | 0/2 | Planned | - |
-| 8. Motion & Polish | v2.0 | 0/? | Not started | - |
+| 8. Motion & Polish | v2.0 | 1/1 | Complete | 2026-03-17 |
