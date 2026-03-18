@@ -43,9 +43,9 @@
 
 ### Reviews
 
-- [ ] **REVW-01**: Review submission form (1-5 star rating + comment textarea)
-- [ ] **REVW-02**: Server action createReview() with validation, requires auth
-- [ ] **REVW-03**: Toast or optimistic UI confirmation after submission
+- [x] **REVW-01**: Review submission form (1-5 star rating + comment textarea)
+- [x] **REVW-02**: Server action createReview() with validation, requires auth
+- [x] **REVW-03**: Toast or optimistic UI confirmation after submission
 
 ### Checkout
 
@@ -60,8 +60,8 @@
 
 ### Profile
 
-- [ ] **PROF-01**: Profile / My Bookings page showing user's booking history
-- [ ] **PROF-02**: Booking cards with stay image, name, dates, status
+- [x] **PROF-01**: Profile / My Bookings page showing user's booking history
+- [x] **PROF-02**: Booking cards with stay image, name, dates, status
 
 ### Polish
 
@@ -152,11 +152,11 @@
 | CHKT-06 | Phase 3 | Pending |
 | CHKT-07 | Phase 3 | Pending |
 | CHKT-08 | Phase 3 | Complete |
-| REVW-01 | Phase 3 | Pending |
-| REVW-02 | Phase 3 | Pending |
-| REVW-03 | Phase 3 | Pending |
-| PROF-01 | Phase 3 | Pending |
-| PROF-02 | Phase 3 | Pending |
+| REVW-01 | Phase 3 | Complete |
+| REVW-02 | Phase 3 | Complete |
+| REVW-03 | Phase 3 | Complete |
+| PROF-01 | Phase 3 | Complete |
+| PROF-02 | Phase 3 | Complete |
 | PLSH-01 | Phase 4 | Pending |
 | PLSH-02 | Phase 4 | Pending |
 | PLSH-03 | Phase 4 | Pending |
