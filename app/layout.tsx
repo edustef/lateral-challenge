@@ -3,7 +3,7 @@ import { fraunces, inter, ibmPlexMono } from "@/lib/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Lateral — Unique Stays",
+  title: "Wanderly — Unique Stays",
   description: "Discover unique stays through a vibe-first experience",
 };
 

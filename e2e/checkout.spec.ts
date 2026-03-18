@@ -35,7 +35,7 @@ test.describe('Checkout flow', () => {
 
   test('home page loads with title and stays', async ({ page }) => {
     await page.goto('/');
-    await expect(page).toHaveTitle(/Lateral/i);
+    await expect(page).toHaveTitle(/Wanderly/i);
     await expect(page.locator('text=Unique stays near you')).toBeVisible();
   });
 });

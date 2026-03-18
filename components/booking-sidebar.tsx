@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { Users, Minus, Plus } from 'lucide-react';
 import { DatePicker } from '@/components/date-picker';
 import { PriceBreakdown } from '@/components/price-breakdown';
 import { formatPrice } from '@/lib/utils/price';
@@ -20,6 +21,16 @@ function getDefaultCheckOut(): Date {
   return d;
 }
 
+function guestsForTravelType(type: string): number {
+  switch (type) {
+    case 'solo': return 1;
+    case 'duo': return 2;
+    case 'family':
+    case 'group': return 3;
+    default: return 2;
+  }
+}
+
 interface BookingSidebarProps {
   stay: {
     id: string;
@@ -28,21 +39,52 @@ interface BookingSidebarProps {
     cleaning_fee: number;
     service_fee: number;
     max_guests: number;
+    travel_type: string;
   };
+  disabledDates?: { from: string; to: string }[];
 }
 
-export function BookingSidebar({ stay }: BookingSidebarProps) {
-  const [checkIn, setCheckIn] = useState<Date | undefined>(getDefaultCheckIn);
-  const [checkOut, setCheckOut] = useState<Date | undefined>(getDefaultCheckOut);
-  const [guests, setGuests] = useState(2);
+function defaultsOverlapDisabled(
+  disabledDates: { from: string; to: string }[]
+): boolean {
+  if (disabledDates.length === 0) return false;
+  const checkIn = getDefaultCheckIn();
+  const checkOut = getDefaultCheckOut();
+  return disabledDates.some((range) => {
+    const from = new Date(range.from + 'T00:00:00');
+    const to = new Date(range.to + 'T00:00:00');
+    return checkIn < to && checkOut > from;
+  });
+}
+
+export function BookingSidebar({ stay, disabledDates = [] }: BookingSidebarProps) {
+  const hasOverlap = defaultsOverlapDisabled(disabledDates);
+  const [checkIn, setCheckIn] = useState<Date | undefined>(
+    hasOverlap ? undefined : getDefaultCheckIn
+  );
+  const [checkOut, setCheckOut] = useState<Date | undefined>(
+    hasOverlap ? undefined : getDefaultCheckOut
+  );
+  const [guests, setGuests] = useState(() =>
+    Math.min(guestsForTravelType(stay.travel_type), stay.max_guests)
+  );
 
   const nights = useMemo(() => {
     if (!checkIn || !checkOut) return 0;
     return Math.max(1, Math.ceil((checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24)));
   }, [checkIn, checkOut]);
 
+  const hasDateConflict = useMemo(() => {
+    if (!checkIn || !checkOut) return false;
+    return disabledDates.some((range) => {
+      const from = new Date(range.from + 'T00:00:00');
+      const to = new Date(range.to + 'T00:00:00');
+      return checkIn < to && checkOut > from;
+    });
+  }, [checkIn, checkOut, disabledDates]);
+
   return (
-    <div className="rounded-card border border-border-subtle bg-bg-card p-6 shadow-sm lg:sticky lg:top-6">
+    <div className="rounded-card border border-border-subtle bg-bg-card p-6 shadow-sm lg:sticky lg:top-24">
       {/* Price header */}
       <div className="flex items-baseline gap-1">
         <span className="font-heading text-3xl font-semibold text-text-primary">
@@ -61,32 +103,46 @@ export function BookingSidebar({ stay }: BookingSidebarProps) {
           checkOut={checkOut}
           onCheckInChange={setCheckIn}
           onCheckOutChange={setCheckOut}
+          disabledDates={disabledDates}
         />
       </div>
 
       {/* Guests */}
       <div className="mt-4">
-        <label
-          htmlFor="guests-select"
-          className="mb-2 block text-sm font-medium text-text-primary"
-        >
+        <label className="mb-2 block text-sm font-medium text-text-primary">
           Guests
         </label>
-        <select
-          id="guests-select"
-          value={guests}
-          onChange={(e) => setGuests(Number(e.target.value))}
-          className="w-full appearance-none rounded-lg border border-border bg-background px-3 py-2 pr-8 text-sm text-foreground bg-[length:16px_16px] bg-[right_8px_center] bg-no-repeat focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 focus:outline-none"
-          style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")` }}
-        >
-          {Array.from({ length: stay.max_guests }, (_, i) => i + 1).map(
-            (n) => (
-              <option key={n} value={n}>
-                {n} {n === 1 ? 'guest' : 'guests'}
-              </option>
-            )
-          )}
-        </select>
+        <div className="flex items-center justify-between rounded-small border border-border bg-bg-card px-4 h-12">
+          <div className="flex items-center gap-2.5">
+            <Users size={16} className="text-text-muted" />
+            <span className="text-sm text-text-primary">
+              {guests} adult{guests !== 1 ? 's' : ''}
+            </span>
+          </div>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setGuests((g) => Math.max(1, g - 1))}
+              disabled={guests <= 1}
+              aria-label="Decrease guests"
+              className="flex h-7 w-7 items-center justify-center rounded-full border border-border text-text-secondary hover:bg-bg-muted disabled:opacity-40 transition"
+            >
+              <Minus size={14} />
+            </button>
+            <span className="min-w-[1.25rem] text-center text-sm font-medium text-text-primary">
+              {guests}
+            </span>
+            <button
+              type="button"
+              onClick={() => setGuests((g) => Math.min(stay.max_guests, g + 1))}
+              disabled={guests >= stay.max_guests}
+              aria-label="Increase guests"
+              className="flex h-7 w-7 items-center justify-center rounded-full bg-accent text-white disabled:opacity-40 transition"
+            >
+              <Plus size={14} />
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Price breakdown */}
@@ -101,14 +157,34 @@ export function BookingSidebar({ stay }: BookingSidebarProps) {
         </div>
       )}
 
+      {/* Date conflict warning */}
+      {hasDateConflict && (
+        <p className="mt-4 rounded-small border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-700">
+          Selected dates include unavailable dates. Please choose a different range.
+        </p>
+      )}
+
       {/* CTA */}
-      <Link
-        href={`/stays/${stay.slug}/book`}
-        aria-label="Book this stay"
-        className="mt-6 block w-full rounded-button bg-accent py-3 text-center font-semibold text-white hover:bg-accent/90 transition"
-      >
-        Book this stay
-      </Link>
+      {hasDateConflict ? (
+        <span
+          aria-disabled="true"
+          className="mt-6 block w-full rounded-button bg-accent/40 py-3 text-center font-semibold text-white cursor-not-allowed"
+        >
+          Book this stay
+        </span>
+      ) : (
+        <Link
+          href={`/stays/${stay.slug}/book?${new URLSearchParams({
+            ...(checkIn ? { checkIn: `${checkIn.getFullYear()}-${String(checkIn.getMonth() + 1).padStart(2, '0')}-${String(checkIn.getDate()).padStart(2, '0')}` } : {}),
+            ...(checkOut ? { checkOut: `${checkOut.getFullYear()}-${String(checkOut.getMonth() + 1).padStart(2, '0')}-${String(checkOut.getDate()).padStart(2, '0')}` } : {}),
+            guests: String(guests),
+          }).toString()}`}
+          aria-label="Book this stay"
+          className="mt-6 block w-full rounded-button bg-accent py-3 text-center font-semibold text-white hover:bg-accent/90 transition"
+        >
+          Book this stay
+        </Link>
+      )}
     </div>
   );
 }

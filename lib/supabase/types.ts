@@ -14,6 +14,41 @@ export type Database = {
   }
   public: {
     Tables: {
+      blocked_dates: {
+        Row: {
+          id: string
+          stay_id: string
+          start_date: string
+          end_date: string
+          reason: string
+          created_at: string | null
+        }
+        Insert: {
+          id?: string
+          stay_id: string
+          start_date: string
+          end_date: string
+          reason?: string
+          created_at?: string | null
+        }
+        Update: {
+          id?: string
+          stay_id?: string
+          start_date?: string
+          end_date?: string
+          reason?: string
+          created_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blocked_dates_stay_id_fkey"
+            columns: ["stay_id"]
+            isOneToOne: false
+            referencedRelation: "stays"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       bookings: {
         Row: {
           check_in: string
@@ -280,7 +315,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_unavailable_dates: {
+        Args: {
+          p_stay_id: string
+        }
+        Returns: {
+          start_date: string
+          end_date: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

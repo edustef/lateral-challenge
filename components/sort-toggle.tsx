@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useQueryState } from 'nuqs';
 import { ArrowUpDown, Check } from 'lucide-react';
 import { searchParamsParsers } from '@/lib/search-params';
+import { useFilterTransition } from '@/components/filter-transition-context';
 import {
   Popover,
   PopoverContent,
@@ -23,7 +24,8 @@ function getSortLabel(sort: string | null): string {
 }
 
 export function SortToggle() {
-  const [sort, setSort] = useQueryState('sort', searchParamsParsers.sort);
+  const { startTransition } = useFilterTransition();
+  const [sort, setSort] = useQueryState('sort', { ...searchParamsParsers.sort, startTransition });
   const [open, setOpen] = useState(false);
 
   return (
@@ -32,7 +34,7 @@ export function SortToggle() {
         className="flex flex-shrink-0 cursor-pointer items-center gap-1 text-sm text-text-secondary transition-all hover:text-text-primary active:scale-95"
       >
         <ArrowUpDown className="h-4 w-4" />
-        <span className="hidden sm:inline">{getSortLabel(sort)}</span>
+        {getSortLabel(sort)}
       </PopoverTrigger>
       <PopoverContent align="end" className="w-48 gap-0 p-1">
         {SORT_OPTIONS.map((option) => {

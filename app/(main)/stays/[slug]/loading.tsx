@@ -1,6 +1,6 @@
 export default function StayDetailLoading() {
   return (
-    <div className="py-6 animate-pulse">
+    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 animate-pulse">
       {/* Back link skeleton */}
       <div className="mb-6 h-4 w-32 rounded bg-bg-muted" />
 
@@ -60,7 +60,7 @@ export default function StayDetailLoading() {
 
         {/* Right column - sidebar skeleton */}
         <div>
-          <div className="rounded-card border border-border-subtle bg-bg-card p-6">
+          <div className="rounded-card border border-border-subtle bg-bg-card p-6 lg:sticky lg:top-24">
             <div className="h-9 w-32 rounded bg-bg-muted" />
             <div className="mt-5 space-y-3">
               <div className="h-4 w-12 rounded bg-bg-muted" />

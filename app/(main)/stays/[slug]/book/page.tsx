@@ -1,29 +1,26 @@
 import { notFound } from 'next/navigation';
 import { getStayBySlug } from '@/lib/actions/stays';
+import { getUnavailableDates } from '@/lib/actions/availability';
+import { getClaims } from '@/lib/supabase/server';
 import { CheckoutForm } from '@/components/checkout-form';
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
 
-type Props = { params: Promise<{ slug: string }> };
+type Props = {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ checkIn?: string; checkOut?: string; guests?: string }>;
+};
 
-export default async function BookPage({ params }: Props) {
-  const { slug } = await params;
+export default async function BookPage({ params, searchParams }: Props) {
+  const [{ slug }, sp] = await Promise.all([params, searchParams]);
   const stay = await getStayBySlug(slug);
   if (!stay) notFound();
 
+  const [user, unavailableDates] = await Promise.all([
+    getClaims(),
+    getUnavailableDates(stay.id),
+  ]);
+
   return (
-    <div className="py-6">
-      <Link
-        href={`/stays/${slug}`}
-        className="mb-6 inline-flex items-center gap-1 text-sm text-text-secondary hover:text-text-primary transition"
-      >
-        <ArrowLeft size={16} /> Back to {stay.title}
-      </Link>
-
-      <h1 className="font-heading text-2xl font-semibold text-text-primary mb-6">
-        Book {stay.title}
-      </h1>
-
+    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <CheckoutForm
         stay={{
           id: stay.id,
@@ -35,7 +32,22 @@ export default async function BookPage({ params }: Props) {
           max_guests: stay.max_guests,
           images: stay.images,
           location: stay.location,
+          travel_type: stay.travel_type,
         }}
+        prefill={{
+          checkIn: sp.checkIn,
+          checkOut: sp.checkOut,
+          guests: sp.guests ? Number(sp.guests) : undefined,
+        }}
+        user={
+          user
+            ? {
+                name: user.user_metadata?.full_name ?? user.email?.split('@')[0] ?? '',
+                email: user.email ?? '',
+              }
+            : undefined
+        }
+        disabledDates={unavailableDates}
       />
     </div>
   );

@@ -1,13 +1,13 @@
 import { notFound } from 'next/navigation';
 import { getStayBySlug, getReviewsForStay } from '@/lib/actions/stays';
+import { getUnavailableDates } from '@/lib/actions/availability';
 import { getClaims } from '@/lib/supabase/server';
 import { PhotoGallery } from '@/components/photo-gallery';
 import { StayInfo } from '@/components/stay-info';
 import { ReviewsList } from '@/components/reviews-list';
 import { ReviewForm } from '@/components/review-form';
 import { BookingSidebar } from '@/components/booking-sidebar';
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { BackButton } from '@/components/back-button';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -17,19 +17,18 @@ export default async function StayDetailPage({ params }: Props) {
   const stay = await getStayBySlug(slug);
   if (!stay) notFound();
 
-  const [reviews, user] = await Promise.all([
+  const [reviews, user, unavailableDates] = await Promise.all([
     getReviewsForStay(stay.id),
     claimsPromise,
+    getUnavailableDates(stay.id),
   ]);
 
   return (
-    <div className="py-6">
-      <Link
-        href="/"
+    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <BackButton
+        label="Back to results"
         className="mb-6 inline-flex items-center gap-1 text-sm text-text-secondary hover:text-text-primary transition"
-      >
-        <ArrowLeft size={16} /> Back to results
-      </Link>
+      />
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_380px]">
         {/* Left column */}
@@ -54,7 +53,9 @@ export default async function StayDetailPage({ params }: Props) {
               cleaning_fee: stay.cleaning_fee,
               service_fee: stay.service_fee,
               max_guests: stay.max_guests,
+              travel_type: stay.travel_type,
             }}
+            disabledDates={unavailableDates}
           />
         </div>
       </div>

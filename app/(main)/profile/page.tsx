@@ -1,7 +1,10 @@
+import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import { createClient, getClaims } from '@/lib/supabase/server';
 import { BookingCard, BookingCardCompact } from '@/components/booking-card';
-import { MapPin } from 'lucide-react';
+import { getFavoriteStays } from '@/lib/actions/favorites';
+import { formatPrice } from '@/lib/utils/price';
+import { MapPin, Heart, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function ProfilePage() {
@@ -12,6 +15,7 @@ export default async function ProfilePage() {
   }
 
   const supabase = await createClient();
+  const favorites = await getFavoriteStays();
   const { data: bookings } = await supabase
     .from('bookings')
     .select('*, stays(title, location, images, slug, price_per_night)')
@@ -46,14 +50,25 @@ export default async function ProfilePage() {
   );
 
   return (
-    <div className="-mx-4 sm:-mx-6 lg:-mx-8">
+    <div>
       {/* Profile Header */}
-      <div className="border-b border-[#F0EDE8] bg-white px-4 py-10 sm:px-6 lg:px-20">
+      <div className="border-b border-border-subtle">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="flex items-start gap-8">
           {/* Avatar */}
-          <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-full bg-accent">
-            <span className="text-2xl font-semibold text-white">{initials}</span>
-          </div>
+          {user.user_metadata?.avatar_url ? (
+            <Image
+              src={user.user_metadata.avatar_url}
+              alt=""
+              width={96}
+              height={96}
+              className="h-24 w-24 shrink-0 rounded-full object-cover"
+            />
+          ) : (
+            <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-full bg-accent">
+              <span className="text-2xl font-semibold text-white">{initials}</span>
+            </div>
+          )}
 
           {/* Info */}
           <div className="flex min-w-0 flex-1 flex-col gap-3">
@@ -78,10 +93,11 @@ export default async function ProfilePage() {
             </p>
           </div>
         </div>
+        </div>
       </div>
 
       {/* Bookings Section */}
-      <div className="px-4 py-6 sm:px-6 lg:px-20">
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         {/* Tabs */}
         <div className="flex border-b border-[#E8E4DF]">
           <div className="flex items-center gap-2 border-b-2 border-[#FF8400] px-5 py-3">
@@ -130,6 +146,76 @@ export default async function ProfilePage() {
             </>
           )}
         </div>
+      </div>
+
+      {/* Wishlist Section */}
+      <div className="mx-auto max-w-7xl border-t border-border-subtle px-4 py-6 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between mb-5">
+          <div className="flex items-center gap-2">
+            <Heart size={18} className="text-text-muted" />
+            <h2 className="text-base font-semibold text-text-primary">
+              Saved stays
+            </h2>
+            {favorites.length > 0 && (
+              <span className="text-sm text-text-secondary">
+                ({favorites.length})
+              </span>
+            )}
+          </div>
+          {favorites.length > 0 && (
+            <Link
+              href="/wishlist"
+              className="flex items-center gap-1 text-sm font-medium text-accent hover:underline"
+            >
+              View all <ArrowRight size={14} />
+            </Link>
+          )}
+        </div>
+
+        {favorites.length === 0 ? (
+          <div className="flex flex-col items-center gap-3 rounded-[20px] border border-border-subtle bg-bg-card py-12">
+            <Heart size={28} className="text-text-muted" />
+            <p className="text-sm text-text-secondary">No saved stays yet</p>
+            <Link
+              href="/"
+              className="text-sm font-medium text-accent hover:underline"
+            >
+              Browse stays
+            </Link>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            {favorites.slice(0, 4).map((stay) => (
+              <Link
+                key={stay.id}
+                href={`/stays/${stay.slug}`}
+                className="group overflow-hidden rounded-card border border-border bg-bg-card transition hover:shadow-sm"
+              >
+                <div className="relative aspect-[4/3] w-full">
+                  {stay.images[0] && (
+                    <Image
+                      src={stay.images[0]}
+                      alt={stay.title}
+                      fill
+                      className="object-cover transition group-hover:scale-[1.02]"
+                    />
+                  )}
+                </div>
+                <div className="p-3 space-y-0.5">
+                  <p className="text-sm font-medium text-text-primary truncate">
+                    {stay.title}
+                  </p>
+                  <p className="text-xs text-text-secondary truncate">
+                    {stay.location}
+                  </p>
+                  <p className="text-xs font-medium text-text-body">
+                    {formatPrice(stay.price_per_night)}/night
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -4,7 +4,6 @@ import * as React from 'react';
 import { format } from 'date-fns';
 import { CalendarDays } from 'lucide-react';
 import { type DateRange } from 'react-day-picker';
-import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import {
   Popover,
@@ -17,6 +16,7 @@ interface DatePickerProps {
   checkOut: Date | undefined;
   onCheckInChange: (date: Date | undefined) => void;
   onCheckOutChange: (date: Date | undefined) => void;
+  disabledDates?: { from: string; to: string }[];
 }
 
 function getTomorrow(): Date {
@@ -31,10 +31,23 @@ export function DatePicker({
   checkOut,
   onCheckInChange,
   onCheckOutChange,
+  disabledDates = [],
 }: DatePickerProps) {
+  const disabledMatchers = disabledDates.map((range) => ({
+    from: new Date(range.from + 'T00:00:00'),
+    to: new Date(range.to + 'T00:00:00'),
+  }));
   const [date, setDate] = React.useState<DateRange | undefined>(
     checkIn ? { from: checkIn, to: checkOut } : undefined
   );
+  const triggerRef = React.useRef<HTMLButtonElement>(null);
+  const [triggerWidth, setTriggerWidth] = React.useState<number | undefined>();
+
+  React.useEffect(() => {
+    if (triggerRef.current) {
+      setTriggerWidth(triggerRef.current.offsetWidth);
+    }
+  }, []);
 
   function handleSelect(selected: DateRange | undefined) {
     setDate(selected);
@@ -47,36 +60,41 @@ export function DatePicker({
   return (
     <Popover>
       <PopoverTrigger
+        ref={triggerRef}
         render={
-          <Button
-            variant="outline"
-            data-empty={!date?.from}
-            className="w-full justify-start px-2.5 font-normal data-[empty=true]:text-muted-foreground"
+          <button
+            type="button"
+            className="flex w-full items-center gap-2.5 rounded-small border border-border bg-bg-card px-4 h-12 text-sm text-text-primary"
           />
         }
       >
-        <CalendarDays />
+        <CalendarDays size={16} className="shrink-0 text-text-muted" />
         {date?.from ? (
           date.to ? (
-            <>
+            <span>
               {format(date.from, 'MMM d')} – {format(date.to, 'MMM d')}
-            </>
+            </span>
           ) : (
-            <>{format(date.from, 'MMM d')} – …</>
+            <span>{format(date.from, 'MMM d')} – …</span>
           )
         ) : (
-          <span>Select dates</span>
+          <span className="text-text-muted">Select dates</span>
         )}
       </PopoverTrigger>
-      <PopoverContent className="w-auto overflow-visible p-0" align="start">
+      <PopoverContent
+        className="overflow-visible p-0"
+        align="start"
+        style={triggerWidth ? { width: triggerWidth } : undefined}
+      >
         <Calendar
           mode="range"
           defaultMonth={date?.from ?? getTomorrow()}
           selected={date}
           onSelect={handleSelect}
           numberOfMonths={1}
-          disabled={{ before: getTomorrow() }}
-          className="p-3"
+          disabled={[{ before: getTomorrow() }, ...disabledMatchers]}
+          className="p-3 w-full"
+          classNames={{ root: "w-full" }}
         />
       </PopoverContent>
     </Popover>

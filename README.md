@@ -1,4 +1,4 @@
-# Lateral Challenge
+# Wanderly
 
 A vibe-first unique stays booking app built as an interview challenge. Users discover treehouses, cabins, glamping sites, and houseboats through a "Who's traveling?" + "What's the vibe?" flow, then book through a multi-step checkout with date selection, guest configuration, and booking confirmation.
 

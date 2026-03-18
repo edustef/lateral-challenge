@@ -76,7 +76,7 @@ export function StayInfo({ stay }: { stay: Tables<'stays'> }) {
       {amenities.length > 0 && (
         <section className="mt-8">
           <h2 className="font-heading text-xl font-semibold text-text-primary">
-            Amenities
+            What this place offers
           </h2>
           <div className="mt-3 flex flex-wrap gap-2">
             {amenities.map((amenity) => {

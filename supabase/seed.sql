@@ -100,7 +100,7 @@ INSERT INTO stays (id, title, slug, description, location, price_per_night, clea
  'An enchanting yurt surrounded by lavender fields and rose gardens. Perfect for an intimate celebration with craft cocktails under fairy lights.',
  'Sonoma, California', 27500, 5500, 3000, 4, 'yurt', 'celebration', 'duo',
  ARRAY['hot-tub', 'outdoor-shower', 'hammock', 'firepit', 'yoga-mat', 'bbq'],
- ARRAY['https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=800&h=600&fit=crop', 'https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=800&h=600&fit=crop', 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&h=600&fit=crop']);
+ ARRAY['https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&h=600&fit=crop', 'https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=800&h=600&fit=crop', 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&h=600&fit=crop']);
 
 -- ============================================================
 -- COLLECTIONS (5)
@@ -195,6 +195,19 @@ INSERT INTO reviews (stay_id, user_id, rating, comment) VALUES
 
 -- Garden Yurt (1 review)
 ('a0000000-0000-0000-0000-000000000015', 'b0000000-0000-0000-0000-000000000001', 4, 'The lavender fields at sunset were breathtaking. Very romantic and intimate.');
+
+-- ============================================================
+-- BLOCKED DATES (sample owner-blocked date ranges)
+-- ============================================================
+INSERT INTO blocked_dates (stay_id, start_date, end_date, reason) VALUES
+-- Summit Treehouse: maintenance window
+('a0000000-0000-0000-0000-000000000001', '2026-04-10', '2026-04-15', 'manual_block'),
+-- Summit Treehouse: owner personal use
+('a0000000-0000-0000-0000-000000000001', '2026-05-01', '2026-05-05', 'manual_block'),
+-- Glacier Cabin: seasonal closure
+('a0000000-0000-0000-0000-000000000002', '2026-04-20', '2026-04-30', 'manual_block'),
+-- Forest Cabin: maintenance
+('a0000000-0000-0000-0000-000000000009', '2026-04-05', '2026-04-08', 'manual_block');
 
 -- Restore normal FK constraints and triggers
 SET session_replication_role = 'origin';

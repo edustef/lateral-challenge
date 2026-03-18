@@ -1,16 +1,20 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 import { signOut } from '@/lib/actions/auth'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
 type AuthButtonProps = {
   user: { email: string; avatarUrl?: string | null } | null
 }
 
 export function AuthButton({ user }: AuthButtonProps) {
-  const [open, setOpen] = useState(false)
-
   if (!user) {
     return (
       <Link
@@ -25,11 +29,9 @@ export function AuthButton({ user }: AuthButtonProps) {
   const initial = user.email.charAt(0).toUpperCase()
 
   return (
-    <div className="relative">
-      <button
-        type="button"
-        onClick={() => setOpen(!open)}
-        className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-sm font-medium text-white transition-all duration-150 active:scale-95"
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-sm font-medium text-white transition-all duration-150 outline-none active:scale-95"
         aria-label="User menu"
       >
         {user.avatarUrl ? (
@@ -41,28 +43,24 @@ export function AuthButton({ user }: AuthButtonProps) {
         ) : (
           initial
         )}
-      </button>
+      </DropdownMenuTrigger>
 
-      {open && (
-        <div className="absolute right-0 top-12 z-50 w-56 rounded-card border border-border bg-bg-card p-3 shadow-lg">
-          <p className="mb-2 truncate text-sm text-text-body">{user.email}</p>
-          <Link
-            href="/profile"
-            className="block w-full rounded-lg px-3 py-2 text-left text-sm text-text-primary transition-colors hover:bg-bg-page"
-            onClick={() => setOpen(false)}
-          >
-            My Bookings
-          </Link>
-          <form action={signOut}>
-            <button
-              type="submit"
-              className="w-full rounded-lg px-3 py-2 text-left text-sm text-text-primary transition-colors hover:bg-bg-page"
-            >
-              Sign out
-            </button>
-          </form>
-        </div>
-      )}
-    </div>
+      <DropdownMenuContent align="end" sideOffset={8} className="w-56">
+        <p className="truncate px-1.5 py-1 text-xs text-muted-foreground">
+          {user.email}
+        </p>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem render={<Link href="/profile" />}>
+          My Bookings
+        </DropdownMenuItem>
+        <DropdownMenuItem render={<Link href="/wishlist" />}>
+          Wishlist
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => signOut()}>
+          Sign out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

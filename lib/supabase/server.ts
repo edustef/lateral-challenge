@@ -5,8 +5,8 @@ import type { Database } from './types'
 
 export async function getClaims() {
   const supabase = await createClient()
-  const { data: { session } } = await supabase.auth.getSession()
-  return session?.user ?? null
+  const { data: { user } } = await supabase.auth.getUser()
+  return user
 }
 
 export async function createClient() {

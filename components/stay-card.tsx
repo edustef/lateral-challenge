@@ -56,9 +56,11 @@ export function StayCard({ stay, isFavorited = false }: { stay: StayCardType; is
       </article>
 
       {/* Mobile: horizontal card (shown below md) */}
-      <article className="flex flex-row gap-4 rounded-small border border-border-subtle bg-bg-card p-3 transition-all duration-200 active:scale-[0.98] md:hidden">
-        <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-small">
+      <article className="relative flex flex-row gap-4 rounded-small border border-border-subtle bg-bg-card p-3 transition-all duration-200 active:scale-[0.98] md:hidden">
+        <div className="absolute right-2 top-2 z-10">
           <FavoriteButton stayId={stay.id} isFavorited={isFavorited} />
+        </div>
+        <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-small">
           <Image
             src={stay.images[0] ?? ''}
             alt={stay.title}
@@ -69,18 +71,16 @@ export function StayCard({ stay, isFavorited = false }: { stay: StayCardType; is
         </div>
         <div className="flex min-w-0 flex-1 flex-col justify-between">
           <div>
-            <h3 className="font-heading text-sm font-semibold text-text-primary line-clamp-1">
+            <h3 className="font-heading text-sm font-semibold text-text-primary line-clamp-1 pr-8">
               {stay.title}
             </h3>
-            <div className="flex items-center gap-2">
-              <p className="text-xs text-text-secondary">{stay.location}</p>
-              {stay.avg_rating !== null && (
-                <span className="flex items-center gap-0.5 text-xs text-text-secondary">
-                  <Star size={12} className="fill-amber-400 text-amber-400" />
-                  {stay.avg_rating.toFixed(1)}
-                </span>
-              )}
-            </div>
+            <p className="text-xs text-text-secondary">{stay.location}</p>
+            {stay.avg_rating !== null && (
+              <span className="flex items-center gap-0.5 text-xs text-text-secondary">
+                <Star size={12} className="fill-amber-400 text-amber-400" />
+                {stay.avg_rating.toFixed(1)}
+              </span>
+            )}
           </div>
           <div className="flex items-end justify-between">
             <div className="flex items-baseline gap-1">
