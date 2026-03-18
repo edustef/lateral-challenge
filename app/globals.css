@@ -36,8 +36,22 @@
 
   /* Semantic */
   --success: #22C55E;
+  --success-tint: #22C55E14;
   --error: #E55B5B;
+  --error-tint: #E55B5B14;
   --destructive: #D93C15;
+  --favorite: #E55B5B;
+
+  /* Status */
+  --status-confirmed: #2E7D32;
+  --status-confirmed-tint: #2E7D3214;
+  --status-pending: #B45309;
+  --status-pending-tint: #B4530914;
+  --status-cancelled: #6B7280;
+  --status-cancelled-tint: #6B728014;
+
+  /* Surface */
+  --bg-surface-secondary: #EDEAE5;
 
   /* Radii */
   --radius-card: 20px;
@@ -117,8 +131,18 @@
   --color-border-subtle: var(--border-subtle);
 
   --color-success: var(--success);
+  --color-success-tint: var(--success-tint);
   --color-error: var(--error);
+  --color-error-tint: var(--error-tint);
   --color-destructive: var(--destructive);
+  --color-favorite: var(--favorite);
+  --color-status-confirmed: var(--status-confirmed);
+  --color-status-confirmed-tint: var(--status-confirmed-tint);
+  --color-status-pending: var(--status-pending);
+  --color-status-pending-tint: var(--status-pending-tint);
+  --color-status-cancelled: var(--status-cancelled);
+  --color-status-cancelled-tint: var(--status-cancelled-tint);
+  --color-bg-surface-secondary: var(--bg-surface-secondary);
 
   /* shadcn color compatibility */
   --color-card: var(--card);

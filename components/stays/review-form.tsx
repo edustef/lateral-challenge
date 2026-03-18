@@ -36,7 +36,7 @@ function StarSelector({
             aria-checked={rating === value}
             onClick={() => onSelect(value)}
             onMouseEnter={() => onHover(value)}
-            className="transition-colors"
+            className="transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:rounded-sm"
             aria-label={`${value} star${value !== 1 ? 's' : ''}`}
           >
             <Star
@@ -91,7 +91,7 @@ export function ReviewForm({ stayId, userEmail }: ReviewFormProps) {
       </h3>
 
       {submitted && state.success ? (
-        <p className="text-sm font-medium text-green-600">Review submitted!</p>
+        <p className="text-sm font-medium text-success">Review submitted!</p>
       ) : (
         <form action={formAction}>
           <input type="hidden" name="stayId" value={stayId} />
@@ -124,7 +124,7 @@ export function ReviewForm({ stayId, userEmail }: ReviewFormProps) {
           </div>
 
           {state.error && (
-            <p className="mb-3 text-sm font-medium text-red-600">{state.error}</p>
+            <p className="mb-3 text-sm font-medium text-error">{state.error}</p>
           )}
 
           <button

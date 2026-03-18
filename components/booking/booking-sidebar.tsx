@@ -126,19 +126,20 @@ export function BookingSidebar({ stay, disabledDates = [] }: BookingSidebarProps
 
         {/* Date conflict warning */}
         {hasDateConflict && (
-          <p className="mt-4 rounded-small border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-700">
+          <p className="mt-4 rounded-small border border-error/30 bg-error-tint px-3 py-2 text-xs text-error">
             Selected dates include unavailable dates. Please choose a different range.
           </p>
         )}
 
         {/* CTA */}
         {hasDateConflict ? (
-          <span
-            aria-disabled="true"
-            className="mt-6 block w-full rounded-button bg-accent/40 py-3 text-center font-semibold text-white cursor-not-allowed"
+          <button
+            type="button"
+            disabled
+            className="mt-6 block w-full rounded-button bg-accent py-3 text-center font-semibold text-white disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Book this stay
-          </span>
+          </button>
         ) : (
           <Link
             href={bookingUrl}
@@ -170,12 +171,13 @@ export function BookingSidebar({ stay, disabledDates = [] }: BookingSidebarProps
             )}
           </div>
           {hasDateConflict ? (
-            <span
-              aria-disabled="true"
-              className="rounded-button bg-accent/40 px-6 py-2.5 text-sm font-semibold text-white cursor-not-allowed"
+            <button
+              type="button"
+              disabled
+              className="rounded-button bg-accent px-6 py-2.5 text-sm font-semibold text-white disabled:opacity-40 disabled:cursor-not-allowed"
             >
               Book
-            </span>
+            </button>
           ) : (
             <Link
               href={bookingUrl}

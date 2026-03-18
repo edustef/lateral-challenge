@@ -34,7 +34,8 @@ export function PhotoGallery({ images }: { images: string[] }) {
               key={i}
               type="button"
               onClick={() => setActiveIndex(i)}
-              className={`relative h-20 w-28 overflow-hidden rounded-small border-2 transition ${
+              aria-selected={activeIndex === i}
+              className={`relative h-20 w-28 overflow-hidden rounded-small border-2 transition focus-visible:ring-2 focus-visible:ring-accent ${
                 activeIndex === i
                   ? 'border-accent'
                   : 'border-transparent hover:border-accent/50'
@@ -43,7 +44,7 @@ export function PhotoGallery({ images }: { images: string[] }) {
               <Image src={img} fill alt={`Thumbnail ${i + 1}`} className="object-cover" sizes="112px" />
               {/* "+N" overlay on last thumbnail if more images */}
               {i === maxThumbnails - 1 && remainingCount > 0 && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-white font-semibold text-sm">
+                <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-white font-semibold text-sm" aria-label={`${remainingCount} more photos`}>
                   +{remainingCount}
                 </div>
               )}

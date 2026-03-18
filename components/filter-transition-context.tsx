@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useCallback, useState, useTransition, type TransitionStartFunction } from 'react';
+import { createContext, useContext, useCallback, useMemo, useState, useTransition, type TransitionStartFunction } from 'react';
 
 type FilterTransitionContextValue = {
   isPending: boolean;
@@ -36,8 +36,13 @@ export function FilterTransitionProvider({ children }: { children: React.ReactNo
     setSummary(null);
   }, []);
 
+  const value = useMemo(
+    () => ({ isPending, startTransition, searchExpanded, setSearchExpanded, summary, setSummary, clearConcierge, heroScrolledPast, setHeroScrolledPast }),
+    [isPending, startTransition, searchExpanded, setSearchExpanded, summary, setSummary, clearConcierge, heroScrolledPast, setHeroScrolledPast]
+  );
+
   return (
-    <FilterTransitionContext.Provider value={{ isPending, startTransition, searchExpanded, setSearchExpanded, summary, setSummary, clearConcierge, heroScrolledPast, setHeroScrolledPast }}>
+    <FilterTransitionContext.Provider value={value}>
       {children}
     </FilterTransitionContext.Provider>
   );

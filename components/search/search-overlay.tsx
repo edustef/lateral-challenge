@@ -65,7 +65,7 @@ export function SearchOverlay() {
               onChange={(e) => setLocalValue(e.target.value)}
               onKeyDown={handleKeyDown}
               disabled={isLoading}
-              className={`h-10 w-full rounded-full border bg-white pl-9 pr-14 text-base text-text-primary placeholder:text-text-muted focus:outline-none ${
+              className={`h-10 w-full rounded-full border bg-bg-card pl-9 pr-14 text-base text-text-primary placeholder:text-text-muted focus:outline-none ${
                 isLoading
                   ? 'border-accent animate-pulse opacity-70'
                   : 'border-accent'

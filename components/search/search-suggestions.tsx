@@ -26,7 +26,7 @@ export function SearchSuggestions({ onSelect }: Props) {
             type="button"
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => onSelect(s.text)}
-            className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm text-text-secondary transition-colors hover:bg-surface-secondary hover:text-text-primary"
+            className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm text-text-secondary transition-colors hover:bg-bg-surface-secondary hover:text-text-primary"
           >
             <span className="text-base">{s.emoji}</span>
             <span>{s.text}</span>

@@ -41,10 +41,10 @@ function calculateNights(checkIn: string, checkOut: string): number {
 function StatusBadge({ status }: { status: string }) {
   const styles =
     status === 'confirmed'
-      ? 'bg-[#E8F5E9] text-[#2E7D32]'
+      ? 'bg-status-confirmed-tint text-status-confirmed'
       : status === 'pending'
-        ? 'bg-amber-50 text-amber-700'
-        : 'bg-gray-100 text-gray-500';
+        ? 'bg-status-pending-tint text-status-pending'
+        : 'bg-status-cancelled-tint text-status-cancelled';
 
   return (
     <span className={`inline-block rounded-full px-3 py-1 text-xs font-semibold capitalize ${styles}`}>
@@ -59,14 +59,15 @@ export function BookingCard({ booking }: BookingCardProps) {
   const nights = calculateNights(booking.check_in, booking.check_out);
 
   return (
-    <div className="flex overflow-hidden rounded-[20px] border border-[#E8E4DF] bg-white transition-all duration-200 hover:shadow-md">
+    <div className="flex overflow-hidden rounded-card border border-border bg-bg-card transition-all duration-200 hover:shadow-md">
       {/* Card Image */}
       <Link href={`/stays/${stay.slug}`} className="shrink-0">
-        <div className="relative h-full w-[280px]">
+        <div className="relative h-full w-full max-w-[280px]">
           <Image
             src={image}
             alt={stay.title}
             fill
+            loading="lazy"
             className="object-cover"
             sizes="280px"
           />
@@ -122,7 +123,7 @@ export function BookingCard({ booking }: BookingCardProps) {
           </Link>
           <button
             type="button"
-            className="rounded-full border border-[#E8E4DF] px-5 py-2.5 text-[13px] font-medium text-text-muted transition-colors hover:bg-bg-page active:scale-[0.98]"
+            className="rounded-full border border-border px-5 py-2.5 text-[13px] font-medium text-text-muted transition-colors hover:bg-bg-page active:scale-[0.98]"
           >
             Cancel
           </button>
@@ -138,10 +139,10 @@ export function BookingCardCompact({ booking }: BookingCardProps) {
   const image = stay.images?.[0] ?? '/placeholder.jpg';
 
   return (
-    <div className="flex gap-4 rounded-[16px] border border-[#E8E4DF] bg-white p-4 transition-all duration-200 hover:shadow-md active:scale-[0.98]">
+    <div className="flex gap-4 rounded-badge border border-border bg-bg-card p-4 transition-all duration-200 hover:shadow-md active:scale-[0.98]">
       <Link href={`/stays/${stay.slug}`} className="shrink-0">
         <div className="relative h-20 w-20 overflow-hidden rounded-xl">
-          <Image src={image} alt={stay.title} fill className="object-cover" sizes="80px" />
+          <Image src={image} alt={stay.title} fill loading="lazy" className="object-cover" sizes="80px" />
         </div>
       </Link>
       <div className="flex min-w-0 flex-1 flex-col gap-1">

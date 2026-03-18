@@ -251,12 +251,12 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
 
         {/* Error */}
         {hasDateConflict && (
-          <div className="rounded-small border border-red-300 bg-red-50 p-3 text-sm text-red-700">
+          <div className="rounded-small border border-error/30 bg-error-tint p-3 text-sm text-error">
             Your selected dates include unavailable dates. Please choose a different range.
           </div>
         )}
         {error && (
-          <div className="rounded-small border border-red-300 bg-red-50 p-3 text-sm text-red-700">
+          <div className="rounded-small border border-error/30 bg-error-tint p-3 text-sm text-error">
             {error}
           </div>
         )}

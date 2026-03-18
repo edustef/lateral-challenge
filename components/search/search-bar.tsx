@@ -53,7 +53,7 @@ export function SearchBar({ compact = false }: SearchBarProps) {
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         disabled={isLoading}
-        className={`${inputSize} w-full border bg-white font-medium text-text-primary placeholder:text-text-muted transition-colors focus:border-accent focus:outline-none ${
+        className={`${inputSize} w-full border bg-bg-card font-medium text-text-primary placeholder:text-text-muted transition-colors focus:border-accent focus:outline-none ${
           compact ? 'pl-9 pr-9' : 'pl-9 pr-16 md:pl-11 md:pr-20'
         } ${isLoading ? 'border-accent animate-pulse opacity-70' : 'border-border'}`}
       />
@@ -93,7 +93,7 @@ export function SearchBar({ compact = false }: SearchBarProps) {
         <PopoverContent
           align="start"
           sideOffset={8}
-          className="rounded-xl border border-border bg-white p-4 shadow-lg"
+          className="rounded-xl border border-border bg-bg-card p-4 shadow-lg"
         >
           <SearchSuggestions onSelect={(text) => { setLocalValue(text); setIsFocused(false); submitQuery(text); }} />
         </PopoverContent>

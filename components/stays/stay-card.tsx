@@ -21,6 +21,7 @@ export function StayCard({ stay, isFavorited = false }: { stay: StayCardType; is
             src={stay.images[0] ?? ''}
             alt={stay.title}
             fill
+            loading="lazy"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
           />
@@ -52,6 +53,7 @@ export function StayCard({ stay, isFavorited = false }: { stay: StayCardType; is
             src={stay.images[0] ?? ''}
             alt={stay.title}
             fill
+            loading="lazy"
             className="object-cover"
             sizes="100px"
           />

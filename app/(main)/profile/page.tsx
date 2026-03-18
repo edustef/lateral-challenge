@@ -59,7 +59,7 @@ export default async function ProfilePage() {
           {user.user_metadata?.avatar_url ? (
             <Image
               src={user.user_metadata.avatar_url}
-              alt=""
+              alt="Profile photo"
               width={96}
               height={96}
               className="h-24 w-24 shrink-0 rounded-full object-cover"

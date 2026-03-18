@@ -21,7 +21,7 @@ export function FavoriteButton({
       type="button"
       aria-label={optimisticFavorited ? 'Remove from wishlist' : 'Add to wishlist'}
       aria-pressed={optimisticFavorited}
-      className="z-10 rounded-full bg-white/80 p-1.5 backdrop-blur-sm transition-colors"
+      className="z-10 rounded-full bg-white/80 p-1.5 backdrop-blur-sm transition-colors focus-visible:ring-2 focus-visible:ring-accent"
       disabled={isPending}
       onClick={(e) => {
         e.preventDefault();
@@ -40,8 +40,8 @@ export function FavoriteButton({
         size={18}
         className={
           optimisticFavorited
-            ? 'fill-red-500 text-red-500'
-            : 'text-text-muted hover:text-red-400'
+            ? 'fill-favorite text-favorite'
+            : 'text-text-muted hover:text-favorite/70'
         }
       />
     </button>
