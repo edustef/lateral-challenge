@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { createClient, getClaims } from '@/lib/supabase/server';
 import { BookingCard, BookingCardCompact } from '@/components/booking-card';
 import { getFavoriteStays } from '@/lib/actions/favorites';
-import { formatPrice } from '@/lib/utils/price';
+import { StayCard } from '@/components/stay-card';
 import { MapPin, Heart, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
@@ -184,35 +184,9 @@ export default async function ProfilePage() {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
             {favorites.slice(0, 4).map((stay) => (
-              <Link
-                key={stay.id}
-                href={`/stays/${stay.slug}`}
-                className="group overflow-hidden rounded-card border border-border bg-bg-card transition hover:shadow-sm"
-              >
-                <div className="relative aspect-[4/3] w-full">
-                  {stay.images[0] && (
-                    <Image
-                      src={stay.images[0]}
-                      alt={stay.title}
-                      fill
-                      className="object-cover transition group-hover:scale-[1.02]"
-                    />
-                  )}
-                </div>
-                <div className="p-3 space-y-0.5">
-                  <p className="text-sm font-medium text-text-primary truncate">
-                    {stay.title}
-                  </p>
-                  <p className="text-xs text-text-secondary truncate">
-                    {stay.location}
-                  </p>
-                  <p className="text-xs font-medium text-text-body">
-                    {formatPrice(stay.price_per_night)}/night
-                  </p>
-                </div>
-              </Link>
+              <StayCard key={stay.id} stay={stay} isFavorited />
             ))}
           </div>
         )}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useQueryStates } from 'nuqs';
 import { X, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -9,10 +9,11 @@ import { useFilterTransition } from '@/components/filter-transition-context';
 
 export function ConciergeSummary() {
   const { summary, setSummary, startTransition } = useFilterTransition();
-  const [, setParams] = useQueryStates(
+  const [params, setParams] = useQueryStates(
     {
-      search: searchParamsParsers.search,
-      country: searchParamsParsers.country,
+      q: searchParamsParsers.q,
+      locations: searchParamsParsers.locations,
+      countries: searchParamsParsers.countries,
       type: searchParamsParsers.type,
       tags: searchParamsParsers.tags,
       sort: searchParamsParsers.sort,
@@ -23,17 +24,26 @@ export function ConciergeSummary() {
     { startTransition },
   );
 
+  // Clear stale summary when URL params are removed (e.g. navigating home)
+  useEffect(() => {
+    if (!params.q && summary) {
+      setSummary(null);
+    }
+  }, [params.q, summary, setSummary]);
+
+  const displayText = summary || params.q;
+
   const handleDismiss = useCallback(() => {
     setSummary(null);
     setParams({
-      search: null, country: null, stayType: null, maxPrice: null, amenities: null,
+      q: null, locations: null, countries: null, stayType: null, maxPrice: null, amenities: null,
       type: null, tags: null, sort: null,
     });
   }, [setSummary, setParams]);
 
   return (
     <AnimatePresence>
-      {summary && (
+      {displayText && (
         <motion.div
           role="status"
           aria-live="polite"
@@ -45,7 +55,7 @@ export function ConciergeSummary() {
         >
           <div className="flex flex-1 items-center gap-2 rounded-button bg-accent-tint px-3 py-2">
             <Sparkles className="h-3.5 w-3.5 shrink-0 text-accent" />
-            <span className="text-sm text-accent">{summary}</span>
+            <span className="text-sm text-accent">{displayText}</span>
             <button
               type="button"
               onClick={handleDismiss}

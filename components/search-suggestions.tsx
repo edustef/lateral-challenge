@@ -1,12 +1,12 @@
 'use client';
 
 const SUGGESTIONS = [
-  { emoji: '🌳', text: 'Treehouse for two with a hot tub under $300' },
-  { emoji: '⛰️', text: 'Off-grid cabin with no wifi, just nature' },
-  { emoji: '🎉', text: 'Group celebration spot for 8 in wine country' },
+  { emoji: '🌳', text: 'Treehouse in the mountains with hiking trails' },
+  { emoji: '⛰️', text: 'Off-grid cabin surrounded by nature' },
+  { emoji: '🎉', text: 'Group celebration spot in wine country' },
   { emoji: '🌏', text: 'Cultural escape in Japan or Bali' },
   { emoji: '❄️', text: 'Cozy winter cabin with fireplace and sauna' },
-  { emoji: '💫', text: 'Luxury glamping with stargazing under $500' },
+  { emoji: '💫', text: 'Luxury glamping with stargazing' },
 ] as const;
 
 type Props = {

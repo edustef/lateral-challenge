@@ -40,15 +40,6 @@ export function DatePicker({
   const [date, setDate] = React.useState<DateRange | undefined>(
     checkIn ? { from: checkIn, to: checkOut } : undefined
   );
-  const triggerRef = React.useRef<HTMLButtonElement>(null);
-  const [triggerWidth, setTriggerWidth] = React.useState<number | undefined>();
-
-  React.useEffect(() => {
-    if (triggerRef.current) {
-      setTriggerWidth(triggerRef.current.offsetWidth);
-    }
-  }, []);
-
   function handleSelect(selected: DateRange | undefined) {
     setDate(selected);
     if (selected?.from && selected?.to) {
@@ -60,7 +51,6 @@ export function DatePicker({
   return (
     <Popover>
       <PopoverTrigger
-        ref={triggerRef}
         render={
           <button
             type="button"
@@ -82,9 +72,8 @@ export function DatePicker({
         )}
       </PopoverTrigger>
       <PopoverContent
-        className="overflow-visible p-0"
+        className="w-(--anchor-width) overflow-visible p-0"
         align="start"
-        style={triggerWidth ? { width: triggerWidth } : undefined}
       >
         <Calendar
           mode="range"
@@ -93,8 +82,7 @@ export function DatePicker({
           onSelect={handleSelect}
           numberOfMonths={1}
           disabled={[{ before: getTomorrow() }, ...disabledMatchers]}
-          className="p-3 w-full"
-          classNames={{ root: "w-full" }}
+          className="w-full p-3"
         />
       </PopoverContent>
     </Popover>

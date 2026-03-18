@@ -81,10 +81,10 @@ export default async function ConfirmationPage({ searchParams }: Props) {
 
         {/* Booking Details Card */}
         {stay && (
-          <div className="flex w-full overflow-hidden rounded-card border border-border bg-bg-card">
+          <div className="flex w-full flex-col overflow-hidden rounded-card border border-border bg-bg-card sm:flex-row">
             {/* Stay Image */}
             {stay.images[0] && (
-              <div className="relative w-[220px] shrink-0">
+              <div className="relative h-40 w-full shrink-0 sm:h-auto sm:w-[220px]">
                 <Image
                   src={stay.images[0]}
                   alt={stay.title}
@@ -95,45 +95,38 @@ export default async function ConfirmationPage({ searchParams }: Props) {
             )}
 
             {/* Details */}
-            <div className="flex-1 space-y-4 p-6">
+            <div className="flex-1 space-y-4 p-5 sm:p-6">
               <div className="space-y-1">
-                <h2 className="font-heading text-lg font-medium text-text-primary">
+                <h2 className="font-heading text-base font-medium text-text-primary sm:text-lg">
                   {stay.title}
                 </h2>
                 <p className="text-[13px] text-text-secondary">{stay.location}</p>
               </div>
 
-              <div className="flex gap-6">
-                {/* Left grid */}
-                <div className="flex-1 space-y-3">
-                  <div className="space-y-0.5">
-                    <p className="text-[11px] font-medium text-text-secondary">Check-in</p>
-                    <p className="text-[13px] font-medium text-text-primary">
-                      {formatDate(booking.check_in)}
-                    </p>
-                  </div>
-                  <div className="space-y-0.5">
-                    <p className="text-[11px] font-medium text-text-secondary">Guests</p>
-                    <p className="text-[13px] font-medium text-text-primary">
-                      {booking.guests} adult{booking.guests !== 1 ? 's' : ''}
-                    </p>
-                  </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-0.5">
+                  <p className="text-[11px] font-medium text-text-secondary">Check-in</p>
+                  <p className="text-[13px] font-medium text-text-primary">
+                    {formatDate(booking.check_in)}
+                  </p>
                 </div>
-
-                {/* Right grid */}
-                <div className="flex-1 space-y-3">
-                  <div className="space-y-0.5">
-                    <p className="text-[11px] font-medium text-text-secondary">Check-out</p>
-                    <p className="text-[13px] font-medium text-text-primary">
-                      {formatDate(booking.check_out)}
-                    </p>
-                  </div>
-                  <div className="space-y-0.5">
-                    <p className="text-[11px] font-medium text-text-secondary">Total paid</p>
-                    <p className="text-[13px] font-medium text-text-primary">
-                      {formatPrice(booking.total_price)}
-                    </p>
-                  </div>
+                <div className="space-y-0.5">
+                  <p className="text-[11px] font-medium text-text-secondary">Check-out</p>
+                  <p className="text-[13px] font-medium text-text-primary">
+                    {formatDate(booking.check_out)}
+                  </p>
+                </div>
+                <div className="space-y-0.5">
+                  <p className="text-[11px] font-medium text-text-secondary">Guests</p>
+                  <p className="text-[13px] font-medium text-text-primary">
+                    {booking.guests} adult{booking.guests !== 1 ? 's' : ''}
+                  </p>
+                </div>
+                <div className="space-y-0.5">
+                  <p className="text-[11px] font-medium text-text-secondary">Total paid</p>
+                  <p className="text-[13px] font-medium text-text-primary">
+                    {formatPrice(booking.total_price)}
+                  </p>
                 </div>
               </div>
             </div>
@@ -141,17 +134,17 @@ export default async function ConfirmationPage({ searchParams }: Props) {
         )}
 
         {/* Action Buttons */}
-        <div className="flex items-center justify-center gap-3">
+        <div className="flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
           <Link
             href="/profile"
-            className="inline-flex items-center gap-2 rounded-button bg-accent px-7 h-12 text-sm font-medium text-white hover:bg-accent/90 transition"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-button bg-accent px-7 h-12 text-sm font-medium text-white hover:bg-accent/90 transition sm:w-auto"
           >
             <CalendarCheck size={16} />
             View my bookings
           </Link>
           <Link
             href="/"
-            className="inline-flex items-center rounded-button border border-border bg-bg-card px-7 h-12 text-sm font-medium text-text-primary hover:bg-bg-muted transition"
+            className="inline-flex w-full items-center justify-center rounded-button border border-border bg-bg-card px-7 h-12 text-sm font-medium text-text-primary hover:bg-bg-muted transition sm:w-auto"
           >
             Browse more stays
           </Link>

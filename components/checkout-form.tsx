@@ -3,8 +3,9 @@
 import { useState, useTransition, useMemo } from 'react';
 import { Calendar } from '@/components/ui/calendar';
 import type { DateRange } from 'react-day-picker';
-import { Users, Lock, ShieldCheck, Minus, Plus, TreePine } from 'lucide-react';
+import { Users, Lock, ShieldCheck, Minus, Plus } from 'lucide-react';
 import { PriceBreakdown } from '@/components/price-breakdown';
+import { DatePicker } from '@/components/date-picker';
 import { calculateNights, calculateTotal, formatPrice } from '@/lib/utils/price';
 import { createBooking } from '@/lib/actions/bookings';
 import Image from 'next/image';
@@ -142,25 +143,34 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
   const formatDateDisplay = (date: Date) =>
     date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-  const typeLabel = stay.travel_type
-    ? stay.travel_type.charAt(0).toUpperCase() + stay.travel_type.slice(1)
-    : null;
 
   return (
-    <div className="flex gap-12">
-      {/* Left Column - Form */}
-      <div className="flex-1 space-y-8">
-        {/* Header */}
-        <h1 className="font-heading text-[28px] font-medium tracking-tight text-text-primary">
+    <div className="flex flex-col gap-6 lg:flex-row lg:gap-12">
+      {/* Form — first on mobile, left column on desktop */}
+      <div className="flex-1 space-y-6 lg:order-1 lg:space-y-8">
+        <h1 className="font-heading text-xl font-medium tracking-tight text-text-primary sm:text-[28px]">
           Complete your booking
         </h1>
 
         {/* Date Section */}
-        <div className="space-y-4">
-          <h2 className="text-base font-medium text-text-primary">
+        <div className="space-y-3">
+          <h2 className="text-sm font-medium text-text-primary sm:text-base">
             When are you staying?
           </h2>
-          <div className="rounded-card border border-border p-4">
+
+          {/* Mobile: popover date picker */}
+          <div className="lg:hidden">
+            <DatePicker
+              checkIn={checkIn}
+              checkOut={checkOut}
+              onCheckInChange={(d) => setRange((r) => ({ from: d, to: r?.to }))}
+              onCheckOutChange={(d) => setRange((r) => ({ from: r?.from, to: d }))}
+              disabledDates={disabledDates}
+            />
+          </div>
+
+          {/* Desktop: inline 2-month calendar */}
+          <div className="hidden lg:block rounded-card border border-border p-4">
             <Calendar
               mode="range"
               selected={range}
@@ -176,19 +186,20 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
               }}
             />
           </div>
+
           {checkIn && checkOut && (
-            <p className="text-sm text-text-secondary">
+            <p className="text-xs text-text-secondary sm:text-sm">
               {nights} night{nights !== 1 ? 's' : ''} selected
             </p>
           )}
         </div>
 
         {/* Guest Section */}
-        <div className="space-y-4">
-          <h2 className="text-base font-medium text-text-primary">
+        <div className="space-y-3">
+          <h2 className="text-sm font-medium text-text-primary sm:text-base">
             How many guests?
           </h2>
-          <div className="flex items-center justify-between rounded-small border border-border bg-bg-card px-4 h-12">
+          <div className="flex items-center justify-between rounded-small border border-border bg-bg-card px-4 h-11 sm:h-12">
             <div className="flex items-center gap-2.5">
               <Users size={16} className="text-text-muted" />
               <span className="text-sm text-text-primary">
@@ -223,13 +234,13 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
 
         {/* Contact Section — only show if user is not signed in */}
         {!user && (
-          <div className="space-y-4">
-            <h2 className="text-base font-medium text-text-primary">
+          <div className="space-y-3">
+            <h2 className="text-sm font-medium text-text-primary sm:text-base">
               Contact information
             </h2>
-            <div className="flex gap-3">
-              <div className="flex-1 space-y-1.5">
-                <label htmlFor="firstName" className="block text-[13px] font-medium text-text-primary">
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <div className="flex-1 space-y-1">
+                <label htmlFor="firstName" className="block text-xs font-medium text-text-primary sm:text-[13px]">
                   First name
                 </label>
                 <input
@@ -238,11 +249,11 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   placeholder="Jane"
-                  className="h-12 w-full rounded-small border border-border bg-bg-card px-4 text-sm text-text-primary placeholder:text-text-muted outline-none focus:ring-2 focus:ring-accent/30"
+                  className="h-11 w-full rounded-small border border-border bg-bg-card px-4 text-sm text-text-primary placeholder:text-text-muted outline-none focus:ring-2 focus:ring-accent/30 sm:h-12"
                 />
               </div>
-              <div className="flex-1 space-y-1.5">
-                <label htmlFor="lastName" className="block text-[13px] font-medium text-text-primary">
+              <div className="flex-1 space-y-1">
+                <label htmlFor="lastName" className="block text-xs font-medium text-text-primary sm:text-[13px]">
                   Last name
                 </label>
                 <input
@@ -251,12 +262,12 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   placeholder="Cooper"
-                  className="h-12 w-full rounded-small border border-border bg-bg-card px-4 text-sm text-text-primary placeholder:text-text-muted outline-none focus:ring-2 focus:ring-accent/30"
+                  className="h-11 w-full rounded-small border border-border bg-bg-card px-4 text-sm text-text-primary placeholder:text-text-muted outline-none focus:ring-2 focus:ring-accent/30 sm:h-12"
                 />
               </div>
             </div>
-            <div className="space-y-1.5">
-              <label htmlFor="email" className="block text-[13px] font-medium text-text-primary">
+            <div className="space-y-1">
+              <label htmlFor="email" className="block text-xs font-medium text-text-primary sm:text-[13px]">
                 Email
               </label>
               <input
@@ -265,11 +276,11 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="jane@example.com"
-                className="h-12 w-full rounded-small border border-border bg-bg-card px-4 text-sm text-text-primary placeholder:text-text-muted outline-none focus:ring-2 focus:ring-accent/30"
+                className="h-11 w-full rounded-small border border-border bg-bg-card px-4 text-sm text-text-primary placeholder:text-text-muted outline-none focus:ring-2 focus:ring-accent/30 sm:h-12"
               />
             </div>
-            <div className="space-y-1.5">
-              <label htmlFor="phone" className="block text-[13px] font-medium text-text-primary">
+            <div className="space-y-1">
+              <label htmlFor="phone" className="block text-xs font-medium text-text-primary sm:text-[13px]">
                 Phone (optional)
               </label>
               <input
@@ -278,7 +289,7 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="+1 (555) 000-0000"
-                className="h-12 w-full rounded-small border border-border bg-bg-card px-4 text-sm text-text-primary placeholder:text-text-muted outline-none focus:ring-2 focus:ring-accent/30"
+                className="h-11 w-full rounded-small border border-border bg-bg-card px-4 text-sm text-text-primary placeholder:text-text-muted outline-none focus:ring-2 focus:ring-accent/30 sm:h-12"
               />
             </div>
           </div>
@@ -296,8 +307,8 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
           </div>
         )}
 
-        {/* Submit */}
-        <div className="flex justify-end">
+        {/* Submit — desktop only (inside form column) */}
+        <div className="hidden lg:block">
           <button
             type="button"
             onClick={handleSubmit}
@@ -311,41 +322,32 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
         </div>
       </div>
 
-      {/* Right Column - Summary */}
-      <div className="w-[380px] shrink-0 space-y-6">
-        {/* Summary Card */}
-        <div className="sticky top-6 space-y-6">
-          <div className="rounded-card border border-border bg-bg-card p-6 space-y-5">
-            {/* Stay Image */}
-            {stay.images[0] && (
-              <div className="relative h-[180px] w-full overflow-hidden rounded-small">
-                <Image
-                  src={stay.images[0]}
-                  alt={stay.title}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            )}
-
-            {/* Stay Info */}
-            <div className="space-y-1">
-              <h3 className="font-heading text-lg font-medium text-text-primary">
-                {stay.title}
-              </h3>
-              <p className="text-[13px] text-text-secondary">{stay.location}</p>
-              {typeLabel && (
-                <span className="inline-flex items-center gap-1 rounded-badge bg-accent-tint px-2.5 py-1 text-[11px] font-medium text-accent">
-                  <TreePine size={12} />
-                  {typeLabel}
-                </span>
+      {/* Summary */}
+      <div className="w-full lg:order-2 lg:w-[380px] lg:shrink-0">
+        <div className="lg:sticky lg:top-6">
+          <div className="rounded-card border border-border bg-bg-card p-4 space-y-3">
+            <div className="flex items-center gap-3 lg:flex-col lg:items-stretch lg:gap-0">
+              {stay.images[0] && (
+                <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-small lg:h-[180px] lg:w-full">
+                  <Image
+                    src={stay.images[0]}
+                    alt={stay.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
               )}
+
+              <div className="min-w-0 lg:mt-4">
+                <h3 className="font-heading text-sm font-medium text-text-primary lg:text-lg">
+                  {stay.title}
+                </h3>
+                <p className="text-xs text-text-secondary">{stay.location}</p>
+              </div>
             </div>
 
-            {/* Divider */}
             <div className="h-px bg-bg-muted" />
 
-            {/* Price Breakdown */}
             <PriceBreakdown
               pricePerNight={stay.price_per_night}
               nights={nights || 1}
@@ -353,7 +355,6 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
               serviceFee={stay.service_fee}
             />
 
-            {/* Secure Note */}
             <div className="flex items-start gap-2">
               <ShieldCheck size={14} className="mt-0.5 shrink-0 text-accent" />
               <p className="text-xs text-text-secondary">
@@ -361,26 +362,21 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
               </p>
             </div>
           </div>
-
-          {/* Dates Summary */}
-          {checkIn && checkOut && (
-            <div className="flex rounded-small bg-bg-surface p-4 gap-4">
-              <div className="flex-1 space-y-0.5">
-                <p className="text-[11px] font-medium text-text-secondary">Check-in</p>
-                <p className="text-[13px] font-medium text-text-primary">
-                  {formatDateDisplay(checkIn)}
-                </p>
-              </div>
-              <div className="w-px bg-border" />
-              <div className="flex-1 space-y-0.5">
-                <p className="text-[11px] font-medium text-text-secondary">Check-out</p>
-                <p className="text-[13px] font-medium text-text-primary">
-                  {formatDateDisplay(checkOut)}
-                </p>
-              </div>
-            </div>
-          )}
         </div>
+      </div>
+
+      {/* Submit — mobile only (below summary card) */}
+      <div className="w-full lg:hidden">
+        <button
+          type="button"
+          onClick={handleSubmit}
+          disabled={!canSubmit || isPending}
+          aria-busy={isPending}
+          className="flex w-full items-center justify-center gap-2 rounded-button bg-accent h-12 text-sm font-semibold text-white hover:bg-accent/90 disabled:opacity-40 transition"
+        >
+          <Lock size={16} />
+          {isPending ? 'Confirming...' : 'Confirm & pay'}
+        </button>
       </div>
     </div>
   );

@@ -11,8 +11,8 @@ export type StayCard = Tables<'stays'> & {
 export async function getStays(filters: {
   type?: string | null;
   tags?: string[] | null;
-  search?: string | null;
-  country?: string | null;
+  locations?: string[] | null;
+  countries?: string[] | null;
   sort?: string | null;
   stayType?: string | null;
   maxPrice?: number | null;
@@ -26,15 +26,21 @@ export async function getStays(filters: {
     let query = supabase.from('stays').select('*');
 
     if (filters.type) query = query.eq('travel_type', filters.type);
-    if (filters.tags && filters.tags.length > 0) query = query.overlaps('tags', filters.tags);
-    if (filters.country) query = query.eq('country', filters.country);
-    if (filters.search) {
-      const sanitized = filters.search
-        .replace(/%/g, '\\%')
-        .replace(/_/g, '\\_');
-      query = query.or(
-        `title.ilike.%${sanitized}%,location.ilike.%${sanitized}%`
-      );
+    // Tags are a soft filter — applied as client-side sort after fetch (matches first, then rest)
+
+    // Geographic filters: locations (text match) and countries (country code) are OR'd together
+    const geoConditions: string[] = [];
+    if (filters.locations?.length) {
+      for (const loc of filters.locations) {
+        const sanitized = loc.replace(/%/g, '\\%').replace(/_/g, '\\_');
+        geoConditions.push(`title.ilike.%${sanitized}%`, `location.ilike.%${sanitized}%`);
+      }
+    }
+    if (filters.countries?.length) {
+      geoConditions.push(`country.in.(${filters.countries.join(',')})`);
+    }
+    if (geoConditions.length > 0) {
+      query = query.or(geoConditions.join(','));
     }
     if (filters.stayType) query = query.eq('type', filters.stayType);
     if (filters.maxPrice) query = query.lte('price_per_night', filters.maxPrice);
@@ -80,6 +86,16 @@ export async function getStays(filters: {
 
     if (filters.sort === 'rating-desc') {
       result.sort((a, b) => (b.avg_rating ?? 0) - (a.avg_rating ?? 0));
+    }
+
+    // Soft-sort by tag relevance: stays matching more requested tags appear first
+    if (filters.tags?.length && filters.sort !== 'price-asc' && filters.sort !== 'price-desc') {
+      const requestedTags = new Set(filters.tags);
+      result.sort((a, b) => {
+        const aHits = (a.tags ?? []).filter(t => requestedTags.has(t)).length;
+        const bHits = (b.tags ?? []).filter(t => requestedTags.has(t)).length;
+        return bHits - aHits; // more tag matches = higher rank
+      });
     }
 
     console.log(`[action] ${actionName} ok`, { duration: Math.round(performance.now() - start) + 'ms', count: result.length });

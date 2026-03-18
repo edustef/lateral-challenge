@@ -43,8 +43,8 @@ describe('parseNaturalQuery', () => {
       travel_type: 'duo',
       max_price: 150,
       amenities: ['hot-tub'],
-      search: null,
-      country: null,
+      locations: null,
+      countries: null,
       sort: null,
       summary: 'Cozy cabins for two under $150/night with a hot tub',
     }));
@@ -56,8 +56,8 @@ describe('parseNaturalQuery', () => {
       travel_type: 'duo',
       max_price: 150,
       amenities: ['hot-tub'],
-      search: null,
-      country: null,
+      locations: null,
+      countries: null,
       sort: null,
       summary: 'Cozy cabins for two under $150/night with a hot tub',
     });

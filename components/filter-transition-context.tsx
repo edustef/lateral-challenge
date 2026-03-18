@@ -10,6 +10,8 @@ type FilterTransitionContextValue = {
   summary: string | null;
   setSummary: (summary: string | null) => void;
   clearConcierge: () => void;
+  heroScrolledPast: boolean;
+  setHeroScrolledPast: (v: boolean) => void;
 };
 
 const FilterTransitionContext = createContext<FilterTransitionContextValue>({
@@ -20,19 +22,22 @@ const FilterTransitionContext = createContext<FilterTransitionContextValue>({
   summary: null,
   setSummary: () => {},
   clearConcierge: () => {},
+  heroScrolledPast: false,
+  setHeroScrolledPast: () => {},
 });
 
 export function FilterTransitionProvider({ children }: { children: React.ReactNode }) {
   const [isPending, startTransition] = useTransition();
   const [searchExpanded, setSearchExpanded] = useState(false);
   const [summary, setSummary] = useState<string | null>(null);
+  const [heroScrolledPast, setHeroScrolledPast] = useState(false);
 
   const clearConcierge = useCallback(() => {
     setSummary(null);
   }, []);
 
   return (
-    <FilterTransitionContext.Provider value={{ isPending, startTransition, searchExpanded, setSearchExpanded, summary, setSummary, clearConcierge }}>
+    <FilterTransitionContext.Provider value={{ isPending, startTransition, searchExpanded, setSearchExpanded, summary, setSummary, clearConcierge, heroScrolledPast, setHeroScrolledPast }}>
       {children}
     </FilterTransitionContext.Provider>
   );

@@ -1,14 +1,14 @@
 'use client';
 
-import { useRef, useEffect, useCallback, useState } from 'react';
+import { useRef, useEffect, useCallback, useState, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { useQueryStates } from 'nuqs';
-import { Search, Sparkles, X, Loader2, ArrowLeft } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { Search, Sparkles, X, Loader2 } from 'lucide-react';
 import { searchParamsParsers } from '@/lib/search-params';
-import { isSimpleQuery } from '@/lib/concierge-schema';
 import { parseNaturalQuery } from '@/lib/actions/concierge';
 import { useFilterTransition } from '@/components/filter-transition-context';
 import { SearchSuggestions } from '@/components/search-suggestions';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 
 type SearchBarProps = {
   compact?: boolean;
@@ -27,8 +27,9 @@ export function SearchBar({ compact = false }: SearchBarProps) {
     useFilterTransition();
   const [params, setParams] = useQueryStates(
     {
-      search: searchParamsParsers.search,
-      country: searchParamsParsers.country,
+      q: searchParamsParsers.q,
+      locations: searchParamsParsers.locations,
+      countries: searchParamsParsers.countries,
       type: searchParamsParsers.type,
       tags: searchParamsParsers.tags,
       sort: searchParamsParsers.sort,
@@ -38,24 +39,26 @@ export function SearchBar({ compact = false }: SearchBarProps) {
     },
     { startTransition },
   );
-  const [localValue, setLocalValue] = useState(params.search ?? '');
+  const [localValue, setLocalValue] = useState(params.q ?? '');
   const [isLoading, setIsLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const lastAiCall = useRef(0);
   const desktopRef = useRef<HTMLInputElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
-  // Sync local value when URL search param changes externally
+  // Sync local value when URL q param changes externally
   useEffect(() => {
-    setLocalValue(params.search ?? '');
-  }, [params.search]);
+    setLocalValue(params.q ?? '');
+  }, [params.q]);
 
   const submitQuery = useCallback(
     async (text: string) => {
       const trimmed = text.trim();
       if (!trimmed) {
         setParams({
-          search: null,
-          country: null,
+          q: null,
+          locations: null,
+          countries: null,
           stayType: null,
           maxPrice: null,
           amenities: null,
@@ -64,18 +67,6 @@ export function SearchBar({ compact = false }: SearchBarProps) {
           sort: null,
         });
         setSummary(null);
-        return;
-      }
-
-      if (isSimpleQuery(trimmed)) {
-        setSummary(null);
-        setParams({
-          search: trimmed,
-          country: null,
-          stayType: null,
-          maxPrice: null,
-          amenities: null,
-        });
         return;
       }
 
@@ -91,8 +82,9 @@ export function SearchBar({ compact = false }: SearchBarProps) {
           // AI failed or returned nothing — fall back to text search
           setSummary(null);
           setParams({
-            search: trimmed,
-            country: null,
+            q: trimmed,
+            locations: [trimmed],
+            countries: null,
             stayType: null,
             maxPrice: null,
             amenities: null,
@@ -102,8 +94,9 @@ export function SearchBar({ compact = false }: SearchBarProps) {
 
         setSummary(result.summary);
         setParams({
-          search: result.search ?? null,
-          country: result.country ?? null,
+          q: trimmed,
+          locations: result.locations ?? null,
+          countries: result.countries ?? null,
           type: result.travel_type ?? null,
           tags: result.tags ?? null,
           sort: result.sort ?? null,
@@ -136,8 +129,9 @@ export function SearchBar({ compact = false }: SearchBarProps) {
     setLocalValue('');
     setSummary(null);
     setParams({
-      search: null,
-      country: null,
+      q: null,
+      locations: null,
+      countries: null,
       stayType: null,
       maxPrice: null,
       amenities: null,
@@ -155,27 +149,12 @@ export function SearchBar({ compact = false }: SearchBarProps) {
   }
 
   const inputSize = compact
-    ? 'h-10 text-sm rounded-lg'
-    : 'h-14 text-base rounded-xl';
+    ? 'h-10 text-base rounded-full'
+    : 'h-10 text-base rounded-full md:h-14';
 
   return (
     <>
-      {/* Mobile: icon button that opens full-screen overlay */}
-      <button
-        type="button"
-        aria-label="Open search"
-        onClick={() => setSearchExpanded(true)}
-        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border transition-colors md:hidden ${
-          params.search
-            ? 'border-accent bg-accent-tint text-accent'
-            : 'border-border bg-white text-text-secondary hover:text-text-primary'
-        }`}
-      >
-        <Search className="h-4 w-4" />
-      </button>
-
-      {/* Desktop: inline input with optional focus popover */}
-      <div className="relative hidden md:block w-[280px]">
+      <div ref={wrapperRef} className={`relative hidden md:block ${compact ? 'w-full max-w-sm' : 'w-full'}`}>
         <Sparkles className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-accent" />
         <input
           ref={desktopRef}
@@ -205,13 +184,49 @@ export function SearchBar({ compact = false }: SearchBarProps) {
         ) : null}
 
         {/* Focus popover — hero mode only */}
-        {!compact && isFocused && (
-          <div className="absolute top-full mt-2 left-0 right-0 rounded-xl border border-border bg-white p-4 shadow-lg">
-            <SearchSuggestions onSelect={handleSuggestionSelect} />
-          </div>
-        )}
+        {!compact && isFocused && <PopoverPortal anchorRef={wrapperRef}>
+          <SearchSuggestions onSelect={handleSuggestionSelect} />
+        </PopoverPortal>}
       </div>
     </>
+  );
+}
+
+/**
+ * Portal-based popover that positions itself below an anchor element.
+ * Renders at document root to avoid z-index/overflow issues.
+ */
+function PopoverPortal({ anchorRef, children }: { anchorRef: React.RefObject<HTMLDivElement | null>; children: ReactNode }) {
+  const [style, setStyle] = useState<React.CSSProperties>({ opacity: 0 });
+
+  useEffect(() => {
+    function update() {
+      const el = anchorRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      setStyle({
+        position: 'fixed',
+        top: rect.bottom + 8,
+        left: rect.left,
+        width: rect.width,
+        zIndex: 9999,
+        opacity: 1,
+      });
+    }
+    update();
+    window.addEventListener('scroll', update, true);
+    window.addEventListener('resize', update);
+    return () => {
+      window.removeEventListener('scroll', update, true);
+      window.removeEventListener('resize', update);
+    };
+  }, [anchorRef]);
+
+  return createPortal(
+    <div style={style} className="rounded-xl border border-border bg-white p-4 shadow-lg">
+      {children}
+    </div>,
+    document.body,
   );
 }
 
@@ -223,8 +238,9 @@ export function SearchOverlay() {
     useFilterTransition();
   const [params, setParams] = useQueryStates(
     {
-      search: searchParamsParsers.search,
-      country: searchParamsParsers.country,
+      q: searchParamsParsers.q,
+      locations: searchParamsParsers.locations,
+      countries: searchParamsParsers.countries,
       type: searchParamsParsers.type,
       tags: searchParamsParsers.tags,
       sort: searchParamsParsers.sort,
@@ -234,22 +250,23 @@ export function SearchOverlay() {
     },
     { startTransition },
   );
-  const [localValue, setLocalValue] = useState(params.search ?? '');
+  const [localValue, setLocalValue] = useState(params.q ?? '');
   const [isLoading, setIsLoading] = useState(false);
   const lastAiCall = useRef(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setLocalValue(params.search ?? '');
-  }, [params.search]);
+    setLocalValue(params.q ?? '');
+  }, [params.q]);
 
   const submitQuery = useCallback(
     async (text: string) => {
       const trimmed = text.trim();
       if (!trimmed) {
         setParams({
-          search: null,
-          country: null,
+          q: null,
+          locations: null,
+          countries: null,
           stayType: null,
           maxPrice: null,
           amenities: null,
@@ -258,19 +275,6 @@ export function SearchOverlay() {
           sort: null,
         });
         setSummary(null);
-        setSearchExpanded(false);
-        return;
-      }
-
-      if (isSimpleQuery(trimmed)) {
-        setSummary(null);
-        setParams({
-          search: trimmed,
-          country: null,
-          stayType: null,
-          maxPrice: null,
-          amenities: null,
-        });
         setSearchExpanded(false);
         return;
       }
@@ -285,8 +289,9 @@ export function SearchOverlay() {
         if (!result) {
           setSummary(null);
           setParams({
-            search: trimmed,
-            country: null,
+            q: trimmed,
+            locations: [trimmed],
+            countries: null,
             stayType: null,
             maxPrice: null,
             amenities: null,
@@ -294,8 +299,9 @@ export function SearchOverlay() {
         } else {
           setSummary(result.summary);
           setParams({
-            search: result.search ?? null,
-            country: result.country ?? null,
+            q: trimmed,
+            locations: result.locations ?? null,
+            countries: result.countries ?? null,
             type: result.travel_type ?? null,
             tags: result.tags ?? null,
             sort: result.sort ?? null,
@@ -328,8 +334,9 @@ export function SearchOverlay() {
     setLocalValue('');
     setSummary(null);
     setParams({
-      search: null,
-      country: null,
+      q: null,
+      locations: null,
+      countries: null,
       stayType: null,
       maxPrice: null,
       amenities: null,
@@ -353,67 +360,67 @@ export function SearchOverlay() {
   }, [searchExpanded]);
 
   return (
-    <AnimatePresence>
-      {searchExpanded && (
-        <motion.div
-          className="fixed inset-0 z-50 flex flex-col bg-bg-page md:hidden"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.15 }}
-        >
-          {/* Top bar: back arrow + input */}
-          <div className="flex items-center gap-3 border-b border-border px-4 py-3">
-            <button
-              type="button"
-              onClick={() => setSearchExpanded(false)}
-              aria-label="Close search"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-text-secondary hover:text-text-primary"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </button>
+    <Dialog open={searchExpanded} onOpenChange={setSearchExpanded}>
+      <DialogContent
+        showCloseButton={false}
+        className="fixed inset-0 top-0 left-0 flex h-dvh w-full max-w-none -translate-x-0 -translate-y-0 flex-col rounded-none ring-0 md:hidden"
+      >
+        <DialogTitle className="sr-only">Search stays</DialogTitle>
 
-            <div className="relative flex-1">
-              <Sparkles className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-accent" />
-              <input
-                ref={inputRef}
-                type="text"
-                placeholder="Try 'cozy cabin for 2 under $200'..."
-                value={localValue}
-                onChange={(e) => setLocalValue(e.target.value)}
-                onKeyDown={handleKeyDown}
-                disabled={isLoading}
-                className={`h-10 w-full rounded-lg border bg-white pl-9 pr-9 text-sm text-text-primary placeholder:text-text-muted focus:outline-none ${
-                  isLoading
-                    ? 'border-accent animate-pulse opacity-70'
-                    : 'border-accent'
-                }`}
-              />
-              {isLoading ? (
-                <Loader2 className="absolute right-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 animate-spin text-accent" />
-              ) : localValue ? (
-                <button
-                  type="button"
-                  onMouseDown={(e) => e.preventDefault()}
-                  onClick={() => {
-                    setLocalValue('');
-                    inputRef.current?.focus();
-                  }}
-                  aria-label="Clear search"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary"
-                >
-                  <X className="h-3.5 w-3.5" />
-                </button>
-              ) : null}
-            </div>
+        {/* Input + close */}
+        <div className="flex items-center gap-2">
+          <div className="relative flex-1">
+            <Sparkles className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-accent" />
+            <input
+              ref={inputRef}
+              type="text"
+              autoFocus
+              placeholder="Try 'cozy cabin for 2 under $200'..."
+              value={localValue}
+              onChange={(e) => setLocalValue(e.target.value)}
+              onKeyDown={handleKeyDown}
+              disabled={isLoading}
+              className={`h-10 w-full rounded-full border bg-white pl-9 pr-9 text-base text-text-primary placeholder:text-text-muted focus:outline-none ${
+                isLoading
+                  ? 'border-accent animate-pulse opacity-70'
+                  : 'border-accent'
+              }`}
+            />
+            {isLoading ? (
+              <Loader2 className="absolute right-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 animate-spin text-accent" />
+            ) : localValue ? (
+              <button
+                type="button"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => {
+                  setLocalValue('');
+                  inputRef.current?.focus();
+                }}
+                aria-label="Clear search text"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            ) : (
+              <Search className="pointer-events-none absolute right-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-text-muted" />
+            )}
           </div>
 
-          {/* Suggestions below */}
-          <div className="flex-1 overflow-y-auto px-4 py-4">
-            <SearchSuggestions onSelect={handleSuggestionSelect} />
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+          <button
+            type="button"
+            onClick={() => setSearchExpanded(false)}
+            aria-label="Close search"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-text-secondary hover:text-text-primary"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+
+        {/* Suggestions */}
+        <div className="mt-4">
+          <SearchSuggestions onSelect={handleSuggestionSelect} />
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }

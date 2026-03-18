@@ -1,6 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { fraunces, inter, ibmPlexMono } from "@/lib/fonts";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   title: "Wanderly — Unique Stays",

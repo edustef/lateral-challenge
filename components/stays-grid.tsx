@@ -33,7 +33,7 @@ export function StaysGrid({ stays, favoriteIds }: { stays: StayCardType[]; favor
       )}
       <div
         data-testid="stays-grid"
-        className={`grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3 transition-opacity ${isPending ? 'opacity-40' : ''}`}
+        className={`grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4 transition-opacity ${isPending ? 'opacity-40' : ''}`}
       >
         {stays.map((stay) => (
           <StayCard key={stay.id} stay={stay} isFavorited={favoriteSet.has(stay.id)} />
