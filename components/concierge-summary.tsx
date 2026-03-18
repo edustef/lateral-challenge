@@ -12,6 +12,7 @@ export function ConciergeSummary() {
   const [, setParams] = useQueryStates(
     {
       search: searchParamsParsers.search,
+      country: searchParamsParsers.country,
       type: searchParamsParsers.type,
       vibe: searchParamsParsers.vibe,
       sort: searchParamsParsers.sort,
@@ -25,7 +26,7 @@ export function ConciergeSummary() {
   const handleDismiss = useCallback(() => {
     setSummary(null);
     setParams({
-      search: null, stayType: null, maxPrice: null, amenities: null,
+      search: null, country: null, stayType: null, maxPrice: null, amenities: null,
       type: null, vibe: null, sort: null,
     });
   }, [setSummary, setParams]);

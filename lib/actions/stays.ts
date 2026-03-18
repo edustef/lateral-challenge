@@ -12,6 +12,7 @@ export async function getStays(filters: {
   type?: string | null;
   vibe?: string | null;
   search?: string | null;
+  country?: string | null;
   sort?: string | null;
   stayType?: string | null;
   maxPrice?: number | null;
@@ -26,6 +27,7 @@ export async function getStays(filters: {
 
     if (filters.type) query = query.eq('travel_type', filters.type);
     if (filters.vibe) query = query.eq('vibe', filters.vibe);
+    if (filters.country) query = query.eq('country', filters.country);
     if (filters.search) {
       const sanitized = filters.search
         .replace(/%/g, '\\%')

@@ -257,6 +257,7 @@ export type Database = {
         Row: {
           amenities: string[] | null
           cleaning_fee: number
+          country: string
           created_at: string | null
           description: string
           id: string
@@ -275,6 +276,7 @@ export type Database = {
         Insert: {
           amenities?: string[] | null
           cleaning_fee?: number
+          country: string
           created_at?: string | null
           description: string
           id?: string
@@ -293,6 +295,7 @@ export type Database = {
         Update: {
           amenities?: string[] | null
           cleaning_fee?: number
+          country?: string
           created_at?: string | null
           description?: string
           id?: string

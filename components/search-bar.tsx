@@ -19,6 +19,7 @@ export function SearchBar() {
   const [params, setParams] = useQueryStates(
     {
       search: searchParamsParsers.search,
+      country: searchParamsParsers.country,
       type: searchParamsParsers.type,
       vibe: searchParamsParsers.vibe,
       sort: searchParamsParsers.sort,
@@ -42,7 +43,7 @@ export function SearchBar() {
     const trimmed = localValue.trim();
     if (!trimmed) {
       setParams({
-        search: null, stayType: null, maxPrice: null, amenities: null,
+        search: null, country: null, stayType: null, maxPrice: null, amenities: null,
         type: null, vibe: null, sort: null,
       });
       setSummary(null);
@@ -52,7 +53,7 @@ export function SearchBar() {
     if (isSimpleQuery(trimmed)) {
       setSummary(null);
       setParams({
-        search: trimmed, stayType: null, maxPrice: null, amenities: null,
+        search: trimmed, country: null, stayType: null, maxPrice: null, amenities: null,
       });
       return;
     }
@@ -68,13 +69,14 @@ export function SearchBar() {
       if (!result) {
         // AI failed or returned nothing — fall back to text search
         setSummary(null);
-        setParams({ search: trimmed, stayType: null, maxPrice: null, amenities: null });
+        setParams({ search: trimmed, country: null, stayType: null, maxPrice: null, amenities: null });
         return;
       }
 
       setSummary(result.summary);
       setParams({
         search: result.search ?? null,
+        country: result.country ?? null,
         type: result.travel_type ?? null,
         vibe: result.vibe ?? null,
         sort: result.sort ?? null,
@@ -101,7 +103,7 @@ export function SearchBar() {
     setLocalValue('');
     setSummary(null);
     setParams({
-      search: null, stayType: null, maxPrice: null, amenities: null,
+      search: null, country: null, stayType: null, maxPrice: null, amenities: null,
       type: null, vibe: null, sort: null,
     });
     desktopRef.current?.focus();
@@ -163,6 +165,7 @@ export function SearchOverlay() {
   const [params, setParams] = useQueryStates(
     {
       search: searchParamsParsers.search,
+      country: searchParamsParsers.country,
       type: searchParamsParsers.type,
       vibe: searchParamsParsers.vibe,
       sort: searchParamsParsers.sort,
@@ -189,7 +192,7 @@ export function SearchOverlay() {
     const trimmed = localValue.trim();
     if (!trimmed) {
       setParams({
-        search: null, stayType: null, maxPrice: null, amenities: null,
+        search: null, country: null, stayType: null, maxPrice: null, amenities: null,
         type: null, vibe: null, sort: null,
       });
       setSummary(null);
@@ -199,7 +202,7 @@ export function SearchOverlay() {
 
     if (isSimpleQuery(trimmed)) {
       setSummary(null);
-      setParams({ search: trimmed, stayType: null, maxPrice: null, amenities: null });
+      setParams({ search: trimmed, country: null, stayType: null, maxPrice: null, amenities: null });
       setSearchExpanded(false);
       return;
     }
@@ -213,11 +216,12 @@ export function SearchOverlay() {
       const result = await parseNaturalQuery(trimmed);
       if (!result) {
         setSummary(null);
-        setParams({ search: trimmed, stayType: null, maxPrice: null, amenities: null });
+        setParams({ search: trimmed, country: null, stayType: null, maxPrice: null, amenities: null });
       } else {
         setSummary(result.summary);
         setParams({
           search: result.search ?? null,
+          country: result.country ?? null,
           type: result.travel_type ?? null,
           vibe: result.vibe ?? null,
           sort: result.sort ?? null,
@@ -248,7 +252,7 @@ export function SearchOverlay() {
     setLocalValue('');
     setSummary(null);
     setParams({
-      search: null, stayType: null, maxPrice: null, amenities: null,
+      search: null, country: null, stayType: null, maxPrice: null, amenities: null,
       type: null, vibe: null, sort: null,
     });
     setSearchExpanded(false);

@@ -29,6 +29,11 @@
   --border: #E8E4DF;
   --border-subtle: #F0EDE8;
 
+  /* Vibe accent colors */
+  --vibe-culture: #8B7BB5;
+  --vibe-disconnect: #6BA3A0;
+  --vibe-celebration: #D4845A;
+
   /* Semantic */
   --success: #22C55E;
   --error: #E55B5B;
@@ -98,6 +103,9 @@
   --color-warm-accent-tint: var(--warm-accent-tint);
   --color-accent: var(--accent);
   --color-accent-tint: var(--accent-tint);
+  --color-vibe-culture: var(--vibe-culture);
+  --color-vibe-disconnect: var(--vibe-disconnect);
+  --color-vibe-celebration: var(--vibe-celebration);
   --color-primary: var(--primary);
 
   --color-text-primary: var(--text-primary);
