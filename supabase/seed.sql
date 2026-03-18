@@ -146,55 +146,55 @@ INSERT INTO collection_stays (collection_id, stay_id, position) VALUES
 -- FAKE USERS for seed reviews (profiles only, no auth.users needed with replica mode)
 -- ============================================================
 INSERT INTO profiles (id, email, full_name) VALUES
-('u0000000-0000-0000-0000-000000000001', 'alex.chen@example.com', 'Alex Chen'),
-('u0000000-0000-0000-0000-000000000002', 'maria.garcia@example.com', 'Maria Garcia'),
-('u0000000-0000-0000-0000-000000000003', 'sam.johnson@example.com', 'Sam Johnson'),
-('u0000000-0000-0000-0000-000000000004', 'emma.wilson@example.com', 'Emma Wilson'),
-('u0000000-0000-0000-0000-000000000005', 'james.taylor@example.com', 'James Taylor');
+('b0000000-0000-0000-0000-000000000001', 'alex.chen@example.com', 'Alex Chen'),
+('b0000000-0000-0000-0000-000000000002', 'maria.garcia@example.com', 'Maria Garcia'),
+('b0000000-0000-0000-0000-000000000003', 'sam.johnson@example.com', 'Sam Johnson'),
+('b0000000-0000-0000-0000-000000000004', 'emma.wilson@example.com', 'Emma Wilson'),
+('b0000000-0000-0000-0000-000000000005', 'james.taylor@example.com', 'James Taylor');
 
 -- ============================================================
 -- REVIEWS (20 across 10 stays)
 -- ============================================================
 INSERT INTO reviews (stay_id, user_id, rating, comment) VALUES
 -- Summit Treehouse (3 reviews)
-('a0000000-0000-0000-0000-000000000001', 'u0000000-0000-0000-0000-000000000001', 5, 'Absolutely magical. Waking up above the clouds was a once-in-a-lifetime experience.'),
-('a0000000-0000-0000-0000-000000000001', 'u0000000-0000-0000-0000-000000000002', 4, 'Stunning views and very peaceful. The rope bridge was a fun touch, though a bit wobbly.'),
-('a0000000-0000-0000-0000-000000000001', 'u0000000-0000-0000-0000-000000000003', 5, 'Best treehouse I have ever stayed in. Already planning my return trip.'),
+('a0000000-0000-0000-0000-000000000001', 'b0000000-0000-0000-0000-000000000001', 5, 'Absolutely magical. Waking up above the clouds was a once-in-a-lifetime experience.'),
+('a0000000-0000-0000-0000-000000000001', 'b0000000-0000-0000-0000-000000000002', 4, 'Stunning views and very peaceful. The rope bridge was a fun touch, though a bit wobbly.'),
+('a0000000-0000-0000-0000-000000000001', 'b0000000-0000-0000-0000-000000000003', 5, 'Best treehouse I have ever stayed in. Already planning my return trip.'),
 
 -- Glacier Cabin (2 reviews)
-('a0000000-0000-0000-0000-000000000002', 'u0000000-0000-0000-0000-000000000001', 5, 'The hot tub under the stars was unforgettable. Cabin was spotless and incredibly warm.'),
-('a0000000-0000-0000-0000-000000000002', 'u0000000-0000-0000-0000-000000000004', 4, 'Beautiful location. The fireplace made every evening special.'),
+('a0000000-0000-0000-0000-000000000002', 'b0000000-0000-0000-0000-000000000001', 5, 'The hot tub under the stars was unforgettable. Cabin was spotless and incredibly warm.'),
+('a0000000-0000-0000-0000-000000000002', 'b0000000-0000-0000-0000-000000000004', 4, 'Beautiful location. The fireplace made every evening special.'),
 
 -- Soho Houseboat (2 reviews)
-('a0000000-0000-0000-0000-000000000005', 'u0000000-0000-0000-0000-000000000002', 4, 'Such a unique way to experience London. Loved the library nook on deck.'),
-('a0000000-0000-0000-0000-000000000005', 'u0000000-0000-0000-0000-000000000005', 3, 'Cool concept but a bit cramped for two people. Great location though.'),
+('a0000000-0000-0000-0000-000000000005', 'b0000000-0000-0000-0000-000000000002', 4, 'Such a unique way to experience London. Loved the library nook on deck.'),
+('a0000000-0000-0000-0000-000000000005', 'b0000000-0000-0000-0000-000000000005', 3, 'Cool concept but a bit cramped for two people. Great location though.'),
 
 -- Kyoto Cabin (2 reviews)
-('a0000000-0000-0000-0000-000000000006', 'u0000000-0000-0000-0000-000000000003', 5, 'Pure serenity. The bamboo forest walks at dawn were the highlight of our Japan trip.'),
-('a0000000-0000-0000-0000-000000000006', 'u0000000-0000-0000-0000-000000000004', 5, 'Minimalist perfection. The private onsen was heavenly.'),
+('a0000000-0000-0000-0000-000000000006', 'b0000000-0000-0000-0000-000000000003', 5, 'Pure serenity. The bamboo forest walks at dawn were the highlight of our Japan trip.'),
+('a0000000-0000-0000-0000-000000000006', 'b0000000-0000-0000-0000-000000000004', 5, 'Minimalist perfection. The private onsen was heavenly.'),
 
 -- Forest Cabin (3 reviews)
-('a0000000-0000-0000-0000-000000000009', 'u0000000-0000-0000-0000-000000000001', 4, 'Exactly what I needed. No wifi forced me to actually relax for once.'),
-('a0000000-0000-0000-0000-000000000009', 'u0000000-0000-0000-0000-000000000005', 5, 'The old-growth forest is cathedral-like. Felt completely restored after three nights.'),
-('a0000000-0000-0000-0000-000000000009', 'u0000000-0000-0000-0000-000000000003', 4, 'Cozy and rustic in the best way. Bring your own books and wine.'),
+('a0000000-0000-0000-0000-000000000009', 'b0000000-0000-0000-0000-000000000001', 4, 'Exactly what I needed. No wifi forced me to actually relax for once.'),
+('a0000000-0000-0000-0000-000000000009', 'b0000000-0000-0000-0000-000000000005', 5, 'The old-growth forest is cathedral-like. Felt completely restored after three nights.'),
+('a0000000-0000-0000-0000-000000000009', 'b0000000-0000-0000-0000-000000000003', 4, 'Cozy and rustic in the best way. Bring your own books and wine.'),
 
 -- Desert Yurt (2 reviews)
-('a0000000-0000-0000-0000-000000000010', 'u0000000-0000-0000-0000-000000000002', 5, 'The night sky alone is worth the trip. Never seen so many stars.'),
-('a0000000-0000-0000-0000-000000000010', 'u0000000-0000-0000-0000-000000000004', 4, 'Beautiful and remote. The outdoor shower with red rock views was incredible.'),
+('a0000000-0000-0000-0000-000000000010', 'b0000000-0000-0000-0000-000000000002', 5, 'The night sky alone is worth the trip. Never seen so many stars.'),
+('a0000000-0000-0000-0000-000000000010', 'b0000000-0000-0000-0000-000000000004', 4, 'Beautiful and remote. The outdoor shower with red rock views was incredible.'),
 
 -- Island Glamping (2 reviews)
-('a0000000-0000-0000-0000-000000000011', 'u0000000-0000-0000-0000-000000000001', 5, 'Paradise found. Kids loved kayaking to the neighboring islands every morning.'),
-('a0000000-0000-0000-0000-000000000011', 'u0000000-0000-0000-0000-000000000003', 4, 'Incredible setting. Worth every penny for a family trip.'),
+('a0000000-0000-0000-0000-000000000011', 'b0000000-0000-0000-0000-000000000001', 5, 'Paradise found. Kids loved kayaking to the neighboring islands every morning.'),
+('a0000000-0000-0000-0000-000000000011', 'b0000000-0000-0000-0000-000000000003', 4, 'Incredible setting. Worth every penny for a family trip.'),
 
 -- Vineyard Houseboat (2 reviews)
-('a0000000-0000-0000-0000-000000000013', 'u0000000-0000-0000-0000-000000000005', 5, 'Hosted my birthday here — the sundeck wine tastings were a dream come true.'),
-('a0000000-0000-0000-0000-000000000013', 'u0000000-0000-0000-0000-000000000002', 4, 'Amazing for a group celebration. The hot tub on the boat is a nice touch.'),
+('a0000000-0000-0000-0000-000000000013', 'b0000000-0000-0000-0000-000000000005', 5, 'Hosted my birthday here — the sundeck wine tastings were a dream come true.'),
+('a0000000-0000-0000-0000-000000000013', 'b0000000-0000-0000-0000-000000000002', 4, 'Amazing for a group celebration. The hot tub on the boat is a nice touch.'),
 
 -- Mountain Lodge Cabin (1 review)
-('a0000000-0000-0000-0000-000000000014', 'u0000000-0000-0000-0000-000000000004', 5, 'Our whole family fit comfortably. The game room kept the kids entertained for hours.'),
+('a0000000-0000-0000-0000-000000000014', 'b0000000-0000-0000-0000-000000000004', 5, 'Our whole family fit comfortably. The game room kept the kids entertained for hours.'),
 
 -- Garden Yurt (1 review)
-('a0000000-0000-0000-0000-000000000015', 'u0000000-0000-0000-0000-000000000001', 4, 'The lavender fields at sunset were breathtaking. Very romantic and intimate.');
+('a0000000-0000-0000-0000-000000000015', 'b0000000-0000-0000-0000-000000000001', 4, 'The lavender fields at sunset were breathtaking. Very romantic and intimate.');
 
 -- Restore normal FK constraints and triggers
 SET session_replication_role = 'origin';
