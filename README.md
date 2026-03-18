@@ -65,36 +65,19 @@ The `.env.example` ships with a hosted Supabase project pre-configured — no lo
 ### Project Structure
 
 ```
-app/
-  (main)/                    # Main layout (header, search overlay, mobile FAB)
-    page.tsx                 # Discovery — AI search + stays grid
-    stays/[slug]/            # Stay detail page
-    stays/[slug]/book/       # Checkout form + confirmation
-    profile/                 # User bookings
-    wishlist/                # Saved stays
-  auth/                      # Login + OAuth callback (no header)
-
-components/
-  search/                    # SearchBar, SearchOverlay, SearchHero, MobileSearchFab, SearchSummary
-  booking/                   # CheckoutForm, CheckoutSummary, BookingSidebar, BookingCard, DatePicker
-  stays/                     # StayCard, StayInfo, StaysGrid, PhotoGallery, ReviewForm, ReviewsList
-  layout/                    # Header, HeaderBar
-  ui/                        # Base UI primitives (shadcn — Dialog, Popover, Calendar, etc.)
-  filter-transition-context.tsx  # App-wide search state (React Context)
-  guest-counter.tsx          # Shared +/- stepper
-  favorite-button.tsx        # Wishlist toggle with optimistic UI
-  ...                        # Other shared components
-
-lib/
-  actions/                   # Server actions (stays, bookings, reviews, favorites, auth, search-parser)
-  hooks/                     # Custom hooks (useSearchParamsState, useSearchQuery)
-  supabase/                  # Client helpers, auth proxy, generated types
-  utils/                     # Price calculation, date utilities
-  search-parser-schema.ts    # OpenAI function calling schema
-
-supabase/
-  migrations/                # 5 SQL migrations (tables, favorites, blocked dates, countries, tags)
-  seed.sql                   # Seed data (15 stays across 5 countries, reviews, blocked dates)
+app/                        # Next.js App Router (pages, layouts, loading/error states)
+components/                 # React components grouped by feature
+  search/                   #   AI search bar, mobile overlay, suggestions
+  booking/                  #   Checkout form, date picker, price breakdown
+  stays/                    #   Stay cards, grid, photo gallery, reviews
+  layout/                   #   Header, navigation
+  ui/                       #   Base UI primitives (shadcn)
+lib/                        # Business logic, no UI
+  actions/                  #   Server actions (data fetching, mutations)
+  hooks/                    #   Custom React hooks (search state)
+  supabase/                 #   DB client, auth, generated types
+  utils/                    #   Pure helpers (price, date calculations)
+supabase/                   # Database migrations + seed data
 ```
 
 ### Data Flow
