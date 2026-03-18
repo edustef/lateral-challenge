@@ -13,15 +13,15 @@
 
 ### Discovery UX
 
-- [ ] **DISC-V2-01**: Sticky filter bar that remains visible while scrolling stays grid
+- [x] **DISC-V2-01**: Sticky filter bar that remains visible while scrolling stays grid
 - [ ] **DISC-V2-02**: User can favorite/unfavorite a stay from the stay card
 - [ ] **DISC-V2-03**: User can view their favorited stays on a wishlist page
 - [ ] **DISC-V2-04**: Favorites persist in database for authenticated users
 
 ### Polish
 
-- [ ] **PLSH-V2-01**: Animated page transitions between routes (fade/slide)
-- [ ] **PLSH-V2-02**: Micro-interactions on interactive elements (buttons, cards, toggles)
+- [x] **PLSH-V2-01**: Animated page transitions between routes (fade/slide)
+- [x] **PLSH-V2-02**: Micro-interactions on interactive elements (buttons, cards, toggles)
 
 ### Content Moderation
 
@@ -47,12 +47,12 @@
 | AUTH-V2-01 | Phase 6 | Complete |
 | AUTH-V2-02 | Phase 6 | Complete |
 | AUTH-V2-03 | Phase 6 | Complete |
-| DISC-V2-01 | Phase 6 | Pending |
+| DISC-V2-01 | Phase 6 | Complete |
 | DISC-V2-02 | Phase 7 | Pending |
 | DISC-V2-03 | Phase 7 | Pending |
 | DISC-V2-04 | Phase 7 | Pending |
-| PLSH-V2-01 | Phase 8 | Pending |
-| PLSH-V2-02 | Phase 8 | Pending |
+| PLSH-V2-01 | Phase 8 | Complete |
+| PLSH-V2-02 | Phase 8 | Complete |
 | MODR-01 | Phase 7 | Pending |
 | MODR-02 | Phase 7 | Pending |
 | MODR-03 | Phase 7 | Pending |

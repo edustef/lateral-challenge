@@ -20,7 +20,7 @@
 
 ### v2.0 Polish & Features
 
-- [ ] **Phase 6: OAuth & Discovery Controls** - Social login and persistent browsing controls
+- [x] **Phase 6: OAuth & Discovery Controls** - Social login and persistent browsing controls
 - [ ] **Phase 7: Favorites & Moderation** - Save stays and AI-powered review quality
 - [ ] **Phase 8: Motion & Polish** - Animated transitions and micro-interactions
 
@@ -71,6 +71,6 @@
 | 3. Authenticated Flows | v1.0 | 3/3 | Complete | 2026-03-17 |
 | 4. Ship It | v1.0 | 3/3 | Complete | 2026-03-17 |
 | 5. Bug Fixes & Wiring | v1.0 | 1/1 | Complete | 2026-03-17 |
-| 6. OAuth & Discovery Controls | v2.0 | 1/2 | Active | - |
+| 6. OAuth & Discovery Controls | v2.0 | 2/2 | Complete | 2026-03-17 |
 | 7. Favorites & Moderation | v2.0 | 0/2 | Planned | - |
 | 8. Motion & Polish | v2.0 | 0/? | Not started | - |
