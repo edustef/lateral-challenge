@@ -23,3 +23,30 @@ export function isDateInFuture(date: Date): boolean {
 export function formatDateRange(checkIn: Date, checkOut: Date): string {
   return `${format(checkIn, 'MMM d')} - ${format(checkOut, 'MMM d')}`;
 }
+
+/**
+ * Returns true if [checkIn, checkOut) overlaps any disabled date range.
+ * Disabled range boundaries use midnight (T00:00:00) for date-only comparison.
+ */
+export function rangeOverlapsDisabled(
+  checkIn: Date,
+  checkOut: Date,
+  disabledDates: { from: string; to: string }[],
+): boolean {
+  return disabledDates.some((range) => {
+    const from = new Date(range.from + 'T00:00:00');
+    const to = new Date(range.to + 'T00:00:00');
+    return checkIn < to && checkOut > from;
+  });
+}
+
+/**
+ * Parses a YYYY-MM-DD string into a Date anchored at noon (T12:00:00)
+ * to avoid timezone edge cases where midnight rolls to the previous day.
+ * Returns undefined if input is missing or invalid.
+ */
+export function parseDate(str?: string): Date | undefined {
+  if (!str) return undefined;
+  const d = new Date(str + 'T12:00:00');
+  return isNaN(d.getTime()) ? undefined : d;
+}

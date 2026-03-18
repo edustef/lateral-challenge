@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { isValidDateRange, isDateInFuture, formatDateRange } from '../date';
+import { rangeOverlapsDisabled, parseDate } from '../date';
 
 describe('isValidDateRange', () => {
   it('returns true when checkOut is after checkIn', () => {
@@ -59,5 +60,43 @@ describe('formatDateRange', () => {
       new Date('2025-07-03'),
     );
     expect(result).toBe('Jun 28 - Jul 3');
+  });
+});
+
+describe('rangeOverlapsDisabled', () => {
+  const disabled = [{ from: '2026-04-10', to: '2026-04-15' }];
+
+  it('returns true when range overlaps disabled dates', () => {
+    const checkIn = new Date('2026-04-12T12:00:00');
+    const checkOut = new Date('2026-04-18T12:00:00');
+    expect(rangeOverlapsDisabled(checkIn, checkOut, disabled)).toBe(true);
+  });
+
+  it('returns false when range is outside disabled dates', () => {
+    const checkIn = new Date('2026-04-01T12:00:00');
+    const checkOut = new Date('2026-04-05T12:00:00');
+    expect(rangeOverlapsDisabled(checkIn, checkOut, disabled)).toBe(false);
+  });
+
+  it('returns false for empty disabled array', () => {
+    const checkIn = new Date('2026-04-10T12:00:00');
+    const checkOut = new Date('2026-04-15T12:00:00');
+    expect(rangeOverlapsDisabled(checkIn, checkOut, [])).toBe(false);
+  });
+});
+
+describe('parseDate', () => {
+  it('parses a valid date string anchored to noon', () => {
+    const d = parseDate('2026-04-10');
+    expect(d).toBeInstanceOf(Date);
+    expect(d!.getHours()).toBe(12);
+  });
+
+  it('returns undefined for undefined input', () => {
+    expect(parseDate(undefined)).toBeUndefined();
+  });
+
+  it('returns undefined for invalid date string', () => {
+    expect(parseDate('not-a-date')).toBeUndefined();
   });
 });
