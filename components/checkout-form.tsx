@@ -102,9 +102,10 @@ export function CheckoutForm({ stay }: CheckoutFormProps) {
           const isActive = stepNum === step;
           const isCompleted = stepNum < step;
           return (
-            <div key={label} className="flex flex-1 items-center">
+            <div key={label} className="flex flex-1 items-center" role="group" aria-label={`Step ${stepNum}: ${label}`}>
               <div className="flex flex-col items-center gap-1">
                 <div
+                  aria-label={`Checkout step ${stepNum} of 4: ${label}`}
                   className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold transition ${
                     isActive
                       ? 'bg-accent text-white'
@@ -165,17 +166,19 @@ export function CheckoutForm({ stay }: CheckoutFormProps) {
                 type="button"
                 onClick={() => setGuests((g) => Math.max(1, g - 1))}
                 disabled={guests <= 1}
+                aria-label="Decrease guests"
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-lg font-semibold text-text-primary hover:bg-bg-muted disabled:opacity-40 transition"
               >
                 -
               </button>
-              <span className="min-w-[3rem] text-center text-2xl font-semibold text-text-primary">
+              <span className="min-w-[3rem] text-center text-2xl font-semibold text-text-primary" aria-live="polite" aria-label={`${guests} guest${guests !== 1 ? 's' : ''}`}>
                 {guests}
               </span>
               <button
                 type="button"
                 onClick={() => setGuests((g) => Math.min(stay.max_guests, g + 1))}
                 disabled={guests >= stay.max_guests}
+                aria-label="Increase guests"
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-lg font-semibold text-text-primary hover:bg-bg-muted disabled:opacity-40 transition"
               >
                 +
@@ -331,6 +334,7 @@ export function CheckoutForm({ stay }: CheckoutFormProps) {
               type="button"
               onClick={handleSubmit}
               disabled={isPending}
+              aria-busy={isPending}
               className="rounded-button bg-accent px-6 py-2 text-sm font-semibold text-white hover:bg-accent/90 disabled:opacity-60 transition"
             >
               {isPending ? 'Confirming...' : 'Confirm & Pay'}

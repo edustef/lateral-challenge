@@ -20,10 +20,10 @@ export async function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between">
         {/* Left: Logo + Nav */}
         <div className="flex items-center gap-8">
-          <Link href="/" className="font-heading text-xl font-semibold text-text-primary">
+          <Link href="/" aria-label="Lateral — home" className="font-heading text-xl font-semibold text-text-primary">
             Lateral
           </Link>
-          <nav className="hidden items-center gap-6 md:flex">
+          <nav aria-label="Main navigation" className="hidden items-center gap-6 md:flex">
             {navLinks.map((link) => (
               <Link
                 key={link.href}

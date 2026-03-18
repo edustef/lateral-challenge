@@ -11,27 +11,37 @@ export async function getStays(filters: {
   search?: string | null;
   sort?: string | null;
 }): Promise<StayCard[]> {
-  const supabase = await createClient();
-  let query = supabase.from('stays').select('*');
+  const start = performance.now();
+  const actionName = 'getStays';
+  console.log(`[action] ${actionName} start`, { filters });
+  try {
+    const supabase = await createClient();
+    let query = supabase.from('stays').select('*');
 
-  if (filters.type) query = query.eq('travel_type', filters.type);
-  if (filters.vibe) query = query.eq('vibe', filters.vibe);
-  if (filters.search) {
-    query = query.or(
-      `title.ilike.%${filters.search}%,location.ilike.%${filters.search}%`
-    );
-  }
-  if (filters.sort === 'price-asc') {
-    query = query.order('price_per_night', { ascending: true });
-  } else if (filters.sort === 'price-desc') {
-    query = query.order('price_per_night', { ascending: false });
-  } else {
-    query = query.order('created_at', { ascending: false });
-  }
+    if (filters.type) query = query.eq('travel_type', filters.type);
+    if (filters.vibe) query = query.eq('vibe', filters.vibe);
+    if (filters.search) {
+      query = query.or(
+        `title.ilike.%${filters.search}%,location.ilike.%${filters.search}%`
+      );
+    }
+    if (filters.sort === 'price-asc') {
+      query = query.order('price_per_night', { ascending: true });
+    } else if (filters.sort === 'price-desc') {
+      query = query.order('price_per_night', { ascending: false });
+    } else {
+      query = query.order('created_at', { ascending: false });
+    }
 
-  const { data, error } = await query;
-  if (error) throw error;
-  return data ?? [];
+    const { data, error } = await query;
+    if (error) throw error;
+    const result = data ?? [];
+    console.log(`[action] ${actionName} ok`, { duration: Math.round(performance.now() - start) + 'ms', count: result.length });
+    return result;
+  } catch (err) {
+    console.error(`[action] ${actionName} error`, { duration: Math.round(performance.now() - start) + 'ms', error: err });
+    throw err;
+  }
 }
 
 export type StayPreview = Pick<Tables<'stays'>, 'id' | 'title' | 'location' | 'price_per_night' | 'slug'>;
@@ -49,14 +59,26 @@ export async function searchStaysPreview(term: string): Promise<StayPreview[]> {
 }
 
 export async function getStayBySlug(slug: string): Promise<Tables<'stays'> | null> {
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from('stays')
-    .select('*')
-    .eq('slug', slug)
-    .single();
-  if (error) return null;
-  return data;
+  const start = performance.now();
+  const actionName = 'getStayBySlug';
+  console.log(`[action] ${actionName} start`, { slug });
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from('stays')
+      .select('*')
+      .eq('slug', slug)
+      .single();
+    if (error) {
+      console.log(`[action] ${actionName} ok`, { duration: Math.round(performance.now() - start) + 'ms', found: false });
+      return null;
+    }
+    console.log(`[action] ${actionName} ok`, { duration: Math.round(performance.now() - start) + 'ms', found: true });
+    return data;
+  } catch (err) {
+    console.error(`[action] ${actionName} error`, { duration: Math.round(performance.now() - start) + 'ms', error: err });
+    throw err;
+  }
 }
 
 export type ReviewWithAuthor = Tables<'reviews'> & {

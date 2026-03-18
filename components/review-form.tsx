@@ -24,7 +24,7 @@ function StarSelector({
   onLeave: () => void
 }) {
   return (
-    <div className="flex gap-1" onMouseLeave={onLeave}>
+    <div className="flex gap-1" role="radiogroup" aria-label="Rating" onMouseLeave={onLeave}>
       {Array.from({ length: 5 }, (_, i) => {
         const value = i + 1
         const filled = value <= (hoverRating || rating)
@@ -32,6 +32,8 @@ function StarSelector({
           <button
             key={value}
             type="button"
+            role="radio"
+            aria-checked={rating === value}
             onClick={() => onSelect(value)}
             onMouseEnter={() => onHover(value)}
             className="transition-colors"

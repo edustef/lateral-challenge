@@ -104,6 +104,7 @@ export function BookingSidebar({ stay }: BookingSidebarProps) {
       {/* CTA */}
       <Link
         href={`/stays/${stay.slug}/book`}
+        aria-label="Book this stay"
         className="mt-6 block w-full rounded-button bg-accent py-3 text-center font-semibold text-white hover:bg-accent/90 transition"
       >
         Book this stay

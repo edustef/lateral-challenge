@@ -81,6 +81,8 @@ export function VibePicker() {
                       key={t.value}
                       type="button"
                       onClick={() => handleChipToggle(type, t.value, setType)}
+                      aria-label={`Filter by ${t.label}`}
+                      aria-pressed={selected}
                       className={`flex items-center gap-2 rounded-pill border px-4 py-2 text-sm transition-colors ${
                         selected
                           ? 'border-accent bg-accent text-white'
@@ -109,6 +111,8 @@ export function VibePicker() {
                       key={v.value}
                       type="button"
                       onClick={() => handleChipToggle(vibe, v.value, setVibe)}
+                      aria-label={`Filter by ${v.label}`}
+                      aria-pressed={selected}
                       className={`flex items-center gap-2 rounded-pill border px-4 py-2 text-sm transition-colors ${
                         selected
                           ? 'border-accent bg-accent text-white'

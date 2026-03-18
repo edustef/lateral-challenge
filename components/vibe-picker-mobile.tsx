@@ -76,6 +76,7 @@ export function VibePickerMobile({ staysCount }: { staysCount: number }) {
         <DrawerTrigger asChild>
           <button
             type="button"
+            aria-label="Open vibe filter"
             className="flex items-center gap-2 rounded-pill border border-border-subtle bg-bg-surface px-4 py-2 text-sm font-medium text-text-body"
           >
             <span>{typeLabel}</span>
@@ -85,7 +86,7 @@ export function VibePickerMobile({ staysCount }: { staysCount: number }) {
           </button>
         </DrawerTrigger>
 
-        <DrawerContent className="bg-bg-card">
+        <DrawerContent className="bg-bg-card" aria-label="Vibe filter">
           <DrawerHeader className="text-left">
             <DrawerTitle className="sr-only">Filter stays</DrawerTitle>
           </DrawerHeader>
@@ -105,6 +106,8 @@ export function VibePickerMobile({ staysCount }: { staysCount: number }) {
                       key={t.value}
                       type="button"
                       onClick={() => handleChipToggle(type, t.value, setType)}
+                      aria-label={`Filter by ${t.label}`}
+                      aria-pressed={selected}
                       className={`flex items-center gap-2 rounded-pill border px-4 py-2 text-sm transition-colors ${
                         selected
                           ? 'border-accent bg-accent text-white'
@@ -133,6 +136,8 @@ export function VibePickerMobile({ staysCount }: { staysCount: number }) {
                       key={v.value}
                       type="button"
                       onClick={() => handleChipToggle(vibe, v.value, setVibe)}
+                      aria-label={`Filter by ${v.label}`}
+                      aria-pressed={selected}
                       className={`flex items-center gap-2 rounded-pill border px-4 py-2 text-sm transition-colors ${
                         selected
                           ? 'border-accent bg-accent text-white'
