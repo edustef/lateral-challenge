@@ -11,10 +11,10 @@ import type { SearchParams } from 'nuqs/server';
 type PageProps = { searchParams: Promise<SearchParams> };
 
 export default async function DiscoveryPage({ searchParams }: PageProps) {
-  const { type, vibe, search, sort } = await searchParamsCache.parse(searchParams);
+  const { type, vibe, search, sort, stayType, maxPrice, amenities } = await searchParamsCache.parse(searchParams);
 
   const [stays, favoriteIds] = await Promise.all([
-    getStays({ type, vibe, search, sort }),
+    getStays({ type, vibe, search, sort, stayType, maxPrice, amenities }),
     getFavoriteStayIds(),
   ]);
   return (
