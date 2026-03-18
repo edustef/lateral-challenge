@@ -39,11 +39,12 @@ describe('parseNaturalQuery', () => {
   it('calls OpenAI for complex queries and returns parsed result', async () => {
     mockFetch.mockResolvedValueOnce(mockOpenAIResponse({
       stay_type: 'cabin',
-      vibe: 'disconnect',
+      tags: ['romantic', 'off-grid'],
       travel_type: 'duo',
       max_price: 150,
       amenities: ['hot-tub'],
       search: null,
+      country: null,
       sort: null,
       summary: 'Cozy cabins for two under $150/night with a hot tub',
     }));
@@ -51,11 +52,12 @@ describe('parseNaturalQuery', () => {
     const result = await parseNaturalQuery('romantic cabin with hot tub under $150');
     expect(result).toEqual({
       stay_type: 'cabin',
-      vibe: 'disconnect',
+      tags: ['romantic', 'off-grid'],
       travel_type: 'duo',
       max_price: 150,
       amenities: ['hot-tub'],
       search: null,
+      country: null,
       sort: null,
       summary: 'Cozy cabins for two under $150/night with a hot tub',
     });
