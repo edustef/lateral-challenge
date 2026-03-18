@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [ ] **Phase 1: Foundation** - Database schema, seed data, Supabase helpers, types, and warm organic theme
 - [ ] **Phase 2: Browsing Experience** - Vibe-first discovery flow and stay detail pages
-- [ ] **Phase 3: Authenticated Flows** - Auth, checkout, reviews, and profile
+- [x] **Phase 3: Authenticated Flows** - Auth, checkout, reviews, and profile (completed 2026-03-17)
 - [ ] **Phase 4: Ship It** - Polish, testing, CI, and deployment
 
 ## Phase Details
@@ -93,5 +93,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Foundation | 0/2 | Not started | - |
 | 2. Browsing Experience | 0/3 | Not started | - |
-| 3. Authenticated Flows | 0/3 | Not started | - |
+| 3. Authenticated Flows | 0/3 | Complete    | 2026-03-17 |
 | 4. Ship It | 0/2 | Not started | - |
