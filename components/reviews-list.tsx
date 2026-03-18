@@ -25,7 +25,7 @@ function StarRating({ rating, size = 14 }: { rating: number; size?: number }) {
   );
 }
 
-export function ReviewsList({ reviews }: { reviews: ReviewWithAuthor[] }) {
+export function ReviewsList({ reviews, reviewForm }: { reviews: ReviewWithAuthor[]; reviewForm?: React.ReactNode }) {
   if (reviews.length === 0) {
     return (
       <section className="mt-8">
@@ -36,6 +36,7 @@ export function ReviewsList({ reviews }: { reviews: ReviewWithAuthor[] }) {
           <MessageCircle size={32} />
           <p className="text-sm">No reviews yet</p>
         </div>
+        {reviewForm}
       </section>
     );
   }
@@ -59,6 +60,8 @@ export function ReviewsList({ reviews }: { reviews: ReviewWithAuthor[] }) {
           </span>
         </div>
       </div>
+
+      {reviewForm}
 
       <div className="mt-4">
         {reviews.map((review) => (
