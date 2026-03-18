@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in-progress
-last_updated: "2026-03-17T12:11:30.000Z"
+last_updated: "2026-03-17T12:17:22.000Z"
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 5
-  completed_plans: 3
+  completed_plans: 4
 ---
 
 # Project State
@@ -23,28 +23,28 @@ See: .planning/PROJECT.md (updated 2026-03-17)
 ## Current Position
 
 Phase: 2 of 4 (Browsing Experience)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-03-17 — Completed 02-01 (Browsing Layout, Vibe Picker, URL State)
+Last activity: 2026-03-17 — Completed 02-02 (Stay Cards, Grid, Search, Sort)
 
-Progress: [██████----] 60%
+Progress: [████████--] 80%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
-- Average duration: 3.7min
-- Total execution time: 0.18 hours
+- Total plans completed: 4
+- Average duration: 3.5min
+- Total execution time: 0.23 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-foundation | 2 | 7min | 3.5min |
-| 02-browsing-experience | 1 | 4min | 4min |
+| 02-browsing-experience | 2 | 7min | 3.5min |
 
 **Recent Trend:**
-- Last 5 plans: 02-01 (4min), 01-02 (2min), 01-01 (5min)
+- Last 5 plans: 02-02 (3min), 02-01 (4min), 01-02 (2min), 01-01 (5min)
 - Trend: Consistent
 
 *Updated after each plan completion*
@@ -64,6 +64,8 @@ Recent decisions affecting current work:
 - Route group (main) for shared browsing layout with header, root layout stays clean for fonts
 - nuqs v2 with NuqsAdapter for URL state management across browsing pages
 - Chip toggle deselects on re-click (sets param to null)
+- Dual card rendering (desktop vertical + mobile horizontal) via responsive visibility classes
+- Sort toggle uses 3-state cycle (null/asc/desc) so users can remove sorting entirely
 
 ### Pending Todos
 
@@ -76,5 +78,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-17
-Stopped at: Completed 02-01-PLAN.md
+Stopped at: Completed 02-02-PLAN.md
 Resume file: None

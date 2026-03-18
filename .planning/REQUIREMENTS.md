@@ -17,12 +17,12 @@
 
 - [x] **DISC-01**: Vibe picker stepper — Step 1 "Who's traveling?" (solo/duo/family/group) → Step 2 "What's the vibe?" (adventure/culture/disconnect/celebration)
 - [x] **DISC-02**: URL state via nuqs (?type=solo&vibe=adventure) — shareable, SSR-compatible
-- [ ] **DISC-03**: Stay cards with image, title, location, price/night, max guests, type badge
-- [ ] **DISC-04**: Responsive stays grid (1/2/3 columns)
-- [ ] **DISC-05**: Text search filter (by title/location)
-- [ ] **DISC-06**: Price sort toggle (low→high, high→low)
-- [ ] **DISC-07**: Loading skeleton state for stays grid
-- [ ] **DISC-08**: Mobile-responsive vibe picker (compact picker + bottom sheet on mobile)
+- [x] **DISC-03**: Stay cards with image, title, location, price/night, max guests, type badge
+- [x] **DISC-04**: Responsive stays grid (1/2/3 columns)
+- [x] **DISC-05**: Text search filter (by title/location)
+- [x] **DISC-06**: Price sort toggle (low→high, high→low)
+- [x] **DISC-07**: Loading skeleton state for stays grid
+- [x] **DISC-08**: Mobile-responsive vibe picker (compact picker + bottom sheet on mobile)
 
 ### Stay Detail
 
@@ -127,12 +127,12 @@
 | FOUND-05 | Phase 1 | Complete |
 | DISC-01 | Phase 2 | Complete |
 | DISC-02 | Phase 2 | Complete |
-| DISC-03 | Phase 2 | Pending |
-| DISC-04 | Phase 2 | Pending |
-| DISC-05 | Phase 2 | Pending |
-| DISC-06 | Phase 2 | Pending |
-| DISC-07 | Phase 2 | Pending |
-| DISC-08 | Phase 2 | Pending |
+| DISC-03 | Phase 2 | Complete |
+| DISC-04 | Phase 2 | Complete |
+| DISC-05 | Phase 2 | Complete |
+| DISC-06 | Phase 2 | Complete |
+| DISC-07 | Phase 2 | Complete |
+| DISC-08 | Phase 2 | Complete |
 | DETL-01 | Phase 2 | Pending |
 | DETL-02 | Phase 2 | Pending |
 | DETL-03 | Phase 2 | Pending |
