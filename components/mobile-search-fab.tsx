@@ -1,17 +1,38 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { Sparkles } from 'lucide-react';
+import { Search, Sparkles, X } from 'lucide-react';
 import { useQueryStates } from 'nuqs';
 import { searchParamsParsers } from '@/lib/search-params';
 import { useFilterTransition } from '@/components/filter-transition-context';
+import { useCallback } from 'react';
 
 export function MobileSearchFab() {
   const pathname = usePathname();
-  const { setSearchExpanded } = useFilterTransition();
-  const [params] = useQueryStates({
-    q: searchParamsParsers.q,
-  });
+  const { startTransition, setSearchExpanded, setSummary } = useFilterTransition();
+  const [params, setParams] = useQueryStates(
+    {
+      q: searchParamsParsers.q,
+      locations: searchParamsParsers.locations,
+      countries: searchParamsParsers.countries,
+      type: searchParamsParsers.type,
+      tags: searchParamsParsers.tags,
+      sort: searchParamsParsers.sort,
+      stayType: searchParamsParsers.stayType,
+      maxPrice: searchParamsParsers.maxPrice,
+      amenities: searchParamsParsers.amenities,
+    },
+    { startTransition },
+  );
+
+  const handleClear = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSummary(null);
+    setParams({
+      q: null, locations: null, countries: null, type: null,
+      tags: null, sort: null, stayType: null, maxPrice: null, amenities: null,
+    });
+  }, [setParams, setSummary]);
 
   // Only show on homepage
   if (pathname !== '/') return null;
@@ -24,11 +45,27 @@ export function MobileSearchFab() {
       <button
         type="button"
         onClick={() => setSearchExpanded(true)}
-        className="flex h-11 max-w-xs items-center gap-2 rounded-full border border-border bg-white px-4 shadow-lg transition-shadow active:shadow-md"
+        className="flex h-11 max-w-xs items-center gap-2 rounded-full border border-border bg-white pl-3 pr-1.5 shadow-lg transition-shadow active:shadow-md"
       >
-        <Sparkles className="h-4 w-4 shrink-0 text-accent" />
-        <span className={`truncate text-sm font-medium ${params.q ? 'text-text-primary' : 'text-text-muted'}`}>
+        {params.q ? (
+          <Search className="h-4 w-4 shrink-0 text-accent" />
+        ) : (
+          <Sparkles className="h-4 w-4 shrink-0 text-accent" />
+        )}
+        <span className={`flex-1 truncate text-sm font-medium ${params.q ? 'text-text-primary' : 'text-text-muted'}`}>
           {params.q || "Try 'cozy cabin for 2 under $200'..."}
+        </span>
+        {params.q && (
+          <span
+            role="button"
+            onClick={handleClear}
+            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-bg-muted text-text-secondary"
+          >
+            <X className="h-3.5 w-3.5" />
+          </span>
+        )}
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-white">
+          <Search className="h-3.5 w-3.5" />
         </span>
       </button>
     </div>

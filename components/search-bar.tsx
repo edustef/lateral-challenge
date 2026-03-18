@@ -155,7 +155,7 @@ export function SearchBar({ compact = false }: SearchBarProps) {
   return (
     <>
       <div ref={wrapperRef} className={`relative hidden md:block ${compact ? 'w-full max-w-sm' : 'w-full'}`}>
-        <Sparkles className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-accent" />
+        <Sparkles className={`pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-accent ${compact ? 'h-4 w-4' : 'h-4 w-4 md:left-4 md:h-5 md:w-5'}`} />
         <input
           ref={desktopRef}
           type="text"
@@ -166,22 +166,32 @@ export function SearchBar({ compact = false }: SearchBarProps) {
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           disabled={isLoading}
-          className={`${inputSize} w-full border bg-white pl-9 pr-9 font-medium text-text-primary placeholder:text-text-muted transition-colors focus:border-accent focus:outline-none ${
-            isLoading ? 'border-accent animate-pulse opacity-70' : 'border-border'
-          }`}
+          className={`${inputSize} w-full border bg-white font-medium text-text-primary placeholder:text-text-muted transition-colors focus:border-accent focus:outline-none ${
+            compact ? 'pl-9 pr-9' : 'pl-9 pr-16 md:pl-11 md:pr-20'
+          } ${isLoading ? 'border-accent animate-pulse opacity-70' : 'border-border'}`}
         />
         {isLoading ? (
-          <Loader2 className="absolute right-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 animate-spin text-accent" />
+          <Loader2 className={`absolute top-1/2 -translate-y-1/2 animate-spin text-accent ${compact ? 'right-3 h-3.5 w-3.5' : 'right-4 h-4 w-4 md:right-5'}`} />
         ) : localValue ? (
           <button
             type="button"
             onClick={handleClear}
             aria-label="Clear search"
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary"
+            className={`absolute top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary ${compact ? 'right-3' : 'right-14 md:right-[4.5rem]'}`}
           >
-            <X className="h-3.5 w-3.5" />
+            <X className={compact ? 'h-3.5 w-3.5' : 'h-4 w-4'} />
           </button>
         ) : null}
+        {!compact && (
+          <button
+            type="button"
+            onClick={() => submitQuery(localValue)}
+            aria-label="Search"
+            className="absolute right-1.5 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-accent text-white transition-colors hover:bg-accent/90 md:right-2 md:h-10 md:w-10"
+          >
+            <Search className="h-3.5 w-3.5 md:h-4 md:w-4" />
+          </button>
+        )}
 
         {/* Focus popover — hero mode only */}
         {!compact && isFocused && <PopoverPortal anchorRef={wrapperRef}>
@@ -380,14 +390,14 @@ export function SearchOverlay() {
               onChange={(e) => setLocalValue(e.target.value)}
               onKeyDown={handleKeyDown}
               disabled={isLoading}
-              className={`h-10 w-full rounded-full border bg-white pl-9 pr-9 text-base text-text-primary placeholder:text-text-muted focus:outline-none ${
+              className={`h-10 w-full rounded-full border bg-white pl-9 pr-14 text-base text-text-primary placeholder:text-text-muted focus:outline-none ${
                 isLoading
                   ? 'border-accent animate-pulse opacity-70'
                   : 'border-accent'
               }`}
             />
             {isLoading ? (
-              <Loader2 className="absolute right-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 animate-spin text-accent" />
+              <Loader2 className="absolute right-12 top-1/2 h-3.5 w-3.5 -translate-y-1/2 animate-spin text-accent" />
             ) : localValue ? (
               <button
                 type="button"
@@ -397,13 +407,19 @@ export function SearchOverlay() {
                   inputRef.current?.focus();
                 }}
                 aria-label="Clear search text"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary"
+                className="absolute right-12 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary"
               >
                 <X className="h-3.5 w-3.5" />
               </button>
-            ) : (
-              <Search className="pointer-events-none absolute right-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-text-muted" />
-            )}
+            ) : null}
+            <button
+              type="button"
+              onClick={() => submitQuery(localValue)}
+              aria-label="Search"
+              className="absolute right-1.5 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-accent text-white transition-colors hover:bg-accent/90"
+            >
+              <Search className="h-3.5 w-3.5" />
+            </button>
           </div>
 
           <button
