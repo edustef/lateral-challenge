@@ -74,8 +74,8 @@
 
 ### Testing & Deployment
 
-- [ ] **TEST-01**: Unit tests for complex logic (price calculation, date utilities, availability checks)
-- [ ] **TEST-02**: E2E test for checkout flow (home → select stay → book → confirmation)
+- [x] **TEST-01**: Unit tests for complex logic (price calculation, date utilities, availability checks)
+- [x] **TEST-02**: E2E test for checkout flow (home → select stay → book → confirmation)
 - [ ] **DEPL-01**: GitHub Actions CI (lint + test + build)
 - [ ] **DEPL-02**: Deploy to Vercel with environment variables
 - [ ] **DEPL-03**: README with setup instructions, architecture notes, key decisions, tradeoffs
@@ -163,8 +163,8 @@
 | PLSH-04 | Phase 4 | Pending |
 | PLSH-05 | Phase 4 | Pending |
 | PLSH-06 | Phase 4 | Pending |
-| TEST-01 | Phase 4 | Pending |
-| TEST-02 | Phase 4 | Pending |
+| TEST-01 | Phase 4 | Complete |
+| TEST-02 | Phase 4 | Complete |
 | DEPL-01 | Phase 4 | Pending |
 | DEPL-02 | Phase 4 | Pending |
 | DEPL-03 | Phase 4 | Pending |
