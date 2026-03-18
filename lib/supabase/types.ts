@@ -16,28 +16,28 @@ export type Database = {
     Tables: {
       blocked_dates: {
         Row: {
-          id: string
-          stay_id: string
-          start_date: string
-          end_date: string
-          reason: string
           created_at: string | null
+          end_date: string
+          id: string
+          reason: string
+          start_date: string
+          stay_id: string
         }
         Insert: {
-          id?: string
-          stay_id: string
-          start_date: string
-          end_date: string
-          reason?: string
           created_at?: string | null
+          end_date: string
+          id?: string
+          reason?: string
+          start_date: string
+          stay_id: string
         }
         Update: {
-          id?: string
-          stay_id?: string
-          start_date?: string
-          end_date?: string
-          reason?: string
           created_at?: string | null
+          end_date?: string
+          id?: string
+          reason?: string
+          start_date?: string
+          stay_id?: string
         }
         Relationships: [
           {
@@ -220,7 +220,7 @@ export type Database = {
           comment: string | null
           created_at: string | null
           id: string
-          is_approved: boolean
+          is_approved: boolean | null
           rating: number
           stay_id: string
           user_id: string
@@ -229,7 +229,7 @@ export type Database = {
           comment?: string | null
           created_at?: string | null
           id?: string
-          is_approved?: boolean
+          is_approved?: boolean | null
           rating: number
           stay_id: string
           user_id: string
@@ -238,7 +238,7 @@ export type Database = {
           comment?: string | null
           created_at?: string | null
           id?: string
-          is_approved?: boolean
+          is_approved?: boolean | null
           rating?: number
           stay_id?: string
           user_id?: string
@@ -267,11 +267,11 @@ export type Database = {
           price_per_night: number
           service_fee: number
           slug: string
+          tags: string[] | null
           title: string
           travel_type: string
           type: string
           updated_at: string | null
-          vibe: string
         }
         Insert: {
           amenities?: string[] | null
@@ -286,11 +286,11 @@ export type Database = {
           price_per_night: number
           service_fee?: number
           slug: string
+          tags?: string[] | null
           title: string
           travel_type: string
           type: string
           updated_at?: string | null
-          vibe: string
         }
         Update: {
           amenities?: string[] | null
@@ -305,11 +305,11 @@ export type Database = {
           price_per_night?: number
           service_fee?: number
           slug?: string
+          tags?: string[] | null
           title?: string
           travel_type?: string
           type?: string
           updated_at?: string | null
-          vibe?: string
         }
         Relationships: []
       }
@@ -319,12 +319,10 @@ export type Database = {
     }
     Functions: {
       get_unavailable_dates: {
-        Args: {
-          p_stay_id: string
-        }
+        Args: { p_stay_id: string }
         Returns: {
-          start_date: string
           end_date: string
+          start_date: string
         }[]
       }
     }
