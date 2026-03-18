@@ -119,6 +119,12 @@ export default async function ConfirmationPage({ searchParams }: Props) {
         >
           Back to home
         </Link>
+        <Link
+          href="/profile"
+          className="mt-3 inline-block text-sm text-accent hover:underline"
+        >
+          View my bookings
+        </Link>
       </div>
     </div>
   );

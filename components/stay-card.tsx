@@ -1,10 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Users } from 'lucide-react';
+import { formatPrice } from '@/lib/utils/price';
 import type { StayCard as StayCardType } from '@/lib/actions/stays';
 
 export function StayCard({ stay }: { stay: StayCardType }) {
-  const price = Math.round(stay.price_per_night / 100);
+  const price = formatPrice(stay.price_per_night);
   const href = `/stays/${stay.slug}`;
 
   return (
@@ -27,7 +28,7 @@ export function StayCard({ stay }: { stay: StayCardType }) {
           <p className="text-sm text-text-secondary">{stay.location}</p>
           <div className="flex items-baseline gap-1">
             <span className="font-mono font-semibold text-text-primary">
-              ${price}
+              {price}
             </span>
             <span className="text-sm text-text-secondary">/ night</span>
           </div>
@@ -64,7 +65,7 @@ export function StayCard({ stay }: { stay: StayCardType }) {
           <div className="flex items-end justify-between">
             <div className="flex items-baseline gap-1">
               <span className="font-mono text-sm font-semibold text-text-primary">
-                ${price}
+                {price}
               </span>
               <span className="text-xs text-text-secondary">/ night</span>
             </div>
