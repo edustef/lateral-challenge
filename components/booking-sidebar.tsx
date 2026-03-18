@@ -68,7 +68,7 @@ export function BookingSidebar({ stay }: BookingSidebarProps) {
       <div className="mt-4">
         <label
           htmlFor="guests-select"
-          className="mb-1 block text-sm text-text-secondary"
+          className="mb-2 block text-sm font-medium text-text-primary"
         >
           Guests
         </label>
@@ -76,7 +76,8 @@ export function BookingSidebar({ stay }: BookingSidebarProps) {
           id="guests-select"
           value={guests}
           onChange={(e) => setGuests(Number(e.target.value))}
-          className="w-full rounded-small border border-border bg-bg-card px-3 py-2 text-sm text-text-body focus:ring-2 focus:ring-accent/30 focus:outline-none"
+          className="w-full appearance-none rounded-lg border border-border bg-background px-3 py-2 pr-8 text-sm text-foreground bg-[length:16px_16px] bg-[right_8px_center] bg-no-repeat focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 focus:outline-none"
+          style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")` }}
         >
           {Array.from({ length: stay.max_guests }, (_, i) => i + 1).map(
             (n) => (

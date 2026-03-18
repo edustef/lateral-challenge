@@ -68,7 +68,7 @@ export function DatePicker({
           <span>Select dates</span>
         )}
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
+      <PopoverContent className="w-auto overflow-visible p-0" align="start">
         <Calendar
           mode="range"
           defaultMonth={date?.from ?? getTomorrow()}
@@ -76,6 +76,7 @@ export function DatePicker({
           onSelect={handleSelect}
           numberOfMonths={1}
           disabled={{ before: getTomorrow() }}
+          className="p-3"
         />
       </PopoverContent>
     </Popover>
