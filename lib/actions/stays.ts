@@ -13,6 +13,9 @@ export async function getStays(filters: {
   vibe?: string | null;
   search?: string | null;
   sort?: string | null;
+  stayType?: string | null;
+  maxPrice?: number | null;
+  amenities?: string[] | null;
 }): Promise<StayCard[]> {
   const start = performance.now();
   const actionName = 'getStays';
@@ -24,9 +27,17 @@ export async function getStays(filters: {
     if (filters.type) query = query.eq('travel_type', filters.type);
     if (filters.vibe) query = query.eq('vibe', filters.vibe);
     if (filters.search) {
+      const sanitized = filters.search
+        .replace(/%/g, '\\%')
+        .replace(/_/g, '\\_');
       query = query.or(
-        `title.ilike.%${filters.search}%,location.ilike.%${filters.search}%`
+        `title.ilike.%${sanitized}%,location.ilike.%${sanitized}%`
       );
+    }
+    if (filters.stayType) query = query.eq('type', filters.stayType);
+    if (filters.maxPrice) query = query.lte('price_per_night', filters.maxPrice);
+    if (filters.amenities && filters.amenities.length > 0) {
+      query = query.contains('amenities', filters.amenities);
     }
     if (filters.sort === 'price-asc') {
       query = query.order('price_per_night', { ascending: true });
@@ -75,20 +86,6 @@ export async function getStays(filters: {
     console.error(`[action] ${actionName} error`, { duration: Math.round(performance.now() - start) + 'ms', error: err });
     throw err;
   }
-}
-
-export type StayPreview = Pick<Tables<'stays'>, 'id' | 'title' | 'location' | 'price_per_night' | 'slug' | 'images'>;
-
-export async function searchStaysPreview(term: string): Promise<StayPreview[]> {
-  if (!term || term.length < 2) return [];
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from('stays')
-    .select('id, title, location, price_per_night, slug, images')
-    .or(`title.ilike.%${term}%,location.ilike.%${term}%`)
-    .limit(5);
-  if (error) return [];
-  return data ?? [];
 }
 
 export async function getStayBySlug(slug: string): Promise<Tables<'stays'> | null> {
