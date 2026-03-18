@@ -45,7 +45,8 @@ export async function getStays(filters: {
     const { data: reviews } = await supabase
       .from('reviews')
       .select('stay_id, rating')
-      .in('stay_id', stayIds);
+      .in('stay_id', stayIds)
+      .eq('is_approved', true);
 
     const ratingMap = new Map<string, { sum: number; count: number }>();
     for (const r of reviews ?? []) {
@@ -125,6 +126,7 @@ export async function getReviewsForStay(stayId: string): Promise<ReviewWithAutho
     .from('reviews')
     .select('*')
     .eq('stay_id', stayId)
+    .eq('is_approved', true)
     .order('created_at', { ascending: false });
   if (error || !reviews) return [];
 

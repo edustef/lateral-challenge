@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { moderateContent } from '@/lib/moderation'
 import { revalidatePath } from 'next/cache'
 
 export async function createReview(formData: FormData): Promise<{ error?: string; success?: boolean }> {
@@ -32,6 +33,9 @@ export async function createReview(formData: FormData): Promise<{ error?: string
     return { error: 'You must be signed in to leave a review' }
   }
 
+  const isApproved = await moderateContent(comment ?? '')
+  console.log(`[action] ${actionName} moderation`, { isApproved })
+
   const { error } = await supabase
     .from('reviews')
     .insert({
@@ -39,6 +43,7 @@ export async function createReview(formData: FormData): Promise<{ error?: string
       user_id: user.id,
       rating,
       comment,
+      is_approved: isApproved,
     })
 
   if (error) {
