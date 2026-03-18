@@ -16,6 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 2: Browsing Experience** - Vibe-first discovery flow and stay detail pages
 - [x] **Phase 3: Authenticated Flows** - Auth, checkout, reviews, and profile (completed 2026-03-17)
 - [ ] **Phase 4: Ship It** - Polish, testing, CI, and deployment
+- [ ] **Phase 5: Bug Fixes & Wiring** - Fix middleware filename, auth redirect chain, search price display, confirmation UX
 
 ## Phase Details
 
@@ -85,6 +86,21 @@ Plans:
 - [ ] 04-02-PLAN.md — Testing: Vitest unit tests for price/date utils, Playwright E2E checkout flow
 - [ ] 04-03-PLAN.md — CI/CD: GitHub Actions pipeline, Vercel config, comprehensive README
 
+### Phase 5: Bug Fixes & Wiring
+**Goal**: Fix critical auth/checkout bugs found during milestone audit — middleware filename, OTP redirect chain, search price display, and confirmation page UX
+**Depends on**: Phase 4
+**Requirements**: AUTH-03, CHKT-08, DISC-05, TEST-02
+**Gap Closure:** Closes gaps from v1.0 audit
+**Success Criteria** (what must be TRUE):
+  1. `middleware.ts` exists at project root (not `proxy.ts`) and Next.js executes it for session refresh
+  2. Unauthenticated user visiting `/stays/[slug]/book` is redirected to login, and after OTP login returns to `/stays/[slug]/book`
+  3. Search bar preview shows formatted prices ($150.00) not raw cents (€15000)
+  4. Confirmation page includes a "View My Bookings" link to `/profile`
+  5. E2E checkout auth-redirect test passes
+
+Plans:
+- [ ] 05-01-PLAN.md — Middleware rename, OTP redirect chain, search price fix, confirmation UX
+
 ## Progress
 
 **Execution Order:**
@@ -96,3 +112,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | 2. Browsing Experience | 0/3 | Not started | - |
 | 3. Authenticated Flows | 0/3 | Complete    | 2026-03-17 |
 | 4. Ship It | 0/2 | Not started | - |
+| 5. Bug Fixes & Wiring | 0/1 | Not started | - |

@@ -19,7 +19,7 @@
 - [x] **DISC-02**: URL state via nuqs (?type=solo&vibe=adventure) — shareable, SSR-compatible
 - [x] **DISC-03**: Stay cards with image, title, location, price/night, max guests, type badge
 - [x] **DISC-04**: Responsive stays grid (1/2/3 columns)
-- [x] **DISC-05**: Text search filter (by title/location)
+- [ ] **DISC-05**: Text search filter (by title/location)
 - [x] **DISC-06**: Price sort toggle (low→high, high→low)
 - [x] **DISC-07**: Loading skeleton state for stays grid
 - [x] **DISC-08**: Mobile-responsive vibe picker (compact picker + bottom sheet on mobile)
@@ -38,7 +38,7 @@
 
 - [x] **AUTH-01**: Magic link (email OTP) login flow
 - [x] **AUTH-02**: Auth callback page (/auth/callback)
-- [x] **AUTH-03**: Session persistence across browser refresh (proxy middleware)
+- [ ] **AUTH-03**: Session persistence across browser refresh (proxy middleware)
 - [x] **AUTH-04**: Header with conditional sign-in/sign-out and user avatar
 
 ### Reviews
@@ -56,7 +56,7 @@
 - [x] **CHKT-05**: Price calculation — per night × nights + cleaning fee + service fee = total
 - [x] **CHKT-06**: Mock payment step ("Confirm & pay" button)
 - [x] **CHKT-07**: Booking confirmation page with summary (stay name, dates, guests, total)
-- [x] **CHKT-08**: Auth guard — redirect to login if unauthenticated
+- [ ] **CHKT-08**: Auth guard — redirect to login if unauthenticated
 
 ### Profile
 
@@ -75,7 +75,7 @@
 ### Testing & Deployment
 
 - [x] **TEST-01**: Unit tests for complex logic (price calculation, date utilities, availability checks)
-- [x] **TEST-02**: E2E test for checkout flow (home → select stay → book → confirmation)
+- [ ] **TEST-02**: E2E test for checkout flow (home → select stay → book → confirmation)
 - [x] **DEPL-01**: GitHub Actions CI (lint + test + build)
 - [x] **DEPL-02**: Deploy to Vercel with environment variables
 - [x] **DEPL-03**: README with setup instructions, architecture notes, key decisions, tradeoffs
@@ -88,7 +88,7 @@
 
 ### Discovery
 
-- **DISC-V2-01**: Sticky filter bar with frosted glass effect on scroll
+- **DISC-V2-01**: Sticky filter bar
 - **DISC-V2-02**: Favorites/wishlist
 - **DISC-V2-03**: Stay comparison view
 - **DISC-V2-04**: Map view for stay locations
@@ -129,7 +129,7 @@
 | DISC-02 | Phase 2 | Complete |
 | DISC-03 | Phase 2 | Complete |
 | DISC-04 | Phase 2 | Complete |
-| DISC-05 | Phase 2 | Complete |
+| DISC-05 | Phase 5 | Pending |
 | DISC-06 | Phase 2 | Complete |
 | DISC-07 | Phase 2 | Complete |
 | DISC-08 | Phase 2 | Complete |
@@ -142,7 +142,7 @@
 | DETL-07 | Phase 2 | Complete |
 | AUTH-01 | Phase 3 | Complete |
 | AUTH-02 | Phase 3 | Complete |
-| AUTH-03 | Phase 3 | Complete |
+| AUTH-03 | Phase 5 | Pending |
 | AUTH-04 | Phase 3 | Complete |
 | CHKT-01 | Phase 3 | Complete |
 | CHKT-02 | Phase 3 | Complete |
@@ -151,7 +151,7 @@
 | CHKT-05 | Phase 3 | Complete |
 | CHKT-06 | Phase 3 | Complete |
 | CHKT-07 | Phase 3 | Complete |
-| CHKT-08 | Phase 3 | Complete |
+| CHKT-08 | Phase 5 | Pending |
 | REVW-01 | Phase 3 | Complete |
 | REVW-02 | Phase 3 | Complete |
 | REVW-03 | Phase 3 | Complete |
@@ -164,7 +164,7 @@
 | PLSH-05 | Phase 4 | Complete |
 | PLSH-06 | Phase 4 | Complete |
 | TEST-01 | Phase 4 | Complete |
-| TEST-02 | Phase 4 | Complete |
+| TEST-02 | Phase 5 | Pending |
 | DEPL-01 | Phase 4 | Complete |
 | DEPL-02 | Phase 4 | Complete |
 | DEPL-03 | Phase 4 | Complete |
