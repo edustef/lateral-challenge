@@ -1,12 +1,17 @@
 'use server';
 
+import { headers } from 'next/headers';
 import { serverEnv } from '@/lib/env.server';
+import { rateLimit } from '@/lib/rate-limit';
 import {
   isSimpleQuery,
   OPENAI_FUNCTION_SCHEMA,
   SYSTEM_PROMPT,
   type ConciergeResult,
 } from '@/lib/concierge-schema';
+
+/** 10 AI search requests per IP per 60 seconds. */
+const AI_SEARCH_LIMIT = { windowMs: 60_000, maxRequests: 10 };
 
 export async function parseNaturalQuery(input: string): Promise<ConciergeResult | null> {
   const start = performance.now();
@@ -15,6 +20,15 @@ export async function parseNaturalQuery(input: string): Promise<ConciergeResult 
   const trimmed = input.trim();
   if (!trimmed || isSimpleQuery(trimmed)) {
     console.log(`[action] ${actionName} skipped (simple query)`, { input: trimmed });
+    return null;
+  }
+
+  // Rate limit by IP before calling OpenAI
+  const h = await headers();
+  const ip = h.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
+  const limit = rateLimit(`ai-search:${ip}`, AI_SEARCH_LIMIT);
+  if (!limit.success) {
+    console.warn(`[action] ${actionName} rate limited`, { ip, retryAfterMs: limit.retryAfterMs });
     return null;
   }
 

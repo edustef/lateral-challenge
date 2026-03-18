@@ -137,6 +137,7 @@ Custom design tokens in CSS variables (not Tailwind defaults):
 | proxy.ts for auth | Keeps Supabase token refresh isolated. Clean separation from route handlers. |
 | OAuth (Google + GitHub) + magic link | No passwords to manage. Simpler UX for a demo. |
 | Optimistic UI for favorites | `useOptimistic` makes wishlist toggling feel instant. Server syncs in the background. |
+| Server-side rate limiting on AI search | In-memory sliding window (10 req/IP/min) prevents OpenAI API abuse. Falls back to text search when limited — no error shown to user. |
 | oxlint over ESLint | 50-100x faster. Sufficient for project scope — no custom rule needs. |
 
 ---
@@ -157,7 +158,8 @@ Custom design tokens in CSS variables (not Tailwind defaults):
 
 ### Architecture
 
-- **No API layer**: Server actions are called directly from components. For a larger app, an API route layer would provide better caching, rate limiting, and monitoring.
+- **In-memory rate limiting**: The AI search rate limiter is per-process. In a multi-instance deployment, this should be replaced with Redis or Upstash Rate Limit for shared state.
+- **No API layer**: Server actions are called directly from components. For a larger app, an API route layer would provide better caching and monitoring.
 - **No real-time**: Supabase supports real-time subscriptions. Booking availability could update live without polling.
 - **No caching strategy**: Server Components re-fetch on every navigation. Adding `unstable_cache` or ISR for stay listings would reduce database load.
 - **No content moderation pipeline**: Reviews go live immediately. A production app would need moderation (the schema and utilities exist but aren't wired into a workflow).
