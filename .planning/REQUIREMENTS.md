@@ -26,13 +26,13 @@
 
 ### Stay Detail
 
-- [ ] **DETL-01**: Stay detail page at /stays/[id] with photo gallery (hero + thumbnails)
-- [ ] **DETL-02**: Stay info display — title, location, type badge, description, amenities as badges
-- [ ] **DETL-03**: Reviews list with star ratings, author, and timestamps
-- [ ] **DETL-04**: Date availability display with date picker
-- [ ] **DETL-05**: Price breakdown — per night rate, number of nights, cleaning fee, service fee, total
-- [ ] **DETL-06**: "Book this stay" CTA linking to checkout
-- [ ] **DETL-07**: notFound() for missing stays
+- [x] **DETL-01**: Stay detail page at /stays/[id] with photo gallery (hero + thumbnails)
+- [x] **DETL-02**: Stay info display — title, location, type badge, description, amenities as badges
+- [x] **DETL-03**: Reviews list with star ratings, author, and timestamps
+- [x] **DETL-04**: Date availability display with date picker
+- [x] **DETL-05**: Price breakdown — per night rate, number of nights, cleaning fee, service fee, total
+- [x] **DETL-06**: "Book this stay" CTA linking to checkout
+- [x] **DETL-07**: notFound() for missing stays
 
 ### Authentication
 
@@ -133,13 +133,13 @@
 | DISC-06 | Phase 2 | Complete |
 | DISC-07 | Phase 2 | Complete |
 | DISC-08 | Phase 2 | Complete |
-| DETL-01 | Phase 2 | Pending |
-| DETL-02 | Phase 2 | Pending |
-| DETL-03 | Phase 2 | Pending |
-| DETL-04 | Phase 2 | Pending |
-| DETL-05 | Phase 2 | Pending |
-| DETL-06 | Phase 2 | Pending |
-| DETL-07 | Phase 2 | Pending |
+| DETL-01 | Phase 2 | Complete |
+| DETL-02 | Phase 2 | Complete |
+| DETL-03 | Phase 2 | Complete |
+| DETL-04 | Phase 2 | Complete |
+| DETL-05 | Phase 2 | Complete |
+| DETL-06 | Phase 2 | Complete |
+| DETL-07 | Phase 2 | Complete |
 | AUTH-01 | Phase 3 | Pending |
 | AUTH-02 | Phase 3 | Pending |
 | AUTH-03 | Phase 3 | Pending |
