@@ -44,24 +44,24 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-V2-01 | TBD | Pending |
-| AUTH-V2-02 | TBD | Pending |
-| AUTH-V2-03 | TBD | Pending |
-| DISC-V2-01 | TBD | Pending |
-| DISC-V2-02 | TBD | Pending |
-| DISC-V2-03 | TBD | Pending |
-| DISC-V2-04 | TBD | Pending |
-| PLSH-V2-01 | TBD | Pending |
-| PLSH-V2-02 | TBD | Pending |
-| MODR-01 | TBD | Pending |
-| MODR-02 | TBD | Pending |
-| MODR-03 | TBD | Pending |
+| AUTH-V2-01 | Phase 6 | Pending |
+| AUTH-V2-02 | Phase 6 | Pending |
+| AUTH-V2-03 | Phase 6 | Pending |
+| DISC-V2-01 | Phase 6 | Pending |
+| DISC-V2-02 | Phase 7 | Pending |
+| DISC-V2-03 | Phase 7 | Pending |
+| DISC-V2-04 | Phase 7 | Pending |
+| PLSH-V2-01 | Phase 8 | Pending |
+| PLSH-V2-02 | Phase 8 | Pending |
+| MODR-01 | Phase 7 | Pending |
+| MODR-02 | Phase 7 | Pending |
+| MODR-03 | Phase 7 | Pending |
 
 **Coverage:**
 - v2 requirements: 12 total
-- Mapped to phases: 0
-- Unmapped: 12
+- Mapped to phases: 12
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-17*
-*Last updated: 2026-03-17 after v2.0 milestone start*
+*Last updated: 2026-03-17 after v2.0 roadmap creation*
