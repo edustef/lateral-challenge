@@ -28,11 +28,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Seed data loads 15 stays across 4 vibes, 5 collections, and 20 reviews into the local database
   3. The app renders with the warm organic palette (#faf7f2 base, #c4956a accent) matching the Pencil designs
   4. Supabase client helpers work for both server components and client components
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
+- [ ] 01-01-PLAN.md — Database schema, seed data, Supabase helpers & types
+- [ ] 01-02-PLAN.md — Warm organic theme & design system setup
 
 ### Phase 2: Browsing Experience
 **Goal**: Users can discover unique stays through the vibe picker and explore detailed stay pages
