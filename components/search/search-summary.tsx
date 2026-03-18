@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useFilterTransition } from '@/components/filter-transition-context';
 import { useSearchParamsState } from '@/lib/hooks/use-search-params';
 
-export function ConciergeSummary() {
+export function SearchSummary() {
   const { summary, setSummary, startTransition } = useFilterTransition();
   const { params, clearAll } = useSearchParamsState(startTransition);
 

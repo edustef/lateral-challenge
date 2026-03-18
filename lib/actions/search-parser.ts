@@ -7,13 +7,13 @@ import {
   isSimpleQuery,
   OPENAI_FUNCTION_SCHEMA,
   SYSTEM_PROMPT,
-  type ConciergeResult,
-} from '@/lib/concierge-schema';
+  type SearchParserResult,
+} from '@/lib/search-parser-schema';
 
 /** 10 AI search requests per IP per 60 seconds. */
 const AI_SEARCH_LIMIT = { windowMs: 60_000, maxRequests: 10 };
 
-export async function parseNaturalQuery(input: string): Promise<ConciergeResult | null> {
+export async function parseNaturalQuery(input: string): Promise<SearchParserResult | null> {
   const start = performance.now();
   const actionName = 'parseNaturalQuery';
 
@@ -67,7 +67,7 @@ export async function parseNaturalQuery(input: string): Promise<ConciergeResult 
       return null;
     }
 
-    const parsed: ConciergeResult = JSON.parse(toolCall.function.arguments);
+    const parsed: SearchParserResult = JSON.parse(toolCall.function.arguments);
 
     console.log(`[action] ${actionName} ok`, {
       duration: Math.round(performance.now() - start) + 'ms',

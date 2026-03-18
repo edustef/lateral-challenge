@@ -75,7 +75,7 @@ app/
   auth/                      # Login + OAuth callback (no header)
 
 components/
-  search/                    # SearchBar, SearchOverlay, SearchHero, MobileSearchFab, ConciergeSummary
+  search/                    # SearchBar, SearchOverlay, SearchHero, MobileSearchFab, SearchSummary
   booking/                   # CheckoutForm, CheckoutSummary, BookingSidebar, BookingCard, DatePicker
   stays/                     # StayCard, StayInfo, StaysGrid, PhotoGallery, ReviewForm, ReviewsList
   layout/                    # Header, HeaderBar
@@ -86,11 +86,11 @@ components/
   ...                        # Other shared components
 
 lib/
-  actions/                   # Server actions (stays, bookings, reviews, favorites, auth, concierge)
+  actions/                   # Server actions (stays, bookings, reviews, favorites, auth, search-parser)
   hooks/                     # Custom hooks (useSearchParamsState, useSearchQuery)
   supabase/                  # Client helpers, auth proxy, generated types
   utils/                     # Price calculation, date utilities
-  concierge-schema.ts        # OpenAI function calling schema
+  search-parser-schema.ts    # OpenAI function calling schema
 
 supabase/
   migrations/                # 5 SQL migrations (tables, favorites, blocked dates, countries, tags)
@@ -200,7 +200,7 @@ Custom design tokens in CSS variables (not Tailwind defaults):
 
 ## Testing
 
-**Unit tests** cover price calculations, date utilities, date range overlap detection, and AI concierge schema validation.
+**Unit tests** cover price calculations, date utilities, date range overlap detection, and AI search parser schema validation.
 
 ```bash
 pnpm test

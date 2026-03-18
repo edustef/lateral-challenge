@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { parseNaturalQuery } from '../concierge';
+import { parseNaturalQuery } from '../search-parser';
 
 // Mock the global fetch
 const mockFetch = vi.fn();

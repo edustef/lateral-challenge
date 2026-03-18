@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { isSimpleQuery, sanitizeSearchInput } from './concierge-schema';
+import { isSimpleQuery, sanitizeSearchInput } from './search-parser-schema';
 
 describe('isSimpleQuery', () => {
   it('returns true for single word', () => {

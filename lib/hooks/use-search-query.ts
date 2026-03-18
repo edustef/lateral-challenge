@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useCallback, useState } from 'react';
-import { parseNaturalQuery } from '@/lib/actions/concierge';
+import { parseNaturalQuery } from '@/lib/actions/search-parser';
 import { useFilterTransition } from '@/components/filter-transition-context';
 import { useSearchParamsState, NULL_PARAMS } from '@/lib/hooks/use-search-params';
 

@@ -2,7 +2,7 @@ import { searchParamsCache } from '@/lib/search-params';
 import { getStays } from '@/lib/actions/stays';
 import { getFavoriteStayIds } from '@/lib/actions/favorites';
 import { SearchHero } from '@/components/search/search-hero';
-import { ConciergeSummary } from '@/components/search/concierge-summary';
+import { SearchSummary } from '@/components/search/search-summary';
 import { StaysGrid } from '@/components/stays/stays-grid';
 import type { SearchParams } from 'nuqs/server';
 
@@ -21,7 +21,7 @@ export default async function DiscoveryPage({ searchParams }: PageProps) {
   return (
     <>
       <SearchHero staysCount={stays.length} featuredMode={true} />
-      <ConciergeSummary />
+      <SearchSummary />
 
       <section className="mx-auto max-w-7xl px-4 pb-12 pt-8 sm:px-6 lg:px-8">
         <p className="mb-6 text-sm text-text-muted">

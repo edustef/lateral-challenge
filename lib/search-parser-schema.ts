@@ -7,7 +7,7 @@ export const AMENITIES = [
   'kayaks', 'outdoor-shower', 'bikes', 'firepit', 'library', 'yoga-mat',
 ] as const;
 
-export type ConciergeResult = {
+export type SearchParserResult = {
   stay_type: (typeof STAY_TYPES)[number] | null;
   tags: string[] | null;
   travel_type: (typeof TRAVEL_TYPES)[number] | null;
