@@ -120,13 +120,60 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (populated during roadmap creation) | | |
+| FOUND-01 | Phase 1 | Pending |
+| FOUND-02 | Phase 1 | Pending |
+| FOUND-03 | Phase 1 | Pending |
+| FOUND-04 | Phase 1 | Pending |
+| FOUND-05 | Phase 1 | Pending |
+| DISC-01 | Phase 2 | Pending |
+| DISC-02 | Phase 2 | Pending |
+| DISC-03 | Phase 2 | Pending |
+| DISC-04 | Phase 2 | Pending |
+| DISC-05 | Phase 2 | Pending |
+| DISC-06 | Phase 2 | Pending |
+| DISC-07 | Phase 2 | Pending |
+| DISC-08 | Phase 2 | Pending |
+| DETL-01 | Phase 2 | Pending |
+| DETL-02 | Phase 2 | Pending |
+| DETL-03 | Phase 2 | Pending |
+| DETL-04 | Phase 2 | Pending |
+| DETL-05 | Phase 2 | Pending |
+| DETL-06 | Phase 2 | Pending |
+| DETL-07 | Phase 2 | Pending |
+| AUTH-01 | Phase 3 | Pending |
+| AUTH-02 | Phase 3 | Pending |
+| AUTH-03 | Phase 3 | Pending |
+| AUTH-04 | Phase 3 | Pending |
+| CHKT-01 | Phase 3 | Pending |
+| CHKT-02 | Phase 3 | Pending |
+| CHKT-03 | Phase 3 | Pending |
+| CHKT-04 | Phase 3 | Pending |
+| CHKT-05 | Phase 3 | Pending |
+| CHKT-06 | Phase 3 | Pending |
+| CHKT-07 | Phase 3 | Pending |
+| CHKT-08 | Phase 3 | Pending |
+| REVW-01 | Phase 3 | Pending |
+| REVW-02 | Phase 3 | Pending |
+| REVW-03 | Phase 3 | Pending |
+| PROF-01 | Phase 3 | Pending |
+| PROF-02 | Phase 3 | Pending |
+| PLSH-01 | Phase 4 | Pending |
+| PLSH-02 | Phase 4 | Pending |
+| PLSH-03 | Phase 4 | Pending |
+| PLSH-04 | Phase 4 | Pending |
+| PLSH-05 | Phase 4 | Pending |
+| PLSH-06 | Phase 4 | Pending |
+| TEST-01 | Phase 4 | Pending |
+| TEST-02 | Phase 4 | Pending |
+| DEPL-01 | Phase 4 | Pending |
+| DEPL-02 | Phase 4 | Pending |
+| DEPL-03 | Phase 4 | Pending |
 
 **Coverage:**
 - v1 requirements: 33 total
-- Mapped to phases: 0
-- Unmapped: 33
+- Mapped to phases: 33
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-17*
-*Last updated: 2026-03-17 after initial definition*
+*Last updated: 2026-03-17 after roadmap creation*
