@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useTransition, useMemo } from 'react';
-import { DayPicker, type DateRange } from 'react-day-picker';
-import 'react-day-picker/style.css';
+import { Calendar } from '@/components/ui/calendar';
+import type { DateRange } from 'react-day-picker';
 import { PriceBreakdown } from '@/components/price-breakdown';
 import { calculateNights, calculateTotal, formatPrice } from '@/lib/utils/price';
 import { createBooking } from '@/lib/actions/bookings';
@@ -138,7 +138,7 @@ export function CheckoutForm({ stay }: CheckoutFormProps) {
               Select your dates
             </h2>
             <div className="flex justify-center">
-              <DayPicker
+              <Calendar
                 mode="range"
                 selected={range}
                 onSelect={setRange}
