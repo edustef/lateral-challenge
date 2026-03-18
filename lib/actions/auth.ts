@@ -6,6 +6,7 @@ import { headers } from 'next/headers'
 
 export async function loginWithOtp(formData: FormData): Promise<{ error?: string; success?: boolean }> {
   const email = formData.get('email') as string
+  const redirectPath = formData.get('redirect') as string | null
 
   if (!email) {
     return { error: 'Email is required' }
@@ -19,7 +20,7 @@ export async function loginWithOtp(formData: FormData): Promise<{ error?: string
   const { error } = await supabase.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: `${baseUrl}/auth/callback`,
+      emailRedirectTo: `${baseUrl}/auth/callback${redirectPath ? `?redirect=${encodeURIComponent(redirectPath)}` : ''}`,
     },
   })
 
