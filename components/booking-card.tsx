@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { CalendarDays, Users } from 'lucide-react';
 import { formatPrice } from '@/lib/utils/price';
 
 type BookingCardProps = {
@@ -16,6 +15,7 @@ type BookingCardProps = {
       location: string;
       images: string[];
       slug: string;
+      price_per_night: number;
     };
   };
 };
@@ -23,68 +23,136 @@ type BookingCardProps = {
 function formatDateRange(checkIn: string, checkOut: string): string {
   const start = new Date(checkIn);
   const end = new Date(checkOut);
-  const opts: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
-  const startStr = start.toLocaleDateString('en-US', opts);
+  const startStr = start.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   const endStr = end.toLocaleDateString('en-US', {
-    ...opts,
+    month: 'short',
+    day: 'numeric',
     year: 'numeric',
   });
-  return `${startStr} - ${endStr}`;
+  return `${startStr} — ${endStr}`;
+}
+
+function calculateNights(checkIn: string, checkOut: string): number {
+  const start = new Date(checkIn);
+  const end = new Date(checkOut);
+  return Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+}
+
+function StatusBadge({ status }: { status: string }) {
+  const styles =
+    status === 'confirmed'
+      ? 'bg-[#E8F5E9] text-[#2E7D32]'
+      : status === 'pending'
+        ? 'bg-amber-50 text-amber-700'
+        : 'bg-gray-100 text-gray-500';
+
+  return (
+    <span className={`inline-block rounded-full px-3 py-1 text-xs font-semibold capitalize ${styles}`}>
+      {status}
+    </span>
+  );
 }
 
 export function BookingCard({ booking }: BookingCardProps) {
   const { stay } = booking;
   const image = stay.images?.[0] ?? '/placeholder.jpg';
+  const nights = calculateNights(booking.check_in, booking.check_out);
 
   return (
-    <div className="flex gap-4 rounded-card border border-border-subtle bg-bg-card p-4 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98]">
-      {/* Stay image */}
+    <div className="flex overflow-hidden rounded-[20px] border border-[#E8E4DF] bg-white transition-all duration-200 hover:shadow-md">
+      {/* Card Image */}
       <Link href={`/stays/${stay.slug}`} className="shrink-0">
-        <div className="relative h-20 w-20 overflow-hidden rounded-lg">
+        <div className="relative h-full w-[280px]">
           <Image
             src={image}
             alt={stay.title}
             fill
             className="object-cover"
-            sizes="80px"
+            sizes="280px"
           />
         </div>
       </Link>
 
-      {/* Booking details */}
-      <div className="flex min-w-0 flex-1 flex-col gap-1">
-        <Link
-          href={`/stays/${stay.slug}`}
-          className="truncate font-heading text-base font-semibold text-text-primary hover:underline"
-        >
-          {stay.title}
-        </Link>
-        <p className="truncate text-sm text-text-secondary">{stay.location}</p>
-
-        <div className="mt-1 flex flex-wrap items-center gap-3 text-xs text-text-muted">
-          <span className="inline-flex items-center gap-1">
-            <CalendarDays size={14} />
-            {formatDateRange(booking.check_in, booking.check_out)}
-          </span>
-          <span className="inline-flex items-center gap-1">
-            <Users size={14} />
-            {booking.guests} guest{booking.guests !== 1 ? 's' : ''}
-          </span>
+      {/* Card Content */}
+      <div className="flex flex-1 flex-col justify-between p-6">
+        {/* Top Info */}
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+            <StatusBadge status={booking.status} />
+            <span className="text-sm font-semibold text-text-primary">
+              {formatPrice(stay.price_per_night)} / night
+            </span>
+          </div>
+          <Link
+            href={`/stays/${stay.slug}`}
+            className="font-mono text-lg font-semibold text-text-primary hover:underline"
+          >
+            {stay.title}
+          </Link>
+          <p className="text-[13px] text-text-muted">{stay.location}</p>
         </div>
 
-        <div className="mt-1 flex items-center gap-3">
-          <span
-            className={`inline-block rounded-full px-2 py-0.5 text-xs font-medium ${
-              booking.status === 'confirmed'
-                ? 'bg-green-100 text-green-700'
-                : 'bg-gray-100 text-gray-500'
-            }`}
+        {/* Dates & Guests */}
+        <div className="mt-4 flex gap-6">
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-text-muted">
+              Check-in / Check-out
+            </span>
+            <span className="text-sm text-text-primary">
+              {formatDateRange(booking.check_in, booking.check_out)}
+            </span>
+          </div>
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-text-muted">
+              Guests
+            </span>
+            <span className="text-sm text-text-primary">
+              {booking.guests} {booking.guests === 1 ? 'Adult' : 'Adults'}
+            </span>
+          </div>
+        </div>
+
+        {/* Actions */}
+        <div className="mt-4 flex gap-3">
+          <Link
+            href={`/stays/${stay.slug}`}
+            className="rounded-full bg-text-primary px-5 py-2.5 text-[13px] font-medium text-white transition-colors hover:bg-text-primary/90 active:scale-[0.98]"
           >
-            {booking.status}
-          </span>
-          <span className="text-sm font-semibold text-text-primary">
-            {formatPrice(booking.total_price)}
-          </span>
+            View Stay
+          </Link>
+          <button
+            type="button"
+            className="rounded-full border border-[#E8E4DF] px-5 py-2.5 text-[13px] font-medium text-text-muted transition-colors hover:bg-bg-page active:scale-[0.98]"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* Compact card for mobile */
+export function BookingCardCompact({ booking }: BookingCardProps) {
+  const { stay } = booking;
+  const image = stay.images?.[0] ?? '/placeholder.jpg';
+
+  return (
+    <div className="flex gap-4 rounded-[16px] border border-[#E8E4DF] bg-white p-4 transition-all duration-200 hover:shadow-md active:scale-[0.98]">
+      <Link href={`/stays/${stay.slug}`} className="shrink-0">
+        <div className="relative h-20 w-20 overflow-hidden rounded-xl">
+          <Image src={image} alt={stay.title} fill className="object-cover" sizes="80px" />
+        </div>
+      </Link>
+      <div className="flex min-w-0 flex-1 flex-col gap-1">
+        <Link href={`/stays/${stay.slug}`} className="truncate font-mono text-sm font-semibold text-text-primary hover:underline">
+          {stay.title}
+        </Link>
+        <p className="truncate text-xs text-text-muted">{stay.location}</p>
+        <p className="text-xs text-text-muted">{formatDateRange(booking.check_in, booking.check_out)}</p>
+        <div className="mt-auto flex items-center gap-2">
+          <StatusBadge status={booking.status} />
+          <span className="text-sm font-semibold text-text-primary">{formatPrice(booking.total_price)}</span>
         </div>
       </div>
     </div>
