@@ -49,13 +49,13 @@
 
 ### Checkout
 
-- [ ] **CHKT-01**: Checkout page at /stays/[id]/book with multi-step form (dates → guests → contact → confirm)
-- [ ] **CHKT-02**: Date selection with react-day-picker, availability validation
-- [ ] **CHKT-03**: Guest count selector
-- [ ] **CHKT-04**: Contact information form (name, email, phone)
-- [ ] **CHKT-05**: Price calculation — per night × nights + cleaning fee + service fee = total
-- [ ] **CHKT-06**: Mock payment step ("Confirm & pay" button)
-- [ ] **CHKT-07**: Booking confirmation page with summary (stay name, dates, guests, total)
+- [x] **CHKT-01**: Checkout page at /stays/[id]/book with multi-step form (dates → guests → contact → confirm)
+- [x] **CHKT-02**: Date selection with react-day-picker, availability validation
+- [x] **CHKT-03**: Guest count selector
+- [x] **CHKT-04**: Contact information form (name, email, phone)
+- [x] **CHKT-05**: Price calculation — per night × nights + cleaning fee + service fee = total
+- [x] **CHKT-06**: Mock payment step ("Confirm & pay" button)
+- [x] **CHKT-07**: Booking confirmation page with summary (stay name, dates, guests, total)
 - [x] **CHKT-08**: Auth guard — redirect to login if unauthenticated
 
 ### Profile
@@ -144,13 +144,13 @@
 | AUTH-02 | Phase 3 | Complete |
 | AUTH-03 | Phase 3 | Complete |
 | AUTH-04 | Phase 3 | Complete |
-| CHKT-01 | Phase 3 | Pending |
-| CHKT-02 | Phase 3 | Pending |
-| CHKT-03 | Phase 3 | Pending |
-| CHKT-04 | Phase 3 | Pending |
-| CHKT-05 | Phase 3 | Pending |
-| CHKT-06 | Phase 3 | Pending |
-| CHKT-07 | Phase 3 | Pending |
+| CHKT-01 | Phase 3 | Complete |
+| CHKT-02 | Phase 3 | Complete |
+| CHKT-03 | Phase 3 | Complete |
+| CHKT-04 | Phase 3 | Complete |
+| CHKT-05 | Phase 3 | Complete |
+| CHKT-06 | Phase 3 | Complete |
+| CHKT-07 | Phase 3 | Complete |
 | CHKT-08 | Phase 3 | Complete |
 | REVW-01 | Phase 3 | Complete |
 | REVW-02 | Phase 3 | Complete |
