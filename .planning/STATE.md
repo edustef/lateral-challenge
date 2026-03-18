@@ -10,27 +10,27 @@ See: .planning/PROJECT.md (updated 2026-03-17)
 ## Current Position
 
 Phase: 1 of 4 (Foundation)
-Plan: 1 of 2 in current phase
-Status: Executing
-Last activity: 2026-03-17 — Completed 01-02 (Warm Organic Theme)
+Plan: 2 of 2 in current phase
+Status: Phase complete
+Last activity: 2026-03-17 — Completed 01-01 (Database, Seed Data, Supabase Helpers & Types)
 
-Progress: [█████░░░░░] 50%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: 2min
-- Total execution time: 0.03 hours
+- Total plans completed: 2
+- Average duration: 3.5min
+- Total execution time: 0.12 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-foundation | 1 | 2min | 2min |
+| 01-foundation | 2 | 7min | 3.5min |
 
 **Recent Trend:**
-- Last 5 plans: 01-02 (2min)
+- Last 5 plans: 01-02 (2min), 01-01 (5min)
 - Trend: Starting
 
 *Updated after each plan completion*
@@ -44,6 +44,9 @@ Recent decisions affecting current work:
 
 - shadcn/ui initialized with base-nova style, all tokens reference Pencil design custom properties
 - Font loading uses next/font/google variable pattern for Fraunces, Inter, IBM Plex Mono
+- Placeholder types file (regenerate with supabase gen types after Docker start)
+- Fixed UUIDs for seed data cross-references
+- session_replication_role=replica for seeding without auth.users FK
 
 ### Pending Todos
 
@@ -56,5 +59,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-17
-Stopped at: Completed 01-02-PLAN.md
+Stopped at: Completed 01-01-PLAN.md (Phase 1 complete)
 Resume file: None

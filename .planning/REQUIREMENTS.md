@@ -7,11 +7,11 @@
 
 ### Foundation
 
-- [ ] **FOUND-01**: Database schema with stays, collections, collection_stays, bookings, reviews, profiles tables with RLS
-- [ ] **FOUND-02**: Seed data — 15 stays across 4 vibes (adventure/culture/disconnect/celebration), 5 collections, 20 reviews
-- [ ] **FOUND-03**: Supabase client helpers (server + client)
+- [x] **FOUND-01**: Database schema with stays, collections, collection_stays, bookings, reviews, profiles tables with RLS
+- [x] **FOUND-02**: Seed data — 15 stays across 4 vibes (adventure/culture/disconnect/celebration), 5 collections, 20 reviews
+- [x] **FOUND-03**: Supabase client helpers (server + client)
 - [x] **FOUND-04**: Warm organic theme matching Pencil designs (CSS custom properties, Tailwind v4 config)
-- [ ] **FOUND-05**: Supabase-generated types (supabase gen types) + colocated component types
+- [x] **FOUND-05**: Supabase-generated types (supabase gen types) + colocated component types
 
 ### Discovery
 
@@ -120,11 +120,11 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | Phase 1 | Pending |
-| FOUND-02 | Phase 1 | Pending |
-| FOUND-03 | Phase 1 | Pending |
+| FOUND-01 | Phase 1 | Complete |
+| FOUND-02 | Phase 1 | Complete |
+| FOUND-03 | Phase 1 | Complete |
 | FOUND-04 | Phase 1 | Complete |
-| FOUND-05 | Phase 1 | Pending |
+| FOUND-05 | Phase 1 | Complete |
 | DISC-01 | Phase 2 | Pending |
 | DISC-02 | Phase 2 | Pending |
 | DISC-03 | Phase 2 | Pending |
