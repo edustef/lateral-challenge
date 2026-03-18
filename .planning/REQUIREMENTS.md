@@ -38,7 +38,7 @@
 
 - [x] **AUTH-01**: Magic link (email OTP) login flow
 - [x] **AUTH-02**: Auth callback page (/auth/callback)
-- [ ] **AUTH-03**: Session persistence across browser refresh (proxy middleware)
+- [x] **AUTH-03**: Session persistence across browser refresh (proxy middleware)
 - [x] **AUTH-04**: Header with conditional sign-in/sign-out and user avatar
 
 ### Reviews
@@ -75,7 +75,7 @@
 ### Testing & Deployment
 
 - [x] **TEST-01**: Unit tests for complex logic (price calculation, date utilities, availability checks)
-- [ ] **TEST-02**: E2E test for checkout flow (home → select stay → book → confirmation)
+- [x] **TEST-02**: E2E test for checkout flow (home → select stay → book → confirmation)
 - [x] **DEPL-01**: GitHub Actions CI (lint + test + build)
 - [x] **DEPL-02**: Deploy to Vercel with environment variables
 - [x] **DEPL-03**: README with setup instructions, architecture notes, key decisions, tradeoffs
@@ -142,7 +142,7 @@
 | DETL-07 | Phase 2 | Complete |
 | AUTH-01 | Phase 3 | Complete |
 | AUTH-02 | Phase 3 | Complete |
-| AUTH-03 | Phase 5 | Pending |
+| AUTH-03 | Phase 3 | Complete |
 | AUTH-04 | Phase 3 | Complete |
 | CHKT-01 | Phase 3 | Complete |
 | CHKT-02 | Phase 3 | Complete |
@@ -164,7 +164,7 @@
 | PLSH-05 | Phase 4 | Complete |
 | PLSH-06 | Phase 4 | Complete |
 | TEST-01 | Phase 4 | Complete |
-| TEST-02 | Phase 5 | Pending |
+| TEST-02 | Phase 4 | Complete |
 | DEPL-01 | Phase 4 | Complete |
 | DEPL-02 | Phase 4 | Complete |
 | DEPL-03 | Phase 4 | Complete |
