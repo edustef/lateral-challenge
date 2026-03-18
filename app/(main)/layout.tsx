@@ -1,4 +1,5 @@
 import { Header } from '@/components/header';
+import { PageTransition } from '@/components/page-transition';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
@@ -7,7 +8,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
       <div className="min-h-screen bg-bg-page">
         <Header />
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {children}
+          <PageTransition>{children}</PageTransition>
         </main>
       </div>
     </NuqsAdapter>

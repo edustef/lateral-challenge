@@ -103,7 +103,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-bg-page px-4">
+    <div className="animate-page-in flex min-h-screen items-center justify-center bg-bg-page px-4">
       <Suspense>
         <LoginForm />
       </Suspense>
