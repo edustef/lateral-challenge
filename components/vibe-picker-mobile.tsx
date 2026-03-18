@@ -1,25 +1,34 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useQueryState } from 'nuqs';
 import { searchParamsParsers } from '@/lib/search-params';
 import {
+  User,
   Users,
-  Heart,
   Baby,
+  UsersRound,
   Mountain,
   Landmark,
   TreePine,
   PartyPopper,
   ChevronDown,
-  X,
 } from 'lucide-react';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer';
 
 const travelTypes = [
-  { value: 'solo', label: 'Solo', icon: Users },
-  { value: 'duo', label: 'Duo', icon: Heart },
+  { value: 'solo', label: 'Solo', icon: User },
+  { value: 'duo', label: 'Duo', icon: Users },
   { value: 'family', label: 'Family', icon: Baby },
-  { value: 'group', label: 'Group', icon: Users },
+  { value: 'group', label: 'Group', icon: UsersRound },
 ] as const;
 
 const vibes = [
@@ -30,7 +39,6 @@ const vibes = [
 ] as const;
 
 export function VibePickerMobile({ staysCount }: { staysCount: number }) {
-  const [open, setOpen] = useState(false);
   const [type, setType] = useQueryState('type', searchParamsParsers.type);
   const [vibe, setVibe] = useQueryState('vibe', searchParamsParsers.vibe);
 
@@ -40,7 +48,8 @@ export function VibePickerMobile({ staysCount }: { staysCount: number }) {
   const summaryParts: string[] = [];
   if (type) {
     const t = travelTypes.find((t) => t.value === type);
-    summaryParts.push(`${t?.label ?? type} traveler`);
+    const label = t?.label ?? type;
+    summaryParts.push(type === 'solo' ? 'Solo traveler' : label);
   }
   if (vibe) {
     const v = vibes.find((v) => v.value === vibe);
@@ -63,45 +72,31 @@ export function VibePickerMobile({ staysCount }: { staysCount: number }) {
 
   return (
     <div className="md:hidden">
-      {/* Compact pill trigger */}
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className="flex items-center gap-2 rounded-pill border border-border-subtle bg-bg-surface px-4 py-2 text-sm font-medium text-text-body"
-      >
-        <span>{typeLabel}</span>
-        <span className="text-text-muted">&middot;</span>
-        <span>{vibeLabel}</span>
-        <ChevronDown className="h-4 w-4 text-text-secondary" />
-      </button>
+      <Drawer>
+        <DrawerTrigger asChild>
+          <button
+            type="button"
+            className="flex items-center gap-2 rounded-pill border border-border-subtle bg-bg-surface px-4 py-2 text-sm font-medium text-text-body"
+          >
+            <span>{typeLabel}</span>
+            <span className="text-text-muted">&middot;</span>
+            <span>{vibeLabel}</span>
+            <ChevronDown className="h-4 w-4 text-text-secondary" />
+          </button>
+        </DrawerTrigger>
 
-      {/* Bottom sheet overlay */}
-      {open && (
-        <div className="fixed inset-0 z-50 flex items-end">
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-            onClick={() => setOpen(false)}
-          />
+        <DrawerContent className="bg-bg-card">
+          <DrawerHeader className="text-left">
+            <DrawerTitle className="sr-only">Filter stays</DrawerTitle>
+          </DrawerHeader>
 
-          {/* Sheet */}
-          <div className="relative w-full rounded-t-card bg-bg-card px-6 pb-8 pt-6 shadow-xl animate-in slide-in-from-bottom duration-300">
-            {/* Close button */}
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              className="absolute right-4 top-4 rounded-full p-1 text-text-secondary hover:text-text-primary"
-              aria-label="Close"
-            >
-              <X className="h-5 w-5" />
-            </button>
-
+          <div className="px-6 pb-2">
             {/* Who's traveling? */}
             <div className="mb-6">
               <h3 className="mb-3 font-heading text-lg text-text-primary">
                 Who&apos;s traveling?
               </h3>
-              <div className="flex gap-2 overflow-x-auto">
+              <div className="grid grid-cols-2 gap-2">
                 {travelTypes.map((t) => {
                   const Icon = t.icon;
                   const selected = type === t.value;
@@ -110,7 +105,7 @@ export function VibePickerMobile({ staysCount }: { staysCount: number }) {
                       key={t.value}
                       type="button"
                       onClick={() => handleChipToggle(type, t.value, setType)}
-                      className={`flex shrink-0 items-center gap-2 rounded-pill border px-4 py-2 text-sm transition-colors ${
+                      className={`flex items-center gap-2 rounded-pill border px-4 py-2 text-sm transition-colors ${
                         selected
                           ? 'border-accent bg-accent text-white'
                           : 'border-border bg-bg-card text-text-body hover:border-accent'
@@ -151,30 +146,31 @@ export function VibePickerMobile({ staysCount }: { staysCount: number }) {
                 })}
               </div>
             </div>
+          </div>
 
-            {/* Footer */}
-            <div className="flex items-center justify-between border-t border-border pt-4">
-              <span className="text-sm text-text-secondary">{summaryText}</span>
-              <div className="flex gap-3">
+          {/* Footer */}
+          <DrawerFooter className="border-t border-border">
+            <p className="text-sm text-text-secondary">{summaryText}</p>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={handleReset}
+                className="rounded-button border border-border px-4 py-2.5 text-sm font-medium text-text-body transition-colors hover:bg-bg-muted"
+              >
+                Reset
+              </button>
+              <DrawerClose asChild>
                 <button
                   type="button"
-                  onClick={handleReset}
-                  className="rounded-button border border-border px-4 py-2 text-sm font-medium text-text-body transition-colors hover:bg-bg-muted"
-                >
-                  Reset
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setOpen(false)}
-                  className="rounded-button bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-accent/90"
+                  className="rounded-button bg-accent px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent/90"
                 >
                   Show {staysCount} stays
                 </button>
-              </div>
+              </DrawerClose>
             </div>
-          </div>
-        </div>
-      )}
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 }

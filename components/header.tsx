@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { createClient } from '@/lib/supabase/server';
+import { getClaims } from '@/lib/supabase/server';
 import { AuthButton } from '@/components/auth-button';
 
 const navLinks = [
@@ -9,8 +9,7 @@ const navLinks = [
 ];
 
 export async function Header() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getClaims();
 
   const authUser = user
     ? { email: user.email ?? '', avatarUrl: user.user_metadata?.avatar_url ?? null }
