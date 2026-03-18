@@ -1,6 +1,6 @@
 import { getClaims } from '@/lib/supabase/server';
 import { AuthButton } from '@/components/auth-button';
-import { HeaderBar } from '@/components/header-bar';
+import { HeaderBar } from '@/components/layout/header-bar';
 
 export async function Header() {
   const user = await getClaims();

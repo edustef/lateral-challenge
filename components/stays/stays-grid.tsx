@@ -2,7 +2,7 @@
 
 import { SearchX, Loader2 } from 'lucide-react';
 import { useMemo } from 'react';
-import { StayCard } from '@/components/stay-card';
+import { StayCard } from '@/components/stays/stay-card';
 import { useFilterTransition } from '@/components/filter-transition-context';
 import type { StayCard as StayCardType } from '@/lib/actions/stays';
 

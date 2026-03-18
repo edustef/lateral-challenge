@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Heart } from 'lucide-react';
 import { getFavoriteStays } from '@/lib/actions/favorites';
 import { BackButton } from '@/components/back-button';
-import { StaysGrid } from '@/components/stays-grid';
+import { StaysGrid } from '@/components/stays/stays-grid';
 
 export const metadata = {
   title: 'Your Wishlist',

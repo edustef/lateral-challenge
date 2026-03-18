@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Header } from '@/components/header';
+import { Header } from '@/components/layout/header';
 import { PageTransition } from '@/components/page-transition';
 import { SearchOverlay } from '@/components/search/search-overlay';
 import { MobileSearchFab } from '@/components/search/mobile-search-fab';

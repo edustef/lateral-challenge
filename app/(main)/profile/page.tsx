@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { createClient, getClaims } from '@/lib/supabase/server';
 import { BookingCard, BookingCardCompact } from '@/components/booking/booking-card';
 import { getFavoriteStays } from '@/lib/actions/favorites';
-import { StayCard } from '@/components/stay-card';
+import { StayCard } from '@/components/stays/stay-card';
 import { MapPin, Heart, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 

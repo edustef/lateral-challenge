@@ -3,7 +3,7 @@ import { getStays } from '@/lib/actions/stays';
 import { getFavoriteStayIds } from '@/lib/actions/favorites';
 import { SearchHero } from '@/components/search/search-hero';
 import { ConciergeSummary } from '@/components/search/concierge-summary';
-import { StaysGrid } from '@/components/stays-grid';
+import { StaysGrid } from '@/components/stays/stays-grid';
 import type { SearchParams } from 'nuqs/server';
 
 type PageProps = { searchParams: Promise<SearchParams> };

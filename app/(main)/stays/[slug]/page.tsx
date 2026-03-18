@@ -2,10 +2,10 @@ import { notFound } from 'next/navigation';
 import { getStayBySlug, getReviewsForStay } from '@/lib/actions/stays';
 import { getUnavailableDates } from '@/lib/actions/availability';
 import { getClaims } from '@/lib/supabase/server';
-import { PhotoGallery } from '@/components/photo-gallery';
-import { StayInfo } from '@/components/stay-info';
-import { ReviewsList } from '@/components/reviews-list';
-import { ReviewForm } from '@/components/review-form';
+import { PhotoGallery } from '@/components/stays/photo-gallery';
+import { StayInfo } from '@/components/stays/stay-info';
+import { ReviewsList } from '@/components/stays/reviews-list';
+import { ReviewForm } from '@/components/stays/review-form';
 import { BookingSidebar } from '@/components/booking/booking-sidebar';
 import { BackButton } from '@/components/back-button';
 
