@@ -155,7 +155,7 @@ function PillTrigger({
 }
 
 export function FilterPill({ staysCount }: { staysCount: number }) {
-  const { startTransition } = useFilterTransition();
+  const { startTransition, clearConcierge } = useFilterTransition();
   const [type, setType] = useQueryState('type', { ...searchParamsParsers.type, startTransition });
   const [vibe, setVibe] = useQueryState('vibe', { ...searchParamsParsers.vibe, startTransition });
 
@@ -168,19 +168,26 @@ export function FilterPill({ staysCount }: { staysCount: number }) {
   const hasSelection = !!(type || vibe);
 
   const handleToggleType = useCallback(
-    (value: string) => setType((prev) => (prev === value ? null : value)),
-    [setType],
+    (value: string) => {
+      setType((prev) => (prev === value ? null : value));
+      clearConcierge();
+    },
+    [setType, clearConcierge],
   );
 
   const handleToggleVibe = useCallback(
-    (value: string) => setVibe((prev) => (prev === value ? null : value)),
-    [setVibe],
+    (value: string) => {
+      setVibe((prev) => (prev === value ? null : value));
+      clearConcierge();
+    },
+    [setVibe, clearConcierge],
   );
 
   const handleReset = useCallback(() => {
     setType(null);
     setVibe(null);
-  }, [setType, setVibe]);
+    clearConcierge();
+  }, [setType, setVibe, clearConcierge]);
 
   const summaryParts: string[] = [];
   if (type) {

@@ -24,7 +24,7 @@ function getSortLabel(sort: string | null): string {
 }
 
 export function SortToggle() {
-  const { startTransition } = useFilterTransition();
+  const { startTransition, clearConcierge } = useFilterTransition();
   const [sort, setSort] = useQueryState('sort', { ...searchParamsParsers.sort, startTransition });
   const [open, setOpen] = useState(false);
 
@@ -46,6 +46,7 @@ export function SortToggle() {
               onClick={() => {
                 setSort(option.value);
                 setOpen(false);
+                clearConcierge();
               }}
               className="flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm text-text-secondary transition-colors hover:bg-accent hover:text-text-primary"
             >

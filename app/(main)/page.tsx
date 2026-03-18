@@ -4,6 +4,7 @@ import { getFavoriteStayIds } from '@/lib/actions/favorites';
 import { FilterPill } from '@/components/filter-pill';
 import { SearchBar, SearchOverlay } from '@/components/search-bar';
 import { SortToggle } from '@/components/sort-toggle';
+import { ConciergeSummary } from '@/components/concierge-summary';
 import { StaysGrid } from '@/components/stays-grid';
 import { FilterTransitionProvider } from '@/components/filter-transition-context';
 import type { SearchParams } from 'nuqs/server';
@@ -29,6 +30,9 @@ export default async function DiscoveryPage({ searchParams }: PageProps) {
           <SearchOverlay />
         </div>
       </div>
+
+      {/* AI summary banner */}
+      <ConciergeSummary />
 
       <div className="mx-auto flex max-w-7xl justify-end px-4 pt-3 sm:px-6 lg:px-8">
         <SortToggle />
