@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { User } from 'lucide-react';
+import { createClient } from '@/lib/supabase/server';
+import { AuthButton } from '@/components/auth-button';
 
 const navLinks = [
   { href: '/', label: 'Stays', active: true },
@@ -7,7 +8,14 @@ const navLinks = [
   { href: '/saved', label: 'Saved', active: false },
 ];
 
-export function Header() {
+export async function Header() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const authUser = user
+    ? { email: user.email ?? '', avatarUrl: user.user_metadata?.avatar_url ?? null }
+    : null;
+
   return (
     <header className="bg-bg-card border-b border-border px-6 py-4">
       <div className="mx-auto flex max-w-7xl items-center justify-between">
@@ -33,14 +41,8 @@ export function Header() {
           </nav>
         </div>
 
-        {/* Right: Avatar */}
-        <button
-          type="button"
-          className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-white"
-          aria-label="User menu"
-        >
-          <User className="h-5 w-5" />
-        </button>
+        {/* Right: Auth */}
+        <AuthButton user={authUser} />
       </div>
     </header>
   );
