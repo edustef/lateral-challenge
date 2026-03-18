@@ -1,18 +1,18 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { createClient } from '@/lib/supabase/server';
+import { createClient, getClaims } from '@/lib/supabase/server';
 import type { StayCard } from './stays';
 
 export async function toggleFavorite(stayId: string): Promise<{ favorited: boolean; error?: string }> {
-  const supabase = await createClient();
-  const { data: { session } } = await supabase.auth.getSession();
+  const user = await getClaims();
 
-  if (!session?.user) {
+  if (!user) {
     return { favorited: false, error: 'Not authenticated' };
   }
 
-  const userId = session.user.id;
+  const supabase = await createClient();
+  const userId = user.id;
 
   // Check if already favorited
   const { data: existing } = await supabase
@@ -34,29 +34,29 @@ export async function toggleFavorite(stayId: string): Promise<{ favorited: boole
 }
 
 export async function getFavoriteStayIds(): Promise<string[]> {
+  const user = await getClaims();
+
+  if (!user) return [];
+
   const supabase = await createClient();
-  const { data: { session } } = await supabase.auth.getSession();
-
-  if (!session?.user) return [];
-
   const { data } = await supabase
     .from('favorites')
     .select('stay_id')
-    .eq('user_id', session.user.id);
+    .eq('user_id', user.id);
 
   return (data ?? []).map((row) => row.stay_id);
 }
 
 export async function getFavoriteStays(): Promise<StayCard[]> {
+  const user = await getClaims();
+
+  if (!user) return [];
+
   const supabase = await createClient();
-  const { data: { session } } = await supabase.auth.getSession();
-
-  if (!session?.user) return [];
-
   const { data: favorites } = await supabase
     .from('favorites')
     .select('stay_id')
-    .eq('user_id', session.user.id);
+    .eq('user_id', user.id);
 
   if (!favorites || favorites.length === 0) return [];
 

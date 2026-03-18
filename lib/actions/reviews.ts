@@ -1,6 +1,6 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
+import { createClient, getClaims } from '@/lib/supabase/server'
 import { moderateContent } from '@/lib/moderation'
 import { revalidatePath } from 'next/cache'
 
@@ -25,8 +25,7 @@ export async function createReview(formData: FormData): Promise<{ error?: string
   }
 
   const supabase = await createClient()
-  const { data: { session } } = await supabase.auth.getSession()
-  const user = session?.user ?? null
+  const user = await getClaims()
 
   if (!user) {
     console.log(`[action] ${actionName} error`, { duration: Math.round(performance.now() - start) + 'ms', error: 'Not authenticated' })

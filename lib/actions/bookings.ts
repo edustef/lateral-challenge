@@ -1,6 +1,6 @@
 'use server';
 
-import { createClient } from '@/lib/supabase/server';
+import { createClient, getClaims } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 
 export async function createBooking(
@@ -21,12 +21,11 @@ export async function createBooking(
   console.log(`[action] ${actionName} start`, { stayId, checkIn, checkOut, guests });
 
   const supabase = await createClient();
-  const { data: { session } } = await supabase.auth.getSession();
-  const user = session?.user ?? null;
+  const user = await getClaims();
 
   if (!user) {
-    console.log(`[action] ${actionName} error`, { duration: Math.round(performance.now() - start) + 'ms', error: 'Not authenticated' });
-    return { error: 'Not authenticated' };
+    console.log(`[action] ${actionName} redirect`, { duration: Math.round(performance.now() - start) + 'ms', reason: 'Not authenticated' });
+    redirect(`/auth/login?redirect=/stays/${slug}/book`);
   }
 
   // Basic validation
