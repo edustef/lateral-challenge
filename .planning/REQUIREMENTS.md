@@ -38,7 +38,7 @@
 
 - [x] **AUTH-01**: Magic link (email OTP) login flow
 - [x] **AUTH-02**: Auth callback page (/auth/callback)
-- [x] **AUTH-03**: Session persistence across browser refresh (proxy middleware)
+- [x] **AUTH-03**: Session persistence across browser refresh (proxy)
 - [x] **AUTH-04**: Header with conditional sign-in/sign-out and user avatar
 
 ### Reviews

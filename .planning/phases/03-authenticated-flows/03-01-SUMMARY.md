@@ -2,14 +2,14 @@
 phase: 03-authenticated-flows
 plan: 01
 subsystem: auth
-tags: [supabase, magic-link, otp, middleware, session, next-auth]
+tags: [supabase, magic-link, otp, proxy, session, next-auth]
 
 # Dependency graph
 requires:
   - phase: 01-foundation
     provides: Supabase client setup (server.ts, client.ts, env.client.ts)
 provides:
-  - Supabase auth proxy middleware for session refresh
+  - Supabase auth proxy proxy for session refresh
   - Magic link (OTP) login page and server actions
   - Auth callback route for code exchange
   - Auth-aware header with conditional sign-in/sign-out UI
@@ -19,12 +19,12 @@ affects: [03-authenticated-flows, checkout, reviews, profile]
 # Tech tracking
 tech-stack:
   added: []
-  patterns: [proxy-middleware-pattern, server-action-auth, async-server-component]
+  patterns: [proxy-proxy-pattern, server-action-auth, async-server-component]
 
 key-files:
   created:
     - lib/supabase/proxy.ts
-    - middleware.ts
+    - proxy.ts (root)
     - lib/actions/auth.ts
     - app/auth/login/page.tsx
     - app/auth/callback/route.ts
@@ -33,14 +33,14 @@ key-files:
     - components/header.tsx
 
 key-decisions:
-  - "proxy.ts + middleware.ts pattern: proxy.ts contains logic, middleware.ts imports it (per user decision)"
+  - "proxy.ts + proxy.ts (root) pattern: proxy.ts contains logic, proxy.ts (root) imports it (per user decision)"
   - "useActionState for login form state management with server action"
   - "Header is async server component that fetches user and passes to client AuthButton"
 
 patterns-established:
-  - "Auth proxy pattern: proxy.ts handles session refresh, middleware.ts delegates to it"
+  - "Auth proxy pattern: proxy.ts handles session refresh, proxy.ts (root) delegates to it"
   - "Server action auth pattern: 'use server' actions in lib/actions/auth.ts for login/signout"
-  - "Protected route guard: middleware checks auth for /stays/*/book and redirects to /auth/login"
+  - "Protected route guard: proxy checks auth for /stays/*/book and redirects to /auth/login"
 
 requirements-completed: [AUTH-01, AUTH-02, AUTH-03, AUTH-04, CHKT-08]
 
@@ -51,7 +51,7 @@ completed: 2026-03-17
 
 # Phase 3 Plan 1: Auth Foundation Summary
 
-**Supabase magic link auth with proxy middleware session refresh, protected route guards, and auth-aware header**
+**Supabase magic link auth with proxy proxy session refresh, protected route guards, and auth-aware header**
 
 ## Performance
 
@@ -62,7 +62,7 @@ completed: 2026-03-17
 - **Files modified:** 7
 
 ## Accomplishments
-- Supabase auth proxy middleware refreshes sessions on every request and guards checkout routes
+- Supabase auth proxy proxy refreshes sessions on every request and guards checkout routes
 - Magic link login page with email OTP flow and success/error states
 - Auth callback exchanges code for session and redirects appropriately
 - Header now shows "Sign in" link or avatar dropdown with sign-out based on auth state
@@ -71,12 +71,12 @@ completed: 2026-03-17
 
 Each task was committed atomically:
 
-1. **Task 1: Create auth proxy middleware, login page, and callback route** - `8d1b21d` (feat)
+1. **Task 1: Create auth proxy proxy, login page, and callback route** - `8d1b21d` (feat)
 2. **Task 2: Update header with conditional auth state** - `d75c896` (feat)
 
 ## Files Created/Modified
-- `lib/supabase/proxy.ts` - Auth proxy middleware with session refresh and route protection
-- `middleware.ts` - Root middleware delegating to proxy.ts
+- `lib/supabase/proxy.ts` - Auth proxy proxy with session refresh and route protection
+- `proxy.ts (root)` - Root proxy delegating to proxy.ts
 - `lib/actions/auth.ts` - Server actions for loginWithOtp and signOut
 - `app/auth/login/page.tsx` - Magic link login page with useActionState form
 - `app/auth/callback/route.ts` - Auth callback handler exchanging code for session
@@ -84,7 +84,7 @@ Each task was committed atomically:
 - `components/header.tsx` - Updated to async server component with auth-aware UI
 
 ## Decisions Made
-- proxy.ts + middleware.ts split: proxy contains auth logic, middleware imports and delegates (per user decision)
+- proxy.ts + proxy.ts (root) split: proxy contains auth logic, proxy imports and delegates (per user decision)
 - Used useActionState for login form to handle pending/success/error states cleanly
 - Header converted to async server component that fetches user and passes data to client AuthButton
 - Login page is outside (main) route group -- no header on auth pages

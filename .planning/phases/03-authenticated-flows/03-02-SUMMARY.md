@@ -7,7 +7,7 @@ tags: [react-day-picker, server-actions, supabase, booking, multi-step-form]
 # Dependency graph
 requires:
   - phase: 03-authenticated-flows
-    provides: Auth proxy middleware, protected route guards for /stays/*/book
+    provides: Auth proxy, protected route guards for /stays/*/book
   - phase: 02-browsing-experience
     provides: Stay detail page, booking sidebar, price-breakdown component
 provides:

@@ -74,7 +74,7 @@ Recent decisions affecting current work:
 - Sort toggle uses 3-state cycle (null/asc/desc) so users can remove sorting entirely
 - Separate profile fetch for reviews (no FK in generated types between reviews and profiles)
 - Native date inputs for date picker (simpler, acceptable for MVP)
-- proxy.ts + middleware.ts split: proxy contains auth logic, middleware imports and delegates
+- proxy.ts at project root: contains auth logic via updateSession from lib/supabase/proxy.ts
 - useActionState for login form state management with server action
 - Header converted to async server component for auth-aware UI
 - [Phase 03]: ReviewForm rendered via reviewForm prop slot in ReviewsList for clean composition

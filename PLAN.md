@@ -50,7 +50,7 @@
 - Supabase magic link auth (email OTP)
 - Auth pages: `/auth/login`, `/auth/callback`
 - Header component: logo + conditional sign-in/sign-out
-- Proxy middleware for session refresh
+- Proxy for session refresh
 - Review submission form (rating 1-5 stars + comment textarea)
 - Server action `createReview()` — requires auth, validates with Zod
 - Optimistic UI or toast confirmation
