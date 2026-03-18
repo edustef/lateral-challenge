@@ -157,7 +157,7 @@ Custom design tokens in CSS variables (not Tailwind defaults):
 
 - **Test coverage**: Unit tests cover utilities but not components. Adding React Testing Library tests for key flows (search submission, checkout form validation) would catch regressions.
 - **Error boundaries**: Each route has an `error.tsx`, but error recovery UX is generic. Could provide more contextual recovery actions.
-- **Loading skeletons**: Each route has a `loading.tsx` but they're not perfectly matched to the actual layout — some visual shift on hydration.
+- **SSR first load**: Currently each route has a `loading.tsx` skeleton that flashes before content renders. Since the app already uses Server Components for data fetching, the pages could stream fully-rendered HTML on first load — eliminating skeletons entirely for server-fetched data. This would mean moving away from the loading.tsx pattern toward inline `<Suspense>` boundaries only where genuinely needed (e.g., below-the-fold content), so users see real content immediately instead of placeholder shapes.
 
 ### Performance
 
