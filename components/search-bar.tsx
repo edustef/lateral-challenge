@@ -2,26 +2,35 @@
 
 import { useRef, useEffect, useCallback, useState } from 'react';
 import { useQueryStates } from 'nuqs';
-import { Search, Sparkles, X, Loader2 } from 'lucide-react';
+import { Search, Sparkles, X, Loader2, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { searchParamsParsers } from '@/lib/search-params';
 import { isSimpleQuery } from '@/lib/concierge-schema';
 import { parseNaturalQuery } from '@/lib/actions/concierge';
 import { useFilterTransition } from '@/components/filter-transition-context';
+import { SearchSuggestions } from '@/components/search-suggestions';
+
+type SearchBarProps = {
+  compact?: boolean;
+};
 
 /**
  * AI-powered search bar. Simple queries (1-2 words) do text search.
  * Complex queries are parsed by OpenAI into structured filters.
  * Submits on Enter (not live-as-you-type).
+ *
+ * - `compact` (default false): hero mode with larger input and focus popover.
+ *   When true: smaller input, no popover, still opens mobile overlay.
  */
-export function SearchBar() {
-  const { startTransition, searchExpanded, setSearchExpanded, setSummary } = useFilterTransition();
+export function SearchBar({ compact = false }: SearchBarProps) {
+  const { startTransition, searchExpanded, setSearchExpanded, setSummary } =
+    useFilterTransition();
   const [params, setParams] = useQueryStates(
     {
       search: searchParamsParsers.search,
       country: searchParamsParsers.country,
       type: searchParamsParsers.type,
-      vibe: searchParamsParsers.vibe,
+      tags: searchParamsParsers.tags,
       sort: searchParamsParsers.sort,
       stayType: searchParamsParsers.stayType,
       maxPrice: searchParamsParsers.maxPrice,
@@ -31,6 +40,7 @@ export function SearchBar() {
   );
   const [localValue, setLocalValue] = useState(params.search ?? '');
   const [isLoading, setIsLoading] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
   const lastAiCall = useRef(0);
   const desktopRef = useRef<HTMLInputElement>(null);
 
@@ -39,79 +49,118 @@ export function SearchBar() {
     setLocalValue(params.search ?? '');
   }, [params.search]);
 
-  const handleSubmit = useCallback(async () => {
-    const trimmed = localValue.trim();
-    if (!trimmed) {
-      setParams({
-        search: null, country: null, stayType: null, maxPrice: null, amenities: null,
-        type: null, vibe: null, sort: null,
-      });
-      setSummary(null);
-      return;
-    }
-
-    if (isSimpleQuery(trimmed)) {
-      setSummary(null);
-      setParams({
-        search: trimmed, country: null, stayType: null, maxPrice: null, amenities: null,
-      });
-      return;
-    }
-
-    // Throttle: ignore if less than 1s since last AI call
-    const now = Date.now();
-    if (now - lastAiCall.current < 1000) return;
-    lastAiCall.current = now;
-
-    setIsLoading(true);
-    try {
-      const result = await parseNaturalQuery(trimmed);
-      if (!result) {
-        // AI failed or returned nothing — fall back to text search
+  const submitQuery = useCallback(
+    async (text: string) => {
+      const trimmed = text.trim();
+      if (!trimmed) {
+        setParams({
+          search: null,
+          country: null,
+          stayType: null,
+          maxPrice: null,
+          amenities: null,
+          type: null,
+          tags: null,
+          sort: null,
+        });
         setSummary(null);
-        setParams({ search: trimmed, country: null, stayType: null, maxPrice: null, amenities: null });
         return;
       }
 
-      setSummary(result.summary);
-      setParams({
-        search: result.search ?? null,
-        country: result.country ?? null,
-        type: result.travel_type ?? null,
-        vibe: result.vibe ?? null,
-        sort: result.sort ?? null,
-        stayType: result.stay_type ?? null,
-        maxPrice: result.max_price ? result.max_price * 100 : null, // dollars → cents
-        amenities: result.amenities ?? null,
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }, [localValue, setParams, setSummary]);
+      if (isSimpleQuery(trimmed)) {
+        setSummary(null);
+        setParams({
+          search: trimmed,
+          country: null,
+          stayType: null,
+          maxPrice: null,
+          amenities: null,
+        });
+        return;
+      }
+
+      // Throttle: ignore if less than 1s since last AI call
+      const now = Date.now();
+      if (now - lastAiCall.current < 1000) return;
+      lastAiCall.current = now;
+
+      setIsLoading(true);
+      try {
+        const result = await parseNaturalQuery(trimmed);
+        if (!result) {
+          // AI failed or returned nothing — fall back to text search
+          setSummary(null);
+          setParams({
+            search: trimmed,
+            country: null,
+            stayType: null,
+            maxPrice: null,
+            amenities: null,
+          });
+          return;
+        }
+
+        setSummary(result.summary);
+        setParams({
+          search: result.search ?? null,
+          country: result.country ?? null,
+          type: result.travel_type ?? null,
+          tags: result.tags ?? null,
+          sort: result.sort ?? null,
+          stayType: result.stay_type ?? null,
+          maxPrice: result.max_price ? result.max_price * 100 : null, // dollars → cents
+          amenities: result.amenities ?? null,
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [setParams, setSummary],
+  );
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === 'Enter') {
         e.preventDefault();
-        handleSubmit();
+        setIsFocused(false);
+        submitQuery(localValue);
+      } else if (e.key === 'Escape') {
+        setIsFocused(false);
+        desktopRef.current?.blur();
       }
     },
-    [handleSubmit],
+    [submitQuery, localValue],
   );
 
   function handleClear() {
     setLocalValue('');
     setSummary(null);
     setParams({
-      search: null, country: null, stayType: null, maxPrice: null, amenities: null,
-      type: null, vibe: null, sort: null,
+      search: null,
+      country: null,
+      stayType: null,
+      maxPrice: null,
+      amenities: null,
+      type: null,
+      tags: null,
+      sort: null,
     });
     desktopRef.current?.focus();
   }
 
+  function handleSuggestionSelect(text: string) {
+    setLocalValue(text);
+    setIsFocused(false);
+    submitQuery(text);
+  }
+
+  const inputSize = compact
+    ? 'h-10 text-sm rounded-lg'
+    : 'h-14 text-base rounded-xl';
+
   return (
     <>
-      {/* Mobile: icon button */}
+      {/* Mobile: icon button that opens full-screen overlay */}
       <button
         type="button"
         aria-label="Open search"
@@ -125,7 +174,7 @@ export function SearchBar() {
         <Search className="h-4 w-4" />
       </button>
 
-      {/* Desktop: inline input */}
+      {/* Desktop: inline input with optional focus popover */}
       <div className="relative hidden md:block w-[280px]">
         <Sparkles className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-accent" />
         <input
@@ -135,8 +184,10 @@ export function SearchBar() {
           value={localValue}
           onChange={(e) => setLocalValue(e.target.value)}
           onKeyDown={handleKeyDown}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           disabled={isLoading}
-          className={`h-10 w-full rounded-button border bg-white pl-9 pr-9 text-chip font-medium text-text-primary placeholder:text-text-muted transition-colors focus:border-accent focus:outline-none ${
+          className={`${inputSize} w-full border bg-white pl-9 pr-9 font-medium text-text-primary placeholder:text-text-muted transition-colors focus:border-accent focus:outline-none ${
             isLoading ? 'border-accent animate-pulse opacity-70' : 'border-border'
           }`}
         />
@@ -152,22 +203,30 @@ export function SearchBar() {
             <X className="h-3.5 w-3.5" />
           </button>
         ) : null}
+
+        {/* Focus popover — hero mode only */}
+        {!compact && isFocused && (
+          <div className="absolute top-full mt-2 left-0 right-0 rounded-xl border border-border bg-white p-4 shadow-lg">
+            <SearchSuggestions onSelect={handleSuggestionSelect} />
+          </div>
+        )}
       </div>
     </>
   );
 }
 
 /**
- * Mobile-only overlay that covers the toolbar when search is expanded.
+ * Mobile-only full-screen overlay with search input and suggestions.
  */
 export function SearchOverlay() {
-  const { startTransition, searchExpanded, setSearchExpanded, setSummary } = useFilterTransition();
+  const { startTransition, searchExpanded, setSearchExpanded, setSummary } =
+    useFilterTransition();
   const [params, setParams] = useQueryStates(
     {
       search: searchParamsParsers.search,
       country: searchParamsParsers.country,
       type: searchParamsParsers.type,
-      vibe: searchParamsParsers.vibe,
+      tags: searchParamsParsers.tags,
       sort: searchParamsParsers.sort,
       stayType: searchParamsParsers.stayType,
       maxPrice: searchParamsParsers.maxPrice,
@@ -184,79 +243,107 @@ export function SearchOverlay() {
     setLocalValue(params.search ?? '');
   }, [params.search]);
 
-  const handleDismiss = useCallback(() => {
-    setSearchExpanded(false);
-  }, [setSearchExpanded]);
-
-  const handleSubmit = useCallback(async () => {
-    const trimmed = localValue.trim();
-    if (!trimmed) {
-      setParams({
-        search: null, country: null, stayType: null, maxPrice: null, amenities: null,
-        type: null, vibe: null, sort: null,
-      });
-      setSummary(null);
-      setSearchExpanded(false);
-      return;
-    }
-
-    if (isSimpleQuery(trimmed)) {
-      setSummary(null);
-      setParams({ search: trimmed, country: null, stayType: null, maxPrice: null, amenities: null });
-      setSearchExpanded(false);
-      return;
-    }
-
-    const now = Date.now();
-    if (now - lastAiCall.current < 1000) return;
-    lastAiCall.current = now;
-
-    setIsLoading(true);
-    try {
-      const result = await parseNaturalQuery(trimmed);
-      if (!result) {
-        setSummary(null);
-        setParams({ search: trimmed, country: null, stayType: null, maxPrice: null, amenities: null });
-      } else {
-        setSummary(result.summary);
+  const submitQuery = useCallback(
+    async (text: string) => {
+      const trimmed = text.trim();
+      if (!trimmed) {
         setParams({
-          search: result.search ?? null,
-          country: result.country ?? null,
-          type: result.travel_type ?? null,
-          vibe: result.vibe ?? null,
-          sort: result.sort ?? null,
-          stayType: result.stay_type ?? null,
-          maxPrice: result.max_price ? result.max_price * 100 : null,
-          amenities: result.amenities ?? null,
+          search: null,
+          country: null,
+          stayType: null,
+          maxPrice: null,
+          amenities: null,
+          type: null,
+          tags: null,
+          sort: null,
         });
+        setSummary(null);
+        setSearchExpanded(false);
+        return;
       }
-    } finally {
-      setIsLoading(false);
-      setSearchExpanded(false);
-    }
-  }, [localValue, setParams, setSummary, setSearchExpanded]);
+
+      if (isSimpleQuery(trimmed)) {
+        setSummary(null);
+        setParams({
+          search: trimmed,
+          country: null,
+          stayType: null,
+          maxPrice: null,
+          amenities: null,
+        });
+        setSearchExpanded(false);
+        return;
+      }
+
+      const now = Date.now();
+      if (now - lastAiCall.current < 1000) return;
+      lastAiCall.current = now;
+
+      setIsLoading(true);
+      try {
+        const result = await parseNaturalQuery(trimmed);
+        if (!result) {
+          setSummary(null);
+          setParams({
+            search: trimmed,
+            country: null,
+            stayType: null,
+            maxPrice: null,
+            amenities: null,
+          });
+        } else {
+          setSummary(result.summary);
+          setParams({
+            search: result.search ?? null,
+            country: result.country ?? null,
+            type: result.travel_type ?? null,
+            tags: result.tags ?? null,
+            sort: result.sort ?? null,
+            stayType: result.stay_type ?? null,
+            maxPrice: result.max_price ? result.max_price * 100 : null, // dollars → cents
+            amenities: result.amenities ?? null,
+          });
+        }
+      } finally {
+        setIsLoading(false);
+        setSearchExpanded(false);
+      }
+    },
+    [setParams, setSummary, setSearchExpanded],
+  );
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === 'Enter') {
         e.preventDefault();
-        handleSubmit();
+        submitQuery(localValue);
       } else if (e.key === 'Escape') {
-        handleDismiss();
+        setSearchExpanded(false);
       }
     },
-    [handleSubmit, handleDismiss],
+    [submitQuery, localValue, setSearchExpanded],
   );
 
   const handleClear = useCallback(() => {
     setLocalValue('');
     setSummary(null);
     setParams({
-      search: null, country: null, stayType: null, maxPrice: null, amenities: null,
-      type: null, vibe: null, sort: null,
+      search: null,
+      country: null,
+      stayType: null,
+      maxPrice: null,
+      amenities: null,
+      type: null,
+      tags: null,
+      sort: null,
     });
     setSearchExpanded(false);
   }, [setParams, setSummary, setSearchExpanded]);
+
+  function handleSuggestionSelect(text: string) {
+    setLocalValue(text);
+    submitQuery(text);
+  }
 
   useEffect(() => {
     if (searchExpanded) {
@@ -269,40 +356,61 @@ export function SearchOverlay() {
     <AnimatePresence>
       {searchExpanded && (
         <motion.div
-          className="absolute inset-0 z-10 flex items-center px-4 sm:px-6 md:hidden"
+          className="fixed inset-0 z-50 flex flex-col bg-bg-page md:hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
         >
-          <div className="absolute inset-0 bg-bg-page/80 backdrop-blur-sm" />
-          <div className="relative w-full">
-            <Sparkles className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-accent" />
-            <input
-              ref={inputRef}
-              type="text"
-              placeholder="Try 'cozy cabin for 2 under $200'..."
-              value={localValue}
-              onChange={(e) => setLocalValue(e.target.value)}
-              onKeyDown={handleKeyDown}
-              disabled={isLoading}
-              className={`h-10 w-full rounded-button border bg-white pl-9 pr-9 text-sm text-text-primary placeholder:text-text-muted focus:outline-none ${
-                isLoading ? 'border-accent animate-pulse opacity-70' : 'border-accent'
-              }`}
-            />
-            {isLoading ? (
-              <Loader2 className="absolute right-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 animate-spin text-accent" />
-            ) : (
-              <button
-                type="button"
-                onMouseDown={(e) => e.preventDefault()}
-                onClick={handleClear}
-                aria-label="Clear search"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary"
-              >
-                <X className="h-3.5 w-3.5" />
-              </button>
-            )}
+          {/* Top bar: back arrow + input */}
+          <div className="flex items-center gap-3 border-b border-border px-4 py-3">
+            <button
+              type="button"
+              onClick={() => setSearchExpanded(false)}
+              aria-label="Close search"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-text-secondary hover:text-text-primary"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </button>
+
+            <div className="relative flex-1">
+              <Sparkles className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-accent" />
+              <input
+                ref={inputRef}
+                type="text"
+                placeholder="Try 'cozy cabin for 2 under $200'..."
+                value={localValue}
+                onChange={(e) => setLocalValue(e.target.value)}
+                onKeyDown={handleKeyDown}
+                disabled={isLoading}
+                className={`h-10 w-full rounded-lg border bg-white pl-9 pr-9 text-sm text-text-primary placeholder:text-text-muted focus:outline-none ${
+                  isLoading
+                    ? 'border-accent animate-pulse opacity-70'
+                    : 'border-accent'
+                }`}
+              />
+              {isLoading ? (
+                <Loader2 className="absolute right-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 animate-spin text-accent" />
+              ) : localValue ? (
+                <button
+                  type="button"
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={() => {
+                    setLocalValue('');
+                    inputRef.current?.focus();
+                  }}
+                  aria-label="Clear search"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              ) : null}
+            </div>
+          </div>
+
+          {/* Suggestions below */}
+          <div className="flex-1 overflow-y-auto px-4 py-4">
+            <SearchSuggestions onSelect={handleSuggestionSelect} />
           </div>
         </motion.div>
       )}
