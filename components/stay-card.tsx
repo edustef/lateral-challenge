@@ -2,22 +2,24 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Star, Users } from 'lucide-react';
 import { formatPrice } from '@/lib/utils/price';
+import { FavoriteButton } from '@/components/favorite-button';
 import type { StayCard as StayCardType } from '@/lib/actions/stays';
 
-export function StayCard({ stay }: { stay: StayCardType }) {
+export function StayCard({ stay, isFavorited = false }: { stay: StayCardType; isFavorited?: boolean }) {
   const price = formatPrice(stay.price_per_night);
   const href = `/stays/${stay.slug}`;
 
   return (
     <Link href={href} className="group block" data-testid="stay-card">
       {/* Desktop: vertical card (hidden below md) */}
-      <article className="hidden md:flex md:flex-col overflow-hidden rounded-card border border-border-subtle bg-bg-card transition-shadow hover:shadow-md">
+      <article className="hidden md:flex md:flex-col overflow-hidden rounded-card border border-border-subtle bg-bg-card transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
         <div className="relative aspect-[4/3]">
+          <FavoriteButton stayId={stay.id} isFavorited={isFavorited} />
           <Image
             src={stay.images[0] ?? ''}
             alt={stay.title}
             fill
-            className="object-cover"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
           />
         </div>
@@ -54,8 +56,9 @@ export function StayCard({ stay }: { stay: StayCardType }) {
       </article>
 
       {/* Mobile: horizontal card (shown below md) */}
-      <article className="flex flex-row gap-4 rounded-small border border-border-subtle bg-bg-card p-3 md:hidden">
+      <article className="flex flex-row gap-4 rounded-small border border-border-subtle bg-bg-card p-3 transition-all duration-200 active:scale-[0.98] md:hidden">
         <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-small">
+          <FavoriteButton stayId={stay.id} isFavorited={isFavorited} />
           <Image
             src={stay.images[0] ?? ''}
             alt={stay.title}

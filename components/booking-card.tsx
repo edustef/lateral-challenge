@@ -37,7 +37,7 @@ export function BookingCard({ booking }: BookingCardProps) {
   const image = stay.images?.[0] ?? '/placeholder.jpg';
 
   return (
-    <div className="flex gap-4 rounded-card border border-border-subtle bg-bg-card p-4">
+    <div className="flex gap-4 rounded-card border border-border-subtle bg-bg-card p-4 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98]">
       {/* Stay image */}
       <Link href={`/stays/${stay.slug}`} className="shrink-0">
         <div className="relative h-20 w-20 overflow-hidden rounded-lg">

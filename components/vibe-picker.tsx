@@ -96,7 +96,7 @@ export function VibePicker() {
                       onClick={() => handleChipToggle(type, t.value, setType)}
                       aria-label={`Filter by ${t.label}`}
                       aria-pressed={selected}
-                      className={`flex items-center gap-1.5 rounded-button border h-9 px-3.5 text-chip font-medium transition-colors ${
+                      className={`flex items-center gap-1.5 rounded-button border h-9 px-3.5 text-chip font-medium transition-all duration-150 active:scale-95 ${
                         selected
                           ? 'border-accent border-w-active bg-accent-tint text-accent'
                           : 'border-border bg-white text-text-secondary hover:border-accent'
@@ -126,7 +126,7 @@ export function VibePicker() {
                       onClick={() => handleChipToggle(vibe, v.value, setVibe)}
                       aria-label={`Filter by ${v.label}`}
                       aria-pressed={selected}
-                      className={`flex items-center gap-1.5 rounded-button border h-9 px-3.5 text-chip font-medium transition-colors ${
+                      className={`flex items-center gap-1.5 rounded-button border h-9 px-3.5 text-chip font-medium transition-all duration-150 active:scale-95 ${
                         selected
                           ? 'border-accent border-w-active bg-accent-tint text-accent'
                           : 'border-border bg-white text-text-secondary hover:border-accent'
