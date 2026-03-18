@@ -31,6 +31,30 @@ export async function loginWithOtp(formData: FormData): Promise<{ error?: string
   return { success: true }
 }
 
+export async function signInWithOAuth(provider: 'google' | 'github', redirectTo?: string | null) {
+  const headerStore = await headers()
+  const origin = headerStore.get('origin') ?? headerStore.get('x-forwarded-host') ?? 'http://localhost:3000'
+  const baseUrl = origin.startsWith('http') ? origin : `https://${origin}`
+
+  const supabase = await createClient()
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider,
+    options: {
+      redirectTo: `${baseUrl}/auth/callback${redirectTo ? `?redirect=${encodeURIComponent(redirectTo)}` : ''}`,
+    },
+  })
+
+  if (error) {
+    return { error: error.message }
+  }
+
+  if (data.url) {
+    redirect(data.url)
+  }
+
+  return { error: 'No redirect URL returned' }
+}
+
 export async function signOut() {
   const supabase = await createClient()
   await supabase.auth.signOut()
