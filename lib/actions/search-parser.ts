@@ -2,6 +2,7 @@
 
 import { headers } from 'next/headers';
 import { serverEnv } from '@/lib/env.server';
+import { logger } from '@/lib/logger';
 import { rateLimit } from '@/lib/rate-limit';
 import {
   isSimpleQuery,
@@ -14,12 +15,11 @@ import {
 const AI_SEARCH_LIMIT = { windowMs: 60_000, maxRequests: 10 };
 
 export async function parseNaturalQuery(input: string): Promise<SearchParserResult | null> {
-  const start = performance.now();
-  const actionName = 'parseNaturalQuery';
+  const log = logger('parseNaturalQuery');
 
   const trimmed = input.trim();
   if (!trimmed || isSimpleQuery(trimmed)) {
-    console.log(`[action] ${actionName} skipped (simple query)`, { input: trimmed });
+    log.info('skipped (simple query)', { input: trimmed });
     return null;
   }
 
@@ -28,14 +28,14 @@ export async function parseNaturalQuery(input: string): Promise<SearchParserResu
   const ip = h.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
   const limit = rateLimit(`ai-search:${ip}`, AI_SEARCH_LIMIT);
   if (!limit.success) {
-    console.warn(`[action] ${actionName} rate limited`, { ip, retryAfterMs: limit.retryAfterMs });
+    log.warn('rate limited', { ip, retryAfterMs: limit.retryAfterMs });
     return null;
   }
 
   const truncated = trimmed.slice(0, 500);
 
   try {
-    console.log(`[action] ${actionName} start`, { input: truncated.slice(0, 80) });
+    log.info('start', { input: truncated.slice(0, 80) });
 
     const res = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -56,29 +56,26 @@ export async function parseNaturalQuery(input: string): Promise<SearchParserResu
     });
 
     if (!res.ok) {
-      console.error(`[action] ${actionName} API error:`, res.status, res.statusText);
+      log.error('API error', { status: res.status, statusText: res.statusText });
       return null;
     }
 
     const data = await res.json();
     const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
     if (!toolCall?.function?.arguments) {
-      console.error(`[action] ${actionName} no tool call in response`);
+      log.error('no tool call in response');
       return null;
     }
 
     const parsed: SearchParserResult = JSON.parse(toolCall.function.arguments);
 
-    console.log(`[action] ${actionName} ok`, {
-      duration: Math.round(performance.now() - start) + 'ms',
-      result: parsed,
-    });
+    log.info('ok', { duration: log.elapsed(), result: parsed });
 
     return parsed;
   } catch (err) {
-    console.error(`[action] ${actionName} error, falling back to text search`, {
-      duration: Math.round(performance.now() - start) + 'ms',
-      error: err,
+    log.error('failed, falling back to text search', {
+      duration: log.elapsed(),
+      error: err instanceof Error ? err.message : String(err),
     });
     return null;
   }

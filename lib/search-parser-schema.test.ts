@@ -2,16 +2,15 @@ import { describe, it, expect } from 'vitest';
 import { isSimpleQuery, sanitizeSearchInput } from './search-parser-schema';
 
 describe('isSimpleQuery', () => {
-  it('returns true for single word', () => {
-    expect(isSimpleQuery('treehouse')).toBe(true);
-  });
+  // isSimpleQuery always returns false — all queries go through AI for better results.
+  // These tests document the intentional behavior.
 
-  it('returns true for two words without trigger words', () => {
-    expect(isSimpleQuery('Asheville NC')).toBe(true);
-  });
-
-  it('returns true for "hot tub" (no trigger words)', () => {
-    expect(isSimpleQuery('hot tub')).toBe(true);
+  it('returns false for all queries (everything goes to AI)', () => {
+    expect(isSimpleQuery('treehouse')).toBe(false);
+    expect(isSimpleQuery('Asheville NC')).toBe(false);
+    expect(isSimpleQuery('hot tub')).toBe(false);
+    expect(isSimpleQuery('')).toBe(false);
+    expect(isSimpleQuery('  treehouse  ')).toBe(false);
   });
 
   it('returns false for queries with digits', () => {
@@ -32,14 +31,6 @@ describe('isSimpleQuery', () => {
 
   it('returns false for questions', () => {
     expect(isSimpleQuery('where can I stay')).toBe(false);
-  });
-
-  it('returns true for empty string', () => {
-    expect(isSimpleQuery('')).toBe(true);
-  });
-
-  it('handles extra whitespace', () => {
-    expect(isSimpleQuery('  treehouse  ')).toBe(true);
   });
 });
 

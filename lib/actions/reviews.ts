@@ -1,26 +1,26 @@
 'use server'
 
 import { createClient, getClaims } from '@/lib/supabase/server'
+import { logger } from '@/lib/logger'
 import { moderateContent } from '@/lib/moderation'
 import { revalidatePath } from 'next/cache'
 
 export async function createReview(formData: FormData): Promise<{ error?: string; success?: boolean }> {
-  const start = performance.now()
-  const actionName = 'createReview'
+  const log = logger('createReview')
   const stayId = formData.get('stayId') as string
   const ratingStr = formData.get('rating') as string
   const comment = (formData.get('comment') as string)?.trim() || null
 
-  console.log(`[action] ${actionName} start`, { stayId, rating: ratingStr })
+  log.info('start', { stayId, rating: ratingStr })
 
   if (!stayId) {
-    console.log(`[action] ${actionName} error`, { duration: Math.round(performance.now() - start) + 'ms', error: 'Missing stayId' })
+    log.error('missing stayId', { duration: log.elapsed() })
     return { error: 'Stay ID is required' }
   }
 
   const rating = parseInt(ratingStr, 10)
   if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
-    console.log(`[action] ${actionName} error`, { duration: Math.round(performance.now() - start) + 'ms', error: 'Invalid rating' })
+    log.error('invalid rating', { duration: log.elapsed() })
     return { error: 'Rating must be between 1 and 5' }
   }
 
@@ -28,12 +28,12 @@ export async function createReview(formData: FormData): Promise<{ error?: string
   const user = await getClaims()
 
   if (!user) {
-    console.log(`[action] ${actionName} error`, { duration: Math.round(performance.now() - start) + 'ms', error: 'Not authenticated' })
+    log.error('not authenticated', { duration: log.elapsed() })
     return { error: 'You must be signed in to leave a review' }
   }
 
   const isApproved = await moderateContent(comment ?? '')
-  console.log(`[action] ${actionName} moderation`, { isApproved })
+  log.info('moderation', { isApproved })
 
   const { error } = await supabase
     .from('reviews')
@@ -48,14 +48,14 @@ export async function createReview(formData: FormData): Promise<{ error?: string
   if (error) {
     // Unique constraint violation — user already reviewed this stay
     if (error.code === '23505') {
-      console.error(`[action] ${actionName} error`, { duration: Math.round(performance.now() - start) + 'ms', error: 'Duplicate review' })
+      log.error('duplicate review', { duration: log.elapsed() })
       return { error: 'You have already reviewed this stay' }
     }
-    console.error(`[action] ${actionName} error`, { duration: Math.round(performance.now() - start) + 'ms', error: error.message })
+    log.error('db error', { duration: log.elapsed(), error: error.message })
     return { error: error.message }
   }
 
-  console.log(`[action] ${actionName} ok`, { duration: Math.round(performance.now() - start) + 'ms' })
+  log.info('ok', { duration: log.elapsed() })
   revalidatePath('/stays/[slug]', 'page')
   return { success: true }
 }

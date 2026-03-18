@@ -1,10 +1,9 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Search, Sparkles, X, Loader2 } from 'lucide-react';
 import { useSearchQuery } from '@/lib/hooks/use-search-query';
 import { SearchSuggestions } from '@/components/search/search-suggestions';
-import { Popover, PopoverContent } from '@/components/ui/popover';
 
 type SearchBarProps = {
   compact?: boolean;
@@ -26,6 +25,7 @@ export function SearchBar({ compact = false }: SearchBarProps) {
   } = useSearchQuery();
   const inputRef = useRef<HTMLInputElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const suggestionsRef = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState(false);
 
   function handleKeyDown(e: React.KeyboardEvent) {
@@ -51,7 +51,6 @@ export function SearchBar({ compact = false }: SearchBarProps) {
         onChange={(e) => setLocalValue(e.target.value)}
         onKeyDown={handleKeyDown}
         onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
         disabled={isLoading}
         className={`${inputSize} w-full border bg-bg-card font-medium text-text-primary placeholder:text-text-muted transition-colors focus:border-accent focus:outline-none ${
           compact ? 'pl-9 pr-9' : 'pl-9 pr-16 md:pl-11 md:pr-20'
@@ -82,22 +81,34 @@ export function SearchBar({ compact = false }: SearchBarProps) {
     </div>
   );
 
+  // Close suggestions when clicking outside
+  useEffect(() => {
+    if (!isFocused) return;
+    function handlePointerDown(e: PointerEvent) {
+      if (wrapperRef.current?.contains(e.target as Node)) return;
+      if (suggestionsRef.current?.contains(e.target as Node)) return;
+      setIsFocused(false);
+    }
+    document.addEventListener('pointerdown', handlePointerDown);
+    return () => document.removeEventListener('pointerdown', handlePointerDown);
+  }, [isFocused]);
+
   if (compact) {
     return <div className="hidden md:block">{input}</div>;
   }
 
   return (
-    <div className="hidden md:block w-full">
-      <Popover open={!compact && isFocused} onOpenChange={setIsFocused}>
-        {input}
-        <PopoverContent
-          align="start"
-          sideOffset={8}
-          className="rounded-xl border border-border bg-bg-card p-4 shadow-lg"
+    <div className="hidden md:block w-full relative">
+      {input}
+      {isFocused && (
+        <div
+          ref={suggestionsRef}
+          onPointerDown={(e) => e.preventDefault()}
+          className="absolute left-0 top-full z-50 mt-2 w-full rounded-xl border border-border bg-bg-card p-4 shadow-lg"
         >
           <SearchSuggestions onSelect={(text) => { setLocalValue(text); setIsFocused(false); submitQuery(text); }} />
-        </PopoverContent>
-      </Popover>
+        </div>
+      )}
     </div>
   );
 }

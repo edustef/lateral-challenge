@@ -1,6 +1,7 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { logger } from '@/lib/logger';
 import type { Tables } from '@/lib/supabase/types';
 
 export type StayCard = Tables<'stays'> & {
@@ -18,9 +19,8 @@ export async function getStays(filters: {
   maxPrice?: number | null;
   amenities?: string[] | null;
 }): Promise<StayCard[]> {
-  const start = performance.now();
-  const actionName = 'getStays';
-  console.log(`[action] ${actionName} start`, { filters });
+  const log = logger('getStays');
+  log.info('start', { filters });
   try {
     const supabase = await createClient();
     let query = supabase.from('stays').select('*');
@@ -98,10 +98,10 @@ export async function getStays(filters: {
       });
     }
 
-    console.log(`[action] ${actionName} ok`, { duration: Math.round(performance.now() - start) + 'ms', count: result.length });
+    log.info('ok', { duration: log.elapsed(), count: result.length });
     return result;
   } catch (err) {
-    console.error(`[action] ${actionName} error`, { duration: Math.round(performance.now() - start) + 'ms', error: err });
+    log.error('failed', { duration: log.elapsed(), error: err instanceof Error ? err.message : String(err) });
     throw err;
   }
 }
@@ -112,9 +112,8 @@ export async function getFeaturedStays(): Promise<StayCard[]> {
 }
 
 export async function getStayBySlug(slug: string): Promise<Tables<'stays'> | null> {
-  const start = performance.now();
-  const actionName = 'getStayBySlug';
-  console.log(`[action] ${actionName} start`, { slug });
+  const log = logger('getStayBySlug');
+  log.info('start', { slug });
   try {
     const supabase = await createClient();
     const { data, error } = await supabase
@@ -123,13 +122,13 @@ export async function getStayBySlug(slug: string): Promise<Tables<'stays'> | nul
       .eq('slug', slug)
       .single();
     if (error) {
-      console.log(`[action] ${actionName} ok`, { duration: Math.round(performance.now() - start) + 'ms', found: false });
+      log.info('ok', { duration: log.elapsed(), found: false });
       return null;
     }
-    console.log(`[action] ${actionName} ok`, { duration: Math.round(performance.now() - start) + 'ms', found: true });
+    log.info('ok', { duration: log.elapsed(), found: true });
     return data;
   } catch (err) {
-    console.error(`[action] ${actionName} error`, { duration: Math.round(performance.now() - start) + 'ms', error: err });
+    log.error('failed', { duration: log.elapsed(), error: err instanceof Error ? err.message : String(err) });
     throw err;
   }
 }

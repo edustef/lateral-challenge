@@ -1,4 +1,5 @@
 import { serverEnv } from "@/lib/env.server";
+import { logger } from "@/lib/logger";
 
 /**
  * Classify review content using OpenAI gpt-4o-mini.
@@ -7,6 +8,8 @@ import { serverEnv } from "@/lib/env.server";
  */
 export async function moderateContent(text: string): Promise<boolean> {
   if (!text || !text.trim()) return true;
+
+  const log = logger("moderation");
 
   try {
     const res = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -34,7 +37,7 @@ export async function moderateContent(text: string): Promise<boolean> {
     });
 
     if (!res.ok) {
-      console.error("[moderation] OpenAI API error:", res.status, res.statusText);
+      log.error("API error", { status: res.status, statusText: res.statusText });
       return true; // fail open
     }
 
@@ -44,12 +47,10 @@ export async function moderateContent(text: string): Promise<boolean> {
       .trim();
 
     const isAppropriate = classification === "appropriate";
-    console.log(
-      `[moderation] result: ${isAppropriate ? "appropriate" : "inappropriate"} for review text "${text.slice(0, 50)}"`
-    );
+    log.info("result", { isAppropriate, preview: text.slice(0, 50) });
     return isAppropriate;
   } catch (err) {
-    console.error("[moderation] failed, approving by default:", err);
+    log.error("failed, approving by default", { error: err instanceof Error ? err.message : String(err) });
     return true; // fail open
   }
 }

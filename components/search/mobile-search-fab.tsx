@@ -24,10 +24,12 @@ export function MobileSearchFab() {
       className="fixed inset-x-0 bottom-0 z-30 flex justify-center px-6 pb-4 md:hidden"
       style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom, 1rem))' }}
     >
-      <button
-        type="button"
+      <div
+        role="button"
+        tabIndex={0}
         onClick={() => setSearchExpanded(true)}
-        className="flex h-11 max-w-xs items-center gap-2 rounded-full border border-border bg-bg-card pl-3 pr-1.5 shadow-lg transition-shadow active:shadow-md"
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSearchExpanded(true); } }}
+        className="flex h-11 max-w-xs cursor-pointer items-center gap-2 rounded-full border border-border bg-bg-card pl-3 pr-1.5 shadow-lg transition-shadow active:shadow-md"
       >
         {params.q ? (
           <Search className="h-4 w-4 shrink-0 text-accent" />
@@ -50,7 +52,7 @@ export function MobileSearchFab() {
         <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-white">
           <Search className="h-3.5 w-3.5" />
         </span>
-      </button>
+      </div>
     </div>
   );
 }

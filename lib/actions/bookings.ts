@@ -1,13 +1,13 @@
 'use server';
 
 import { createClient, getClaims } from '@/lib/supabase/server';
+import { logger } from '@/lib/logger';
 import { redirect } from 'next/navigation';
 
 export async function createBooking(
   formData: FormData
 ): Promise<{ bookingId?: string; error?: string }> {
-  const start = performance.now();
-  const actionName = 'createBooking';
+  const log = logger('createBooking');
   const stayId = formData.get('stayId') as string;
   const slug = formData.get('slug') as string;
   const checkIn = formData.get('checkIn') as string;
@@ -18,23 +18,23 @@ export async function createBooking(
   const contactPhone = (formData.get('contactPhone') as string) || null;
   const totalPrice = Number(formData.get('totalPrice'));
 
-  console.log(`[action] ${actionName} start`, { stayId, checkIn, checkOut, guests });
+  log.info('start', { stayId, checkIn, checkOut, guests });
 
   const supabase = await createClient();
   const user = await getClaims();
 
   if (!user) {
-    console.log(`[action] ${actionName} redirect`, { duration: Math.round(performance.now() - start) + 'ms', reason: 'Not authenticated' });
+    log.info('redirect', { duration: log.elapsed(), reason: 'Not authenticated' });
     redirect(`/auth/login?redirect=/stays/${slug}/book`);
   }
 
   // Basic validation
   if (new Date(checkOut) <= new Date(checkIn)) {
-    console.log(`[action] ${actionName} error`, { duration: Math.round(performance.now() - start) + 'ms', error: 'Invalid dates' });
+    log.error('invalid dates', { duration: log.elapsed() });
     return { error: 'Check-out must be after check-in' };
   }
   if (guests < 1) {
-    console.log(`[action] ${actionName} error`, { duration: Math.round(performance.now() - start) + 'ms', error: 'Invalid guests' });
+    log.error('invalid guests', { duration: log.elapsed() });
     return { error: 'At least 1 guest is required' };
   }
 
@@ -57,13 +57,13 @@ export async function createBooking(
   if (error) {
     // Overlapping dates exclusion constraint or other DB errors
     if (error.code === '23P01') {
-      console.error(`[action] ${actionName} error`, { duration: Math.round(performance.now() - start) + 'ms', error: 'Dates unavailable' });
+      log.error('dates unavailable', { duration: log.elapsed() });
       return { error: 'These dates are no longer available' };
     }
-    console.error(`[action] ${actionName} error`, { duration: Math.round(performance.now() - start) + 'ms', error: error.message });
+    log.error('db error', { duration: log.elapsed(), error: error.message });
     return { error: error.message };
   }
 
-  console.log(`[action] ${actionName} ok`, { duration: Math.round(performance.now() - start) + 'ms', bookingId: data.id });
+  log.info('ok', { duration: log.elapsed(), bookingId: data.id });
   redirect(`/stays/${slug}/book/confirmation?id=${data.id}`);
 }

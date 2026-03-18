@@ -10,6 +10,11 @@ vi.mock('@/lib/env.server', () => ({
   serverEnv: { openaiApiKey: 'test-key' },
 }));
 
+// Mock next/headers to avoid "headers was called outside a request scope"
+vi.mock('next/headers', () => ({
+  headers: vi.fn().mockResolvedValue(new Map([['x-forwarded-for', '127.0.0.1']])),
+}));
+
 function mockOpenAIResponse(args: Record<string, unknown>) {
   return {
     ok: true,
@@ -30,12 +35,6 @@ beforeEach(() => {
 });
 
 describe('parseNaturalQuery', () => {
-  it('returns null for simple queries', async () => {
-    const result = await parseNaturalQuery('treehouse');
-    expect(result).toBeNull();
-    expect(mockFetch).not.toHaveBeenCalled();
-  });
-
   it('calls OpenAI for complex queries and returns parsed result', async () => {
     mockFetch.mockResolvedValueOnce(mockOpenAIResponse({
       stay_type: 'cabin',

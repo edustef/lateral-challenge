@@ -22,11 +22,8 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
-
       - run: pnpm lint
-
       - run: pnpm test
-
       - run: pnpm build
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co

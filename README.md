@@ -225,6 +225,24 @@ pnpm dev &
 pnpm test:e2e
 ```
 
+## CI / CD
+
+A GitHub Actions pipeline runs **lint + tests + build** on every push to `main` and on PRs targeting `main`. This catches issues that Vercel's build step alone wouldn't — linting violations, test failures, and type errors that don't break the build.
+
+Vercel handles deployment: every push gets a preview deploy, and merges to `main` trigger production. The CI pipeline and Vercel serve complementary roles — CI gates code quality, Vercel handles hosting and preview environments.
+
+## Release Process
+
+Releases follow a simple tag-based approach:
+
+1. Update `version` in `package.json`
+2. Update `CHANGELOG.md` with the new version and changes
+3. Commit: `git commit -m "release: v0.2.0"`
+4. Tag: `git tag v0.2.0`
+5. Push: `git push origin main --tags`
+
+The changelog follows [Keep a Changelog](https://keepachangelog.com/) format. Versioning follows [SemVer](https://semver.org/) — patch for fixes, minor for features, major for breaking changes.
+
 ## Deployment
 
 1. Push to GitHub
@@ -232,4 +250,12 @@ pnpm test:e2e
 3. Set environment variables in Vercel dashboard
 4. Deploy — Vercel auto-detects Next.js
 
-CI runs lint + test + build on every push to `main` and on PRs.
+## Observability
+
+Server actions use a structured logger (`lib/logger.ts`) that outputs consistent `[scope] event {data}` lines with duration tracking. Every server action logs:
+
+- **start** — action name and key parameters
+- **ok** — duration and result summary
+- **error** — duration, error type, and message
+
+This provides request tracing in Vercel's function logs without adding a third-party dependency. For production at scale, this could be extended with a service like Sentry (error tracking) or Axiom (log aggregation) — the structured format makes integration straightforward.
