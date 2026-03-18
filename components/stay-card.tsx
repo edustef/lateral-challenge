@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Users } from 'lucide-react';
+import { Star, Users } from 'lucide-react';
 import { formatPrice } from '@/lib/utils/price';
 import type { StayCard as StayCardType } from '@/lib/actions/stays';
 
@@ -25,7 +25,16 @@ export function StayCard({ stay }: { stay: StayCardType }) {
           <h3 className="font-heading text-base font-semibold text-text-primary line-clamp-1">
             {stay.title}
           </h3>
-          <p className="text-sm text-text-secondary">{stay.location}</p>
+          <div className="flex items-center gap-2">
+            <p className="text-sm text-text-secondary">{stay.location}</p>
+            {stay.avg_rating !== null && (
+              <span className="flex items-center gap-0.5 text-sm text-text-secondary">
+                <Star size={14} className="fill-amber-400 text-amber-400" />
+                {stay.avg_rating.toFixed(1)}
+                <span className="text-text-muted">({stay.review_count})</span>
+              </span>
+            )}
+          </div>
           <div className="flex items-baseline gap-1">
             <span className="font-mono font-semibold text-text-primary">
               {price}
@@ -60,7 +69,15 @@ export function StayCard({ stay }: { stay: StayCardType }) {
             <h3 className="font-heading text-sm font-semibold text-text-primary line-clamp-1">
               {stay.title}
             </h3>
-            <p className="text-xs text-text-secondary">{stay.location}</p>
+            <div className="flex items-center gap-2">
+              <p className="text-xs text-text-secondary">{stay.location}</p>
+              {stay.avg_rating !== null && (
+                <span className="flex items-center gap-0.5 text-xs text-text-secondary">
+                  <Star size={12} className="fill-amber-400 text-amber-400" />
+                  {stay.avg_rating.toFixed(1)}
+                </span>
+              )}
+            </div>
           </div>
           <div className="flex items-end justify-between">
             <div className="flex items-baseline gap-1">

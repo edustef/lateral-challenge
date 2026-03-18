@@ -14,7 +14,7 @@ export default function ProfileLoading() {
             className="flex gap-4 rounded-card border border-border-subtle bg-bg-card p-4"
           >
             {/* Image */}
-            <div className="h-24 w-32 flex-shrink-0 rounded-small bg-bg-muted" />
+            <div className="h-20 w-20 flex-shrink-0 rounded-lg bg-bg-muted" />
             {/* Details */}
             <div className="flex-1 space-y-2">
               <div className="h-5 w-3/4 rounded bg-bg-muted" />

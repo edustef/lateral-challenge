@@ -4,7 +4,7 @@ import { useQueryState } from 'nuqs';
 import { ArrowUpDown } from 'lucide-react';
 import { searchParamsParsers } from '@/lib/search-params';
 
-const SORT_CYCLE = [null, 'price-asc', 'price-desc'] as const;
+const SORT_CYCLE = [null, 'price-asc', 'price-desc', 'rating-desc'] as const;
 
 function getSortLabel(sort: string | null): string {
   switch (sort) {
@@ -12,6 +12,8 @@ function getSortLabel(sort: string | null): string {
       return 'Price: low \u2192 high';
     case 'price-desc':
       return 'Price: high \u2192 low';
+    case 'rating-desc':
+      return 'Top rated';
     default:
       return 'Sort';
   }

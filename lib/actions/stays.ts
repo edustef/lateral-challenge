@@ -3,7 +3,10 @@
 import { createClient } from '@/lib/supabase/server';
 import type { Tables } from '@/lib/supabase/types';
 
-export type StayCard = Tables<'stays'>;
+export type StayCard = Tables<'stays'> & {
+  avg_rating: number | null;
+  review_count: number;
+};
 
 export async function getStays(filters: {
   type?: string | null;
@@ -29,13 +32,42 @@ export async function getStays(filters: {
       query = query.order('price_per_night', { ascending: true });
     } else if (filters.sort === 'price-desc') {
       query = query.order('price_per_night', { ascending: false });
-    } else {
+    } else if (filters.sort !== 'rating-desc') {
       query = query.order('created_at', { ascending: false });
     }
 
     const { data, error } = await query;
     if (error) throw error;
-    const result = data ?? [];
+    const stays = data ?? [];
+
+    // Fetch average ratings for all stays
+    const stayIds = stays.map((s) => s.id);
+    const { data: reviews } = await supabase
+      .from('reviews')
+      .select('stay_id, rating')
+      .in('stay_id', stayIds);
+
+    const ratingMap = new Map<string, { sum: number; count: number }>();
+    for (const r of reviews ?? []) {
+      const entry = ratingMap.get(r.stay_id) ?? { sum: 0, count: 0 };
+      entry.sum += r.rating;
+      entry.count += 1;
+      ratingMap.set(r.stay_id, entry);
+    }
+
+    let result: StayCard[] = stays.map((s) => {
+      const entry = ratingMap.get(s.id);
+      return {
+        ...s,
+        avg_rating: entry ? entry.sum / entry.count : null,
+        review_count: entry?.count ?? 0,
+      };
+    });
+
+    if (filters.sort === 'rating-desc') {
+      result.sort((a, b) => (b.avg_rating ?? 0) - (a.avg_rating ?? 0));
+    }
+
     console.log(`[action] ${actionName} ok`, { duration: Math.round(performance.now() - start) + 'ms', count: result.length });
     return result;
   } catch (err) {
