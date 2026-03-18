@@ -25,9 +25,9 @@
 
 ### Content Moderation
 
-- [ ] **MODR-01**: Reviews are classified by OpenAI before display (approve/reject)
-- [ ] **MODR-02**: Rejected reviews are stored but hidden with a "moderated" flag
-- [ ] **MODR-03**: Classification runs as part of createReview server action
+- [x] **MODR-01**: Reviews are classified by OpenAI before display (approve/reject)
+- [x] **MODR-02**: Rejected reviews are stored but hidden with a "moderated" flag
+- [x] **MODR-03**: Classification runs as part of createReview server action
 
 ## Out of Scope
 
@@ -53,9 +53,9 @@
 | DISC-V2-04 | Phase 7 | Pending |
 | PLSH-V2-01 | Phase 8 | Complete |
 | PLSH-V2-02 | Phase 8 | Complete |
-| MODR-01 | Phase 7 | Pending |
-| MODR-02 | Phase 7 | Pending |
-| MODR-03 | Phase 7 | Pending |
+| MODR-01 | Phase 7 | Complete |
+| MODR-02 | Phase 7 | Complete |
+| MODR-03 | Phase 7 | Complete |
 
 **Coverage:**
 - v2 requirements: 12 total

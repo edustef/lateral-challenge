@@ -66,6 +66,8 @@ Recent decisions affecting current work:
 - Google and GitHub as OAuth providers for v2 auth
 - Reuse existing /auth/callback route for OAuth code exchange
 - Server action with redirect() for OAuth flow from client components
+- [Phase 07-02]: Direct fetch to OpenAI API for moderation, fail-open pattern, silent rejection of inappropriate reviews
+- [Phase 07-01]: useOptimistic + useTransition for instant heart toggle, favorites table type added to DB types
 - [Phase 08-motion-and-polish]: CSS-first animations with @keyframes and Tailwind utilities, no framer-motion
 
 ### Pending Todos
