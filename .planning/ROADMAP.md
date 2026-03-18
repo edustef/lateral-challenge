@@ -44,12 +44,12 @@ Plans:
   3. User can search stays by text, sort by price, and see a responsive grid (1/2/3 columns by viewport)
   4. User can open a stay detail page showing photos, amenities, reviews, date availability, and price breakdown
   5. Navigating to a non-existent stay shows a proper 404 page
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
-- [ ] 02-03: TBD
+- [ ] 02-01-PLAN.md — Shared layout, header, nuqs URL state, vibe picker (desktop + mobile), data fetching
+- [ ] 02-02-PLAN.md — Stay cards, responsive grid, search bar, sort toggle, loading skeletons
+- [ ] 02-03-PLAN.md — Stay detail page: photo gallery, stay info, reviews, date picker, price breakdown, 404
 
 ### Phase 3: Authenticated Flows
 **Goal**: Users can sign in, book stays through a multi-step checkout, leave reviews, and view their bookings

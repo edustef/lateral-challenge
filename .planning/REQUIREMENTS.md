@@ -15,8 +15,8 @@
 
 ### Discovery
 
-- [ ] **DISC-01**: Vibe picker stepper — Step 1 "Who's traveling?" (solo/duo/family/group) → Step 2 "What's the vibe?" (adventure/culture/disconnect/celebration)
-- [ ] **DISC-02**: URL state via nuqs (?type=solo&vibe=adventure) — shareable, SSR-compatible
+- [x] **DISC-01**: Vibe picker stepper — Step 1 "Who's traveling?" (solo/duo/family/group) → Step 2 "What's the vibe?" (adventure/culture/disconnect/celebration)
+- [x] **DISC-02**: URL state via nuqs (?type=solo&vibe=adventure) — shareable, SSR-compatible
 - [ ] **DISC-03**: Stay cards with image, title, location, price/night, max guests, type badge
 - [ ] **DISC-04**: Responsive stays grid (1/2/3 columns)
 - [ ] **DISC-05**: Text search filter (by title/location)
@@ -125,8 +125,8 @@
 | FOUND-03 | Phase 1 | Complete |
 | FOUND-04 | Phase 1 | Complete |
 | FOUND-05 | Phase 1 | Complete |
-| DISC-01 | Phase 2 | Pending |
-| DISC-02 | Phase 2 | Pending |
+| DISC-01 | Phase 2 | Complete |
+| DISC-02 | Phase 2 | Complete |
 | DISC-03 | Phase 2 | Pending |
 | DISC-04 | Phase 2 | Pending |
 | DISC-05 | Phase 2 | Pending |
