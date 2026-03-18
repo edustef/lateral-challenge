@@ -111,8 +111,34 @@ User types "romantic cabin near mountains under $300"
 
 - **Server Components** fetch data via server actions — no client-side API calls, no loading waterfalls
 - **Client Components** only where interactivity is needed (search input, forms, date pickers)
-- **URL state** via nuqs — every filter combination is a shareable, bookmarkable URL
 - **Auth** managed by a Supabase proxy that refreshes tokens on every request
+
+### URL as State
+
+All search and booking state lives in the URL, not in client-side state management or localStorage. This is a deliberate choice for a booking platform:
+
+- **Shareable links**: A user can copy `?q=romantic+cabin&maxPrice=20000&tags=romantic&stayType=cabin` and send it to a travel partner. They see the exact same results.
+- **Bookmarkable searches**: Save a search, come back later — the URL reconstructs the full filter state.
+- **Back/forward works**: Browser navigation through search refinements works for free. No manual history management.
+- **SSR-compatible**: Server Components can read search params directly and fetch data on the server — no loading spinners for initial results.
+- **Booking flow prefill**: When a user clicks "Book" from a stay detail page, dates and guest count are passed via URL params (`/stays/alpine-treehouse/book?checkIn=2026-04-10&checkOut=2026-04-15&guests=2`). The checkout form reads these on the server and prefills — no client state to hydrate or lose on refresh.
+- **No state library needed**: nuqs provides type-safe parsers for all 9 search params. React Context is only used for transient UI state (search overlay open/closed, pending transitions) that doesn't belong in the URL.
+
+This means there's zero risk of stale state, lost filters on refresh, or broken back button — common issues with client-side state management in booking flows.
+
+### Checkout & Availability
+
+The booking flow has server-side availability checking at two levels:
+
+1. **UI-level blocking**: The stay detail page and checkout form both call `getUnavailableDates(stayId)`, which runs a Supabase RPC (`get_unavailable_dates`) that returns all booked date ranges plus any manually blocked dates. The calendar disables these dates, and the form validates client-side that the selected range doesn't overlap any disabled dates before allowing submission.
+
+2. **Database-level enforcement**: Even if a client bypasses the UI validation, the `bookings` table has a Postgres exclusion constraint that prevents overlapping date ranges for the same stay. If two users try to book the same dates simultaneously, the second insert fails with error code `23P01`, and the server action returns a clear error: "These dates are no longer available."
+
+The checkout flow itself:
+- **Stay detail page** → BookingSidebar with date picker, guest counter, and price preview → "Book" link passes selections via URL params
+- **Checkout page** → Server Component fetches stay data, user session, and unavailable dates in parallel → CheckoutForm renders with prefilled dates/guests and disabled calendar dates
+- **Form submission** → `createBooking` server action validates dates, inserts booking, and redirects to confirmation page
+- **Confirmation page** → Fetches the created booking by ID and displays confirmation details
 
 ### Design System
 
@@ -131,7 +157,7 @@ Custom design tokens in CSS variables (not Tailwind defaults):
 |----------|-----------|
 | AI-powered natural language search | Users describe what they want in plain English. The AI extracts structured filters — no need to learn a filter UI. Falls back to text search when AI is unavailable. |
 | Server Components for data fetching | Zero client-side loading states for initial data. SEO-friendly. Simpler mental model — data flows top-down. |
-| nuqs for URL state | Shareable filter URLs, SSR-compatible, type-safe. No Redux/Zustand needed. |
+| URL as single source of truth | For a booking site, every search and booking state must survive refresh, back/forward, and link sharing. URL params handle all of this for free. No Redux/Zustand/localStorage needed — nuqs provides type-safe parsers, and Server Components read params directly. |
 | Two-layer search hook architecture | `useSearchParamsState` (thin param wrapper) + `useSearchQuery` (AI submit logic). 4 components share params; only 2 need the full query logic. |
 | Feature-folder components | `search/`, `booking/`, `stays/`, `layout/` — find files by what they do, not what they are. |
 | proxy.ts for auth | Keeps Supabase token refresh isolated. Clean separation from route handlers. |
@@ -170,19 +196,21 @@ Custom design tokens in CSS variables (not Tailwind defaults):
 - **No image upload**: Stay images are hardcoded Unsplash URLs. A CMS or admin panel would manage real content.
 - **Payment is mocked**: The checkout flow captures all data but doesn't process payment. Stripe integration is the obvious next step.
 - **No i18n**: Single language (English). `next-intl` would be the path forward.
+- **No sort UI**: The backend supports sorting by price (asc/desc) and rating, and the AI parser can extract sort intent from natural language queries ("cheapest cabins"), but there's no explicit sort dropdown in the UI. Users should be able to sort results without relying on the AI to infer it.
 - **Mobile search popover**: The desktop search uses a base-ui Popover for suggestions, but the positioning strategy could be refined for edge cases.
 
 ---
 
 ## What I'd Do Next
 
-1. **Stripe integration** — Wire the checkout form to Stripe Payment Intents. The form already captures all necessary data.
-2. **Map view** — Add a split-view discovery page with Mapbox GL. Stays already have location data.
-3. **Component tests** — Add React Testing Library tests for SearchBar, CheckoutForm, and BookingSidebar.
-4. **Real-time availability** — Use Supabase real-time to update blocked dates when another user books.
-5. **Admin panel** — CRUD for stays, review moderation queue, booking management.
-6. **Image pipeline** — Upload to Supabase Storage, serve through Next.js Image Optimization.
-7. **Caching** — Add ISR for stay listings, `unstable_cache` for frequently-accessed queries.
+1. **Sort UI** — Add a sort dropdown (price low/high, top rated, newest) to the discovery page. The backend already supports all sort modes via the `sort` URL param — this is purely a UI addition.
+2. **Stripe integration** — Wire the checkout form to Stripe Payment Intents. The form already captures all necessary data.
+3. **Map view** — Add a split-view discovery page with Mapbox GL. Stays already have location data.
+4. **Component tests** — Add React Testing Library tests for SearchBar, CheckoutForm, and BookingSidebar.
+5. **Real-time availability** — Use Supabase real-time to update blocked dates when another user books.
+6. **Admin panel** — CRUD for stays, review moderation queue, booking management.
+7. **Image pipeline** — Upload to Supabase Storage, serve through Next.js Image Optimization.
+8. **Caching** — Add ISR for stay listings, `unstable_cache` for frequently-accessed queries.
 
 ---
 
