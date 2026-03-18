@@ -19,7 +19,7 @@
 - [x] **DISC-02**: URL state via nuqs (?type=solo&vibe=adventure) — shareable, SSR-compatible
 - [x] **DISC-03**: Stay cards with image, title, location, price/night, max guests, type badge
 - [x] **DISC-04**: Responsive stays grid (1/2/3 columns)
-- [ ] **DISC-05**: Text search filter (by title/location)
+- [x] **DISC-05**: Text search filter (by title/location)
 - [x] **DISC-06**: Price sort toggle (low→high, high→low)
 - [x] **DISC-07**: Loading skeleton state for stays grid
 - [x] **DISC-08**: Mobile-responsive vibe picker (compact picker + bottom sheet on mobile)
@@ -56,7 +56,7 @@
 - [x] **CHKT-05**: Price calculation — per night × nights + cleaning fee + service fee = total
 - [x] **CHKT-06**: Mock payment step ("Confirm & pay" button)
 - [x] **CHKT-07**: Booking confirmation page with summary (stay name, dates, guests, total)
-- [ ] **CHKT-08**: Auth guard — redirect to login if unauthenticated
+- [x] **CHKT-08**: Auth guard — redirect to login if unauthenticated
 
 ### Profile
 
@@ -129,7 +129,7 @@
 | DISC-02 | Phase 2 | Complete |
 | DISC-03 | Phase 2 | Complete |
 | DISC-04 | Phase 2 | Complete |
-| DISC-05 | Phase 5 | Pending |
+| DISC-05 | Phase 5 | Complete |
 | DISC-06 | Phase 2 | Complete |
 | DISC-07 | Phase 2 | Complete |
 | DISC-08 | Phase 2 | Complete |
@@ -151,7 +151,7 @@
 | CHKT-05 | Phase 3 | Complete |
 | CHKT-06 | Phase 3 | Complete |
 | CHKT-07 | Phase 3 | Complete |
-| CHKT-08 | Phase 5 | Pending |
+| CHKT-08 | Phase 5 | Complete |
 | REVW-01 | Phase 3 | Complete |
 | REVW-02 | Phase 3 | Complete |
 | REVW-03 | Phase 3 | Complete |

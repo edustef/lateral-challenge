@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 2: Browsing Experience** - Vibe-first discovery flow and stay detail pages
 - [x] **Phase 3: Authenticated Flows** - Auth, checkout, reviews, and profile (completed 2026-03-17)
 - [ ] **Phase 4: Ship It** - Polish, testing, CI, and deployment
-- [ ] **Phase 5: Bug Fixes & Wiring** - Fix OTP redirect chain, search price display, confirmation UX
+- [x] **Phase 5: Bug Fixes & Wiring** - Fix OTP redirect chain, search price display, confirmation UX (completed 2026-03-17)
 
 ## Phase Details
 
@@ -97,7 +97,7 @@ Plans:
   3. Confirmation page includes a "View My Bookings" link to `/profile`
 
 Plans:
-- [ ] 05-01-PLAN.md — OTP redirect chain, search price fix, confirmation UX
+- [x] 05-01-PLAN.md — OTP redirect chain, search price fix, confirmation UX
 
 ## Progress
 
@@ -110,4 +110,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | 2. Browsing Experience | 0/3 | Not started | - |
 | 3. Authenticated Flows | 0/3 | Complete    | 2026-03-17 |
 | 4. Ship It | 0/2 | Not started | - |
-| 5. Bug Fixes & Wiring | 0/1 | Not started | - |
+| 5. Bug Fixes & Wiring | 1/1 | Complete | 2026-03-17 |

@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: unknown
-last_updated: "2026-03-17T13:51:08.976Z"
+status: complete
+last_updated: "2026-03-17T14:51:53Z"
 progress:
-  total_phases: 4
-  completed_phases: 4
-  total_plans: 11
-  completed_plans: 11
+  total_phases: 5
+  completed_phases: 5
+  total_plans: 12
+  completed_plans: 12
 ---
 
 # Project State
@@ -18,23 +18,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-17)
 
 **Core value:** Users can discover unique stays through a vibe-first experience and complete a booking flow end-to-end
-**Current focus:** Phase 4: Ship It
+**Current focus:** Phase 5: Bug Fixes & Wiring (gap closure)
 
 ## Current Position
 
-Phase: 4 of 4 (Ship It) -- COMPLETE
-Plan: 3 of 3 in current phase -- ALL COMPLETE
-Status: All plans complete. Project finished.
-Last activity: 2026-03-17 -- Completed 04-03 (CI/CD & README)
+Phase: 5 of 5 (Bug Fixes & Wiring) -- COMPLETE
+Plan: 1 of 1 in current phase -- ALL COMPLETE
+Status: All plans complete. v1.0 milestone fully closed.
+Last activity: 2026-03-17 -- Completed 05-01 (OTP redirect chain, price fix, confirmation UX)
 
 Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 11
+- Total plans completed: 12
 - Average duration: 3.4min
-- Total execution time: 0.62 hours
+- Total execution time: 0.69 hours
 
 **By Phase:**
 
@@ -54,6 +54,7 @@ Progress: [██████████] 100%
 | Phase 03 P03 | 3min | 2 tasks | 7 files |
 | Phase 03 P02 | 5min | 2 tasks | 5 files |
 | Phase 04 P03 | 2min | 2 tasks | 3 files |
+| Phase 05 P01 | 4min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -85,6 +86,8 @@ Recent decisions affecting current work:
 - [Phase 04]: Shared RouteError component to DRY error boundaries across all routes
 - [Phase 04]: Server action logging on key actions only (skipped noisy preview/reviews queries)
 - [Phase 04]: Placeholder env vars in CI build for Zod validation; E2E tests manual only (needs Supabase)
+- [Phase 05]: search-bar.tsx has no price display; raw-cents issue was in stay-card.tsx -- fixed formatPrice there
+- [Phase 05]: proxy.ts is the correct Next.js convention; middleware.ts must not be used
 
 ### Pending Todos
 
@@ -97,5 +100,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-17
-Stopped at: Completed 04-03-PLAN.md (final plan -- project complete)
+Stopped at: Completed 05-01-PLAN.md (gap closure -- v1.0 milestone fully closed)
 Resume file: None
