@@ -33,21 +33,30 @@ Users can discover unique stays through a vibe-first experience and complete a b
 - [ ] OAuth login (Google, GitHub)
 - [ ] Sticky filter bar
 - [ ] Favorites/wishlist
-- [ ] Stay comparison view
-- [ ] Map view for stay locations
 - [ ] Animated page transitions
-- [ ] Sentry + Vercel Analytics integration
-- [ ] Image upload for reviews
-- [ ] Content moderation system
+- [ ] Content moderation with OpenAI classification
 
 ### Out of Scope
 
 - Real payment processing — mock confirmation, document Stripe plan
 - Image upload — hardcoded Unsplash URLs in seed data
-- Content moderation — reviews go live immediately
+- Stay comparison view — defer to v3
+- Map view for stay locations — defer to v3
+- Sentry + Vercel Analytics — defer to v3
 - i18n / multi-currency — out of scope for timebox
 - Real-time chat or messaging
 - Video posts or media beyond images
+
+## Current Milestone: v2.0 Polish & Features
+
+**Goal:** Add OAuth login, sticky filter bar, favorites/wishlist, animated page transitions, and AI-powered content moderation to elevate the demo.
+
+**Target features:**
+- OAuth login (Google, GitHub) for faster onboarding
+- Sticky filter bar for persistent browsing controls
+- Favorites/wishlist to save stays
+- Animated page transitions for premium feel
+- OpenAI-powered content moderation for review quality
 
 ## Context
 
@@ -79,4 +88,4 @@ Full Pencil design file exists (`lateral-design.pen`) with screens for all major
 | Shared RouteError component | DRY error boundaries across all routes | ✓ Good |
 
 ---
-*Last updated: 2026-03-17 after v1.0 milestone*
+*Last updated: 2026-03-17 after v2.0 milestone start*

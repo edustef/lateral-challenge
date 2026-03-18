@@ -1,8 +1,8 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
-status: complete
+milestone: v2.0
+milestone_name: Polish & Features
+status: active
 last_updated: "2026-03-17T14:58:23.564Z"
 progress:
   total_phases: 5
@@ -18,14 +18,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-17)
 
 **Core value:** Users can discover unique stays through a vibe-first experience and complete a booking flow end-to-end
-**Current focus:** v1.0 complete — ready for v2
+**Current focus:** v2.0 — OAuth, sticky filters, favorites, animations, content moderation
 
 ## Current Position
 
-Phase: 5 of 5 (Bug Fixes & Wiring) -- COMPLETE
-Plan: 1 of 1 in current phase -- ALL COMPLETE
-Status: All plans complete. v1.0 milestone fully closed.
-Last activity: 2026-03-17 -- Completed 05-01 (OTP redirect chain, price fix, confirmation UX)
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements for v2.0
+Last activity: 2026-03-17 -- Milestone v2.0 started
 
 Progress: [██████████] 100%
 
