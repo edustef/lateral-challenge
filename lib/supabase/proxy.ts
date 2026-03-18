@@ -30,14 +30,13 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const { data: { session } } = await supabase.auth.getSession()
+  const claims = session?.user ?? null
 
   // Redirect unauthenticated users from checkout pages to login
   const { pathname } = request.nextUrl
   if (
-    !user &&
+    !claims &&
     pathname.startsWith('/stays/') &&
     pathname.endsWith('/book')
   ) {

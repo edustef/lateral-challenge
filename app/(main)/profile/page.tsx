@@ -1,19 +1,17 @@
 import { redirect } from 'next/navigation';
-import { createClient } from '@/lib/supabase/server';
+import { createClient, getClaims } from '@/lib/supabase/server';
 import { BookingCard } from '@/components/booking-card';
 import { MapPin } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function ProfilePage() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getClaims();
 
   if (!user) {
     redirect('/auth/login?redirect=/profile');
   }
 
+  const supabase = await createClient();
   const { data: bookings } = await supabase
     .from('bookings')
     .select('*, stays(title, location, images, slug)')

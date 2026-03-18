@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getStayBySlug, getReviewsForStay } from '@/lib/actions/stays';
-import { createClient } from '@/lib/supabase/server';
+import { getClaims } from '@/lib/supabase/server';
 import { PhotoGallery } from '@/components/photo-gallery';
 import { StayInfo } from '@/components/stay-info';
 import { ReviewsList } from '@/components/reviews-list';
@@ -18,8 +18,7 @@ export default async function StayDetailPage({ params }: Props) {
 
   const reviews = await getReviewsForStay(stay.id);
 
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getClaims();
 
   return (
     <div className="py-6">

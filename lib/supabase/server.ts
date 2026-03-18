@@ -3,6 +3,12 @@ import { cookies } from 'next/headers'
 import { clientEnv } from '@/lib/env.client'
 import type { Database } from './types'
 
+export async function getClaims() {
+  const supabase = await createClient()
+  const { data: { session } } = await supabase.auth.getSession()
+  return session?.user ?? null
+}
+
 export async function createClient() {
   const cookieStore = await cookies()
 
