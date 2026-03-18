@@ -35,7 +35,7 @@
   2. User can sign in with GitHub and land on their profile with existing bookings/reviews intact
   3. User who previously used magic link can sign in via OAuth and see their same account
   4. Filter bar stays visible at top of screen while scrolling through the stays grid
-**Plans**: TBD
+**Plans**: 2 (06-01 OAuth buttons + action, 06-02 Sticky filter bar)
 
 ### Phase 7: Favorites & Moderation
 **Goal**: Users can save stays for later and submitted reviews are automatically checked for quality
@@ -47,7 +47,9 @@
   3. Favorites persist across sessions (stored in database for authenticated users)
   4. A submitted review with inappropriate content is hidden from the listing and flagged as moderated
   5. A submitted review with appropriate content appears on the listing normally
-**Plans**: TBD
+**Plans**: 2 plans
+- [ ] 07-01-PLAN.md — Favorites: heart toggle on stay cards, wishlist page, favorites server actions
+- [ ] 07-02-PLAN.md — Moderation: OpenAI review classification, is_approved filter, moderation utility
 
 ### Phase 8: Motion & Polish
 **Goal**: The app feels premium with smooth transitions and responsive interactive feedback
@@ -69,6 +71,6 @@
 | 3. Authenticated Flows | v1.0 | 3/3 | Complete | 2026-03-17 |
 | 4. Ship It | v1.0 | 3/3 | Complete | 2026-03-17 |
 | 5. Bug Fixes & Wiring | v1.0 | 1/1 | Complete | 2026-03-17 |
-| 6. OAuth & Discovery Controls | v2.0 | 0/? | Not started | - |
-| 7. Favorites & Moderation | v2.0 | 0/? | Not started | - |
+| 6. OAuth & Discovery Controls | v2.0 | 0/2 | Planned | - |
+| 7. Favorites & Moderation | v2.0 | 0/2 | Planned | - |
 | 8. Motion & Polish | v2.0 | 0/? | Not started | - |
