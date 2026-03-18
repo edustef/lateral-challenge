@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { SearchBar } from '@/components/search-bar';
+import { SearchBar } from '@/components/search/search-bar';
 import { AuthButton } from '@/components/auth-button';
 import { useFilterTransition } from '@/components/filter-transition-context';
 

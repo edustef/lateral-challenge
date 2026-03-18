@@ -1,30 +1,15 @@
 'use client';
 
 import { useCallback, useEffect } from 'react';
-import { useQueryStates } from 'nuqs';
 import { X, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { searchParamsParsers } from '@/lib/search-params';
 import { useFilterTransition } from '@/components/filter-transition-context';
+import { useSearchParamsState } from '@/lib/hooks/use-search-params';
 
 export function ConciergeSummary() {
   const { summary, setSummary, startTransition } = useFilterTransition();
-  const [params, setParams] = useQueryStates(
-    {
-      q: searchParamsParsers.q,
-      locations: searchParamsParsers.locations,
-      countries: searchParamsParsers.countries,
-      type: searchParamsParsers.type,
-      tags: searchParamsParsers.tags,
-      sort: searchParamsParsers.sort,
-      stayType: searchParamsParsers.stayType,
-      maxPrice: searchParamsParsers.maxPrice,
-      amenities: searchParamsParsers.amenities,
-    },
-    { startTransition },
-  );
+  const { params, clearAll } = useSearchParamsState(startTransition);
 
-  // Clear stale summary when URL params are removed (e.g. navigating home)
   useEffect(() => {
     if (!params.q && summary) {
       setSummary(null);
@@ -35,11 +20,8 @@ export function ConciergeSummary() {
 
   const handleDismiss = useCallback(() => {
     setSummary(null);
-    setParams({
-      q: null, locations: null, countries: null, stayType: null, maxPrice: null, amenities: null,
-      type: null, tags: null, sort: null,
-    });
-  }, [setSummary, setParams]);
+    clearAll();
+  }, [setSummary, clearAll]);
 
   return (
     <AnimatePresence>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useEffect } from 'react';
-import { SearchBar } from '@/components/search-bar';
+import { SearchBar } from '@/components/search/search-bar';
 import { useFilterTransition } from '@/components/filter-transition-context';
 
 type Props = {

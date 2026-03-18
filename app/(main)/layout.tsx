@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
 import { Header } from '@/components/header';
 import { PageTransition } from '@/components/page-transition';
-import { SearchOverlay } from '@/components/search-bar';
-import { MobileSearchFab } from '@/components/mobile-search-fab';
+import { SearchOverlay } from '@/components/search/search-overlay';
+import { MobileSearchFab } from '@/components/search/mobile-search-fab';
 import { FilterTransitionProvider } from '@/components/filter-transition-context';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 

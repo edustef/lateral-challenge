@@ -1,8 +1,8 @@
 import { searchParamsCache } from '@/lib/search-params';
 import { getStays } from '@/lib/actions/stays';
 import { getFavoriteStayIds } from '@/lib/actions/favorites';
-import { SearchHero } from '@/components/search-hero';
-import { ConciergeSummary } from '@/components/concierge-summary';
+import { SearchHero } from '@/components/search/search-hero';
+import { ConciergeSummary } from '@/components/search/concierge-summary';
 import { StaysGrid } from '@/components/stays-grid';
 import type { SearchParams } from 'nuqs/server';
 

@@ -2,39 +2,21 @@
 
 import { usePathname } from 'next/navigation';
 import { Search, Sparkles, X } from 'lucide-react';
-import { useQueryStates } from 'nuqs';
-import { searchParamsParsers } from '@/lib/search-params';
 import { useFilterTransition } from '@/components/filter-transition-context';
+import { useSearchParamsState } from '@/lib/hooks/use-search-params';
 import { useCallback } from 'react';
 
 export function MobileSearchFab() {
   const pathname = usePathname();
   const { startTransition, setSearchExpanded, setSummary } = useFilterTransition();
-  const [params, setParams] = useQueryStates(
-    {
-      q: searchParamsParsers.q,
-      locations: searchParamsParsers.locations,
-      countries: searchParamsParsers.countries,
-      type: searchParamsParsers.type,
-      tags: searchParamsParsers.tags,
-      sort: searchParamsParsers.sort,
-      stayType: searchParamsParsers.stayType,
-      maxPrice: searchParamsParsers.maxPrice,
-      amenities: searchParamsParsers.amenities,
-    },
-    { startTransition },
-  );
+  const { params, clearAll } = useSearchParamsState(startTransition);
 
   const handleClear = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     setSummary(null);
-    setParams({
-      q: null, locations: null, countries: null, type: null,
-      tags: null, sort: null, stayType: null, maxPrice: null, amenities: null,
-    });
-  }, [setParams, setSummary]);
+    clearAll();
+  }, [clearAll, setSummary]);
 
-  // Only show on homepage
   if (pathname !== '/') return null;
 
   return (
