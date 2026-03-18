@@ -65,12 +65,12 @@
 
 ### Polish
 
-- [ ] **PLSH-01**: loading.tsx skeleton UI for each route
-- [ ] **PLSH-02**: error.tsx error boundaries for each route
-- [ ] **PLSH-03**: Empty states (no stays found, no reviews yet)
-- [ ] **PLSH-04**: Responsive design — mobile (375px), tablet, desktop
-- [ ] **PLSH-05**: Accessibility — aria-labels, focus rings, keyboard nav on stepper
-- [ ] **PLSH-06**: Structured console.log at server action boundaries (action name, params, duration, errors)
+- [x] **PLSH-01**: loading.tsx skeleton UI for each route
+- [x] **PLSH-02**: error.tsx error boundaries for each route
+- [x] **PLSH-03**: Empty states (no stays found, no reviews yet)
+- [x] **PLSH-04**: Responsive design — mobile (375px), tablet, desktop
+- [x] **PLSH-05**: Accessibility — aria-labels, focus rings, keyboard nav on stepper
+- [x] **PLSH-06**: Structured console.log at server action boundaries (action name, params, duration, errors)
 
 ### Testing & Deployment
 
@@ -157,12 +157,12 @@
 | REVW-03 | Phase 3 | Complete |
 | PROF-01 | Phase 3 | Complete |
 | PROF-02 | Phase 3 | Complete |
-| PLSH-01 | Phase 4 | Pending |
-| PLSH-02 | Phase 4 | Pending |
-| PLSH-03 | Phase 4 | Pending |
-| PLSH-04 | Phase 4 | Pending |
-| PLSH-05 | Phase 4 | Pending |
-| PLSH-06 | Phase 4 | Pending |
+| PLSH-01 | Phase 4 | Complete |
+| PLSH-02 | Phase 4 | Complete |
+| PLSH-03 | Phase 4 | Complete |
+| PLSH-04 | Phase 4 | Complete |
+| PLSH-05 | Phase 4 | Complete |
+| PLSH-06 | Phase 4 | Complete |
 | TEST-01 | Phase 4 | Complete |
 | TEST-02 | Phase 4 | Complete |
 | DEPL-01 | Phase 4 | Pending |

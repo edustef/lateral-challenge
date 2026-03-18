@@ -45,10 +45,11 @@ Progress: [█████████░] 91%
 | 03-authenticated-flows | 3 | 9min | 3min |
 
 **Recent Trend:**
-- Last 5 plans: 04-02 (4min), 03-03 (3min), 03-02 (3min), 03-01 (3min), 02-03 (5min)
+- Last 5 plans: 04-01 (5min), 04-02 (4min), 03-03 (3min), 03-02 (3min), 03-01 (3min)
 - Trend: Consistent
 
 *Updated after each plan completion*
+| Phase 04 P01 | 5min | 2 tasks | 18 files |
 | Phase 04 P02 | 4min | 2 tasks | 8 files |
 | Phase 03 P03 | 3min | 2 tasks | 7 files |
 | Phase 03 P02 | 5min | 2 tasks | 5 files |
@@ -80,6 +81,8 @@ Recent decisions affecting current work:
 - [Phase 03]: react-day-picker with mode=range for date selection (better UX than native date inputs)
 - [Phase 04]: Vitest for unit tests (fast, ESM-native, zero-config with TS)
 - [Phase 04]: Playwright E2E tests verify browsing + auth redirect (no test user session needed)
+- [Phase 04]: Shared RouteError component to DRY error boundaries across all routes
+- [Phase 04]: Server action logging on key actions only (skipped noisy preview/reviews queries)
 
 ### Pending Todos
 
@@ -92,5 +95,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-03-17
-Stopped at: Completed 04-02-PLAN.md
+Stopped at: Completed 04-01-PLAN.md
 Resume file: None
