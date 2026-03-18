@@ -36,10 +36,10 @@
 
 ### Authentication
 
-- [ ] **AUTH-01**: Magic link (email OTP) login flow
-- [ ] **AUTH-02**: Auth callback page (/auth/callback)
-- [ ] **AUTH-03**: Session persistence across browser refresh (proxy middleware)
-- [ ] **AUTH-04**: Header with conditional sign-in/sign-out and user avatar
+- [x] **AUTH-01**: Magic link (email OTP) login flow
+- [x] **AUTH-02**: Auth callback page (/auth/callback)
+- [x] **AUTH-03**: Session persistence across browser refresh (proxy middleware)
+- [x] **AUTH-04**: Header with conditional sign-in/sign-out and user avatar
 
 ### Reviews
 
@@ -56,7 +56,7 @@
 - [ ] **CHKT-05**: Price calculation — per night × nights + cleaning fee + service fee = total
 - [ ] **CHKT-06**: Mock payment step ("Confirm & pay" button)
 - [ ] **CHKT-07**: Booking confirmation page with summary (stay name, dates, guests, total)
-- [ ] **CHKT-08**: Auth guard — redirect to login if unauthenticated
+- [x] **CHKT-08**: Auth guard — redirect to login if unauthenticated
 
 ### Profile
 
@@ -140,10 +140,10 @@
 | DETL-05 | Phase 2 | Complete |
 | DETL-06 | Phase 2 | Complete |
 | DETL-07 | Phase 2 | Complete |
-| AUTH-01 | Phase 3 | Pending |
-| AUTH-02 | Phase 3 | Pending |
-| AUTH-03 | Phase 3 | Pending |
-| AUTH-04 | Phase 3 | Pending |
+| AUTH-01 | Phase 3 | Complete |
+| AUTH-02 | Phase 3 | Complete |
+| AUTH-03 | Phase 3 | Complete |
+| AUTH-04 | Phase 3 | Complete |
 | CHKT-01 | Phase 3 | Pending |
 | CHKT-02 | Phase 3 | Pending |
 | CHKT-03 | Phase 3 | Pending |
@@ -151,7 +151,7 @@
 | CHKT-05 | Phase 3 | Pending |
 | CHKT-06 | Phase 3 | Pending |
 | CHKT-07 | Phase 3 | Pending |
-| CHKT-08 | Phase 3 | Pending |
+| CHKT-08 | Phase 3 | Complete |
 | REVW-01 | Phase 3 | Pending |
 | REVW-02 | Phase 3 | Pending |
 | REVW-03 | Phase 3 | Pending |
