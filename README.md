@@ -4,6 +4,18 @@ A search-first unique stays discovery and booking app. Users find treehouses, ca
 
 Built as a technical interview challenge to demonstrate full-stack product thinking, clean architecture, and attention to craft.
 
+## How This Was Built
+
+This project was built collaboratively with Claude Code (Anthropic's AI coding assistant) using a structured, plan-first approach:
+
+1. **Planning with /gsd** — Used the [GSD (Get Stuff Done)](https://github.com/cyanheads/claude-gsd) skill to break the project into milestones with clear goals, phases, and success criteria before writing any code. This produced a roadmap that the AI then executed phase by phase — scaffolding, data layer, search, booking flow, auth, and polish.
+
+2. **Milestone execution** — Each milestone was planned, implemented, and verified through GSD's structured workflow: research → plan → execute → verify. The AI scaffolded the full project structure, wrote the implementation, and committed atomically per phase.
+
+3. **Iteration and refinement** — After the core was in place, iteration happened through targeted skills: `/superpowers` for test-driven development, debugging, and code review workflows; `/frontend-design` for UI design quality and component polish. Each conversation refined specific areas rather than rewriting from scratch.
+
+The result is a codebase that reflects deliberate architectural decisions rather than ad-hoc prompting — the AI was guided by structured plans, not just asked to "build a booking app."
+
 ## Quick Start
 
 ### Prerequisites
@@ -42,7 +54,7 @@ The `.env.example` ships with a hosted Supabase project pre-configured — no lo
 
 > Without an OpenAI key, search still works — it falls back to plain text matching instead of AI-structured filters.
 >
-> Google OAuth credentials are configured in Supabase for the hosted environment. You only need `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` locally if you want to test Google sign-in — GitHub and magic link auth work without them.
+> Google OAuth credentials are configured in Supabase for the hosted environment. You only need `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` locally if you want to test Google sign-in — magic link auth works without them.
 
 ---
 
@@ -52,7 +64,7 @@ The `.env.example` ships with a hosted Supabase project pre-configured — no lo
 |------------|-------------|-----------------|
 | **Next.js 16** (App Router) | Framework, routing, SSR | Server Components eliminate client-side data waterfalls. App Router provides clean file-based routing with layouts, loading states, and error boundaries. |
 | **React 19** | UI rendering | Server Components + `useActionState` + `useOptimistic` for forms without client-side state management libraries. |
-| **Supabase** (Postgres + Auth + RLS) | Database, authentication, row-level security | Full Postgres with RLS policies — auth and data in one place. OAuth (Google, GitHub) and magic link built in. |
+| **Supabase** (Postgres + Auth + RLS) | Database, authentication, row-level security | Full Postgres with RLS policies — auth and data in one place. OAuth (Google) and magic link built in. |
 | **Tailwind CSS v4** | Styling | Utility-first CSS with a custom design token system (CSS variables for colors, radii, fonts). Fast iteration, no CSS-in-JS runtime. |
 | **shadcn/ui** (base-ui) | Component primitives | Unstyled, accessible primitives (Dialog, Popover, Dropdown) that we own and customize — not a locked-in library. |
 | **nuqs v2** | URL search params state | Type-safe, SSR-compatible URL state. Search filters (`?q=cabin&maxPrice=20000&tags=romantic`) are shareable and bookmarkable. |
@@ -148,7 +160,7 @@ Custom design tokens in CSS variables (not Tailwind defaults):
 | Two-layer search hook architecture | `useSearchParamsState` (thin param wrapper) + `useSearchQuery` (AI submit logic). 4 components share params; only 2 need the full query logic. |
 | Feature-folder components | `search/`, `booking/`, `stays/`, `layout/` — find files by what they do, not what they are. |
 | proxy.ts for auth | Keeps Supabase token refresh isolated. Clean separation from route handlers. |
-| OAuth (Google + GitHub) + magic link | No passwords to manage. Simpler UX for a demo. |
+| OAuth (Google) + magic link | No passwords to manage. Simpler UX for a demo. |
 | Optimistic UI for favorites | `useOptimistic` makes wishlist toggling feel instant. Server syncs in the background. |
 | AI review moderation | Reviews are classified by GPT-4o-mini at submission time (appropriate/inappropriate). Only approved reviews are visible. Fails open if the API is unavailable — availability over strictness for a demo. |
 | Server-side rate limiting on AI search | In-memory sliding window (10 req/IP/min) prevents OpenAI API abuse. Falls back to text search when limited — no error shown to user. |

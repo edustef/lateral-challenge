@@ -31,7 +31,7 @@ export async function loginWithOtp(formData: FormData): Promise<{ error?: string
   return { success: true }
 }
 
-export async function signInWithOAuth(provider: 'google' | 'github', redirectTo?: string | null) {
+export async function signInWithOAuth(provider: 'google', redirectTo?: string | null) {
   const headerStore = await headers()
   const origin = headerStore.get('origin') ?? headerStore.get('x-forwarded-host') ?? 'http://localhost:3000'
   const baseUrl = origin.startsWith('http') ? origin : `https://${origin}`
