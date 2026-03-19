@@ -3,7 +3,6 @@ import { Heart } from 'lucide-react';
 export default function ProfileLoading() {
   return (
     <div>
-      {/* Profile Header — static layout, skeleton avatar + text */}
       <div className="border-b border-border-subtle">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
           <div className="flex items-start gap-8">
@@ -22,9 +21,7 @@ export default function ProfileLoading() {
         </div>
       </div>
 
-      {/* Bookings Section */}
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        {/* Tabs — real text */}
         <div className="flex border-b border-[#E8E4DF]">
           <div className="flex items-center gap-2 border-b-2 border-[#FF8400] px-5 py-3">
             <span className="text-sm font-semibold text-text-primary">Upcoming</span>
@@ -37,7 +34,6 @@ export default function ProfileLoading() {
           </div>
         </div>
 
-        {/* Booking card skeletons */}
         <div className="mt-6 space-y-5">
           {Array.from({ length: 2 }).map((_, i) => (
             <div
@@ -55,7 +51,6 @@ export default function ProfileLoading() {
         </div>
       </div>
 
-      {/* Wishlist Section */}
       <div className="mx-auto max-w-7xl border-t border-border-subtle px-4 py-6 sm:px-6 lg:px-8">
         <div className="mb-5 flex items-center gap-2">
           <Heart size={18} className="text-text-muted" />

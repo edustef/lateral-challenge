@@ -63,12 +63,10 @@ export default async function ConfirmationPage({ searchParams }: Props) {
   return (
     <div className="mx-auto flex max-w-7xl flex-col items-center justify-center px-4 py-16 sm:px-6 lg:px-8">
       <div className="flex w-full max-w-[640px] flex-col items-center gap-10">
-        {/* Success Circle */}
         <div className="flex h-[72px] w-[72px] items-center justify-center rounded-full bg-accent-tint">
           <Check size={32} className="text-accent" />
         </div>
 
-        {/* Header */}
         <div className="space-y-2 text-center">
           <h1 className="font-heading text-[32px] font-medium tracking-tight text-text-primary">
             Booking confirmed!
@@ -79,10 +77,8 @@ export default async function ConfirmationPage({ searchParams }: Props) {
           </p>
         </div>
 
-        {/* Booking Details Card */}
         {stay && (
           <div className="flex w-full flex-col overflow-hidden rounded-card border border-border bg-bg-card sm:flex-row">
-            {/* Stay Image */}
             {stay.images[0] && (
               <div className="relative h-40 w-full shrink-0 sm:h-auto sm:w-[220px]">
                 <Image
@@ -94,7 +90,6 @@ export default async function ConfirmationPage({ searchParams }: Props) {
               </div>
             )}
 
-            {/* Details */}
             <div className="flex-1 space-y-4 p-5 sm:p-6">
               <div className="space-y-1">
                 <h2 className="font-heading text-base font-medium text-text-primary sm:text-lg">
@@ -133,7 +128,6 @@ export default async function ConfirmationPage({ searchParams }: Props) {
           </div>
         )}
 
-        {/* Action Buttons */}
         <div className="flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
           <Link
             href="/profile"

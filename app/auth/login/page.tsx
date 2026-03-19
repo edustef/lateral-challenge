@@ -23,7 +23,6 @@ function LoginForm() {
 
   return (
     <div className="flex min-h-screen w-full">
-      {/* Left Panel — brand + hero */}
       <div className="hidden w-1/2 flex-col justify-center gap-10 bg-[#F0EDE8] px-20 py-16 lg:flex">
         <div className="overflow-hidden rounded-[20px]">
           <Image
@@ -58,7 +57,6 @@ function LoginForm() {
         </div>
       </div>
 
-      {/* Right Panel — form */}
       <div className="flex w-full items-center justify-center bg-bg-card px-8 py-16 lg:w-1/2 lg:px-20">
         <div className="w-full max-w-[400px]">
           <div className="mb-8 flex flex-col gap-2">
@@ -70,7 +68,6 @@ function LoginForm() {
             </p>
           </div>
 
-          {/* Email + Magic Link */}
           {state.success ? (
             <div className="rounded-xl bg-accent/10 p-4 text-center text-sm text-accent">
               Check your email for a magic link!
@@ -107,14 +104,12 @@ function LoginForm() {
             </form>
           )}
 
-          {/* Divider */}
           <div className="my-8 flex items-center gap-4">
             <div className="h-px flex-1 bg-[#E8E4DF]" />
             <span className="text-xs text-text-muted">or</span>
             <div className="h-px flex-1 bg-[#E8E4DF]" />
           </div>
 
-          {/* OAuth buttons */}
           <div className="flex flex-col gap-3">
             <button
               type="button"

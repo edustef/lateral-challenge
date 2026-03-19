@@ -70,7 +70,6 @@ export function ReviewsList({ reviews, reviewForm }: { reviews: ReviewWithAuthor
             className="border-b border-border-subtle py-4 last:border-0"
           >
             <div className="flex items-center gap-3">
-              {/* Avatar */}
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-white font-semibold text-sm shrink-0">
                 {getInitials(review.profiles?.full_name ?? null)}
               </div>

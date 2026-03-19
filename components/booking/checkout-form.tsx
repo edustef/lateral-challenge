@@ -130,19 +130,16 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
 
   return (
     <div className="flex flex-col gap-6 lg:flex-row lg:gap-12">
-      {/* Form — first on mobile, left column on desktop */}
       <div className="flex-1 space-y-6 lg:order-1 lg:space-y-8">
         <h1 className="font-heading text-xl font-medium tracking-tight text-text-primary sm:text-[28px]">
           Complete your booking
         </h1>
 
-        {/* Date Section */}
         <div className="space-y-3">
           <h2 className="text-sm font-medium text-text-primary sm:text-base">
             When are you staying?
           </h2>
 
-          {/* Mobile: popover date picker */}
           <div className="lg:hidden">
             <DatePicker
               checkIn={checkIn}
@@ -153,7 +150,6 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
             />
           </div>
 
-          {/* Desktop: inline 2-month calendar */}
           <div className="hidden lg:block rounded-card border border-border p-4">
             <Calendar
               mode="range"
@@ -178,7 +174,6 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
           )}
         </div>
 
-        {/* Guest Section */}
         <div className="space-y-3">
           <h2 className="text-sm font-medium text-text-primary sm:text-base">
             How many guests?
@@ -186,7 +181,6 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
           <GuestCounter value={guests} max={stay.max_guests} onChange={setGuests} />
         </div>
 
-        {/* Contact Section — only show if user is not signed in */}
         {!user && (
           <div className="space-y-3">
             <h2 className="text-sm font-medium text-text-primary sm:text-base">
@@ -249,7 +243,6 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
           </div>
         )}
 
-        {/* Error */}
         {hasDateConflict && (
           <div className="rounded-small border border-error/30 bg-error-tint p-3 text-sm text-error">
             Your selected dates include unavailable dates. Please choose a different range.
@@ -261,7 +254,6 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
           </div>
         )}
 
-        {/* Submit — desktop only (inside form column) */}
         <div className="hidden lg:block">
           <button
             type="button"
@@ -276,12 +268,10 @@ export function CheckoutForm({ stay, prefill, user, disabledDates = [] }: Checko
         </div>
       </div>
 
-      {/* Summary */}
       <div className="w-full lg:order-2 lg:w-[380px] lg:shrink-0">
         <CheckoutSummary stay={stay} nights={nights} />
       </div>
 
-      {/* Submit — mobile only (below summary card) */}
       <div className="w-full lg:hidden">
         <button
           type="button"

@@ -11,7 +11,6 @@ export function StayCard({ stay, isFavorited = false }: { stay: StayCardType; is
 
   return (
     <Link href={href} className="group block" data-testid="stay-card">
-      {/* Desktop card */}
       <article className="hidden md:block">
         <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
           <div className="absolute top-2 right-2 z-10">
@@ -46,7 +45,6 @@ export function StayCard({ stay, isFavorited = false }: { stay: StayCardType; is
         </div>
       </article>
 
-      {/* Mobile card */}
       <article className="flex gap-3 md:hidden">
         <div className="relative h-[100px] w-[100px] flex-shrink-0 overflow-hidden rounded-xl">
           <Image

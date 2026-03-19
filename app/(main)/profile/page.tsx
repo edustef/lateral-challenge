@@ -51,11 +51,9 @@ export default async function ProfilePage() {
 
   return (
     <div>
-      {/* Profile Header */}
       <div className="border-b border-border-subtle">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="flex items-start gap-8">
-          {/* Avatar */}
           {user.user_metadata?.avatar_url ? (
             <Image
               src={user.user_metadata.avatar_url}
@@ -70,7 +68,6 @@ export default async function ProfilePage() {
             </div>
           )}
 
-          {/* Info */}
           <div className="flex min-w-0 flex-1 flex-col gap-3">
             <div className="flex items-center justify-between">
               <h1 className="font-heading text-[26px] font-semibold tracking-tight text-text-primary">
@@ -96,9 +93,7 @@ export default async function ProfilePage() {
         </div>
       </div>
 
-      {/* Bookings Section */}
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        {/* Tabs */}
         <div className="flex border-b border-[#E8E4DF]">
           <div className="flex items-center gap-2 border-b-2 border-[#FF8400] px-5 py-3">
             <span className="text-sm font-semibold text-text-primary">Upcoming</span>
@@ -116,7 +111,6 @@ export default async function ProfilePage() {
           </div>
         </div>
 
-        {/* Booking Cards */}
         <div className="mt-6">
           {formattedBookings.length === 0 ? (
             <div className="flex flex-col items-center gap-3 rounded-[20px] border border-border-subtle bg-bg-card py-16">
@@ -131,13 +125,11 @@ export default async function ProfilePage() {
             </div>
           ) : (
             <>
-              {/* Desktop cards */}
               <div className="hidden flex-col gap-5 md:flex">
                 {formattedBookings.map((booking) => (
                   <BookingCard key={booking.id} booking={booking} />
                 ))}
               </div>
-              {/* Mobile cards */}
               <div className="flex flex-col gap-3 md:hidden">
                 {formattedBookings.map((booking) => (
                   <BookingCardCompact key={booking.id} booking={booking} />
@@ -148,7 +140,6 @@ export default async function ProfilePage() {
         </div>
       </div>
 
-      {/* Wishlist Section */}
       <div className="mx-auto max-w-7xl border-t border-border-subtle px-4 py-6 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-2">

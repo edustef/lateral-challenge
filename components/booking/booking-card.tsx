@@ -60,7 +60,6 @@ export function BookingCard({ booking }: BookingCardProps) {
 
   return (
     <div className="flex overflow-hidden rounded-card border border-border bg-bg-card transition-all duration-200 hover:shadow-md">
-      {/* Card Image */}
       <Link href={`/stays/${stay.slug}`} className="shrink-0">
         <div className="relative h-full w-full max-w-[280px]">
           <Image
@@ -74,9 +73,7 @@ export function BookingCard({ booking }: BookingCardProps) {
         </div>
       </Link>
 
-      {/* Card Content */}
       <div className="flex flex-1 flex-col justify-between p-6">
-        {/* Top Info */}
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between">
             <StatusBadge status={booking.status} />
@@ -93,7 +90,6 @@ export function BookingCard({ booking }: BookingCardProps) {
           <p className="text-[13px] text-text-muted">{stay.location}</p>
         </div>
 
-        {/* Dates & Guests */}
         <div className="mt-4 flex gap-6">
           <div className="flex flex-col gap-0.5">
             <span className="text-[11px] font-semibold uppercase tracking-wider text-text-muted">
@@ -113,7 +109,6 @@ export function BookingCard({ booking }: BookingCardProps) {
           </div>
         </div>
 
-        {/* Actions */}
         <div className="mt-4 flex gap-3">
           <Link
             href={`/stays/${stay.slug}`}
@@ -133,7 +128,6 @@ export function BookingCard({ booking }: BookingCardProps) {
   );
 }
 
-/* Compact card for mobile */
 export function BookingCardCompact({ booking }: BookingCardProps) {
   const { stay } = booking;
   const image = stay.images?.[0] ?? '/placeholder.jpg';

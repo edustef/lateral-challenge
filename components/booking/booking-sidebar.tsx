@@ -75,9 +75,7 @@ export function BookingSidebar({ stay, disabledDates = [] }: BookingSidebarProps
 
   return (
     <>
-      {/* Desktop sidebar */}
       <div className="hidden rounded-card border border-border-subtle bg-bg-card p-6 shadow-sm lg:sticky lg:top-24 lg:block">
-        {/* Price header */}
         <div className="flex items-baseline gap-1">
           <span className="font-heading text-3xl font-semibold text-text-primary">
             {formatPrice(stay.price_per_night)}
@@ -85,7 +83,6 @@ export function BookingSidebar({ stay, disabledDates = [] }: BookingSidebarProps
           <span className="text-text-secondary">/night</span>
         </div>
 
-        {/* Dates */}
         <div className="mt-5">
           <label className="mb-2 block text-sm font-medium text-text-primary">
             Dates
@@ -99,7 +96,6 @@ export function BookingSidebar({ stay, disabledDates = [] }: BookingSidebarProps
           />
         </div>
 
-        {/* Guests */}
         <div className="mt-4">
           <label className="mb-2 block text-sm font-medium text-text-primary">
             Guests
@@ -112,7 +108,6 @@ export function BookingSidebar({ stay, disabledDates = [] }: BookingSidebarProps
           />
         </div>
 
-        {/* Price breakdown */}
         {nights > 0 && (
           <div className="mt-5">
             <PriceBreakdown
@@ -124,14 +119,12 @@ export function BookingSidebar({ stay, disabledDates = [] }: BookingSidebarProps
           </div>
         )}
 
-        {/* Date conflict warning */}
         {hasDateConflict && (
           <p className="mt-4 rounded-small border border-error/30 bg-error-tint px-3 py-2 text-xs text-error">
             Selected dates include unavailable dates. Please choose a different range.
           </p>
         )}
 
-        {/* CTA */}
         {hasDateConflict ? (
           <button
             type="button"
@@ -151,7 +144,6 @@ export function BookingSidebar({ stay, disabledDates = [] }: BookingSidebarProps
         )}
       </div>
 
-      {/* Mobile floating bottom bar */}
       <div
         className="fixed inset-x-0 bottom-0 z-40 px-4 pb-4 lg:hidden"
         style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom, 1rem))' }}

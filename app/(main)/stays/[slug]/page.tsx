@@ -31,7 +31,6 @@ export default async function StayDetailPage({ params }: Props) {
       />
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_380px]">
-        {/* Left column */}
         <div>
           <PhotoGallery images={stay.images} />
           <StayInfo stay={stay} />
@@ -43,7 +42,6 @@ export default async function StayDetailPage({ params }: Props) {
           />
         </div>
 
-        {/* Right column - sidebar */}
         <div>
           <BookingSidebar
             stay={{

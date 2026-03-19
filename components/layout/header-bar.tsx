@@ -18,7 +18,6 @@ export function HeaderBar({ authUser }: Props) {
   return (
     <header className="top-0 z-40 bg-bg-page/80 backdrop-blur-xl md:sticky">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        {/* Left: Logo */}
         <Link href="/" aria-label="Wanderly — home" className="flex shrink-0 items-center gap-2 focus-visible:ring-2 focus-visible:ring-accent focus-visible:rounded-sm">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 107.05 107.71" fill="currentColor" className="size-6 text-primary">
             <path d="M47.885.252c2.712-.397 8.35-.271 11.098.006 14.323 1.4 27.476 8.518 36.482 19.742 10.897 13.58 12.84 27.055 10.934 43.723-8.64-8.939-16.866-19.245-26.141-28.748l-6.834 7.155c-4.373-6.455-12.154-15.662-17.183-21.992l-2.72-3.042-19.765 25.354c-2.384-2.344-5.238-4.72-7.787-6.93-8.747 9.51-17.053 18.627-25.277 28.582l-.083-.578C-3.731 31.463 15.446 4.47 47.885.252" />
@@ -27,14 +26,12 @@ export function HeaderBar({ authUser }: Props) {
           <span className="font-heading text-lg font-semibold text-text-primary">Wanderly</span>
         </Link>
 
-        {/* Center: Search bar — desktop only, visible when hero scrolled past */}
         {showSearch && (
           <div className="hidden flex-1 md:block md:max-w-md lg:max-w-lg">
             <SearchBar compact />
           </div>
         )}
 
-        {/* Right: Auth */}
         <div className="shrink-0">
           <AuthButton user={authUser} />
         </div>

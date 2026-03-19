@@ -1,7 +1,6 @@
 export default function DiscoveryLoading() {
   return (
     <>
-      {/* Hero — static text, search bar placeholder */}
       <section className="flex flex-col items-center px-4 pb-4 pt-10 text-center sm:px-6 sm:pb-8 sm:pt-20 lg:px-8">
         <h1 className="text-3xl font-semibold tracking-tight text-text-primary sm:text-4xl">
           Find your perfect escape

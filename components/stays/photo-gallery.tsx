@@ -14,7 +14,6 @@ export function PhotoGallery({ images }: { images: string[] }) {
 
   return (
     <div>
-      {/* Hero image */}
       <div className="relative aspect-[16/9] w-full overflow-hidden rounded-card">
         <Image
           src={images[activeIndex]}
@@ -26,7 +25,6 @@ export function PhotoGallery({ images }: { images: string[] }) {
         />
       </div>
 
-      {/* Thumbnails */}
       {images.length > 1 && (
         <div className="mt-3 flex gap-3">
           {visibleThumbnails.map((img, i) => (
@@ -42,7 +40,6 @@ export function PhotoGallery({ images }: { images: string[] }) {
               }`}
             >
               <Image src={img} fill alt={`Thumbnail ${i + 1}`} className="object-cover" sizes="112px" />
-              {/* "+N" overlay on last thumbnail if more images */}
               {i === maxThumbnails - 1 && remainingCount > 0 && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-white font-semibold text-sm" aria-label={`${remainingCount} more photos`}>
                   +{remainingCount}

@@ -9,25 +9,18 @@ export default function StayDetailLoading() {
       />
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_380px]">
-        {/* Left column */}
         <div className="animate-pulse">
-          {/* Hero image */}
           <div className="aspect-[16/9] w-full rounded-card bg-bg-muted" />
 
-          {/* Thumbnails */}
           <div className="mt-3 flex gap-3">
             <div className="h-20 w-28 rounded-small bg-bg-muted" />
             <div className="h-20 w-28 rounded-small bg-bg-muted" />
             <div className="h-20 w-28 rounded-small bg-bg-muted" />
           </div>
 
-          {/* Title */}
           <div className="mt-8 h-8 w-3/4 rounded bg-bg-muted" />
-
-          {/* Location */}
           <div className="mt-3 h-4 w-1/2 rounded bg-bg-muted" />
 
-          {/* Description */}
           <div className="mt-8 space-y-2">
             <div className="h-5 w-40 rounded bg-bg-muted" />
             <div className="mt-3 h-4 w-full rounded bg-bg-muted" />
@@ -35,7 +28,6 @@ export default function StayDetailLoading() {
             <div className="h-4 w-2/3 rounded bg-bg-muted" />
           </div>
 
-          {/* Amenities */}
           <div className="mt-8 space-y-2">
             <div className="h-5 w-24 rounded bg-bg-muted" />
             <div className="mt-3 flex flex-wrap gap-2">
@@ -46,7 +38,6 @@ export default function StayDetailLoading() {
             </div>
           </div>
 
-          {/* Reviews */}
           <div className="mt-8 space-y-4">
             <div className="h-5 w-32 rounded bg-bg-muted" />
             <div className="space-y-3 py-4">
@@ -62,7 +53,6 @@ export default function StayDetailLoading() {
           </div>
         </div>
 
-        {/* Right column - sidebar */}
         <div className="animate-pulse">
           <div className="rounded-card border border-border-subtle bg-bg-card p-6 lg:sticky lg:top-24">
             <div className="h-9 w-32 rounded bg-bg-muted" />
