@@ -37,8 +37,12 @@ The `.env.example` ships with a hosted Supabase project pre-configured — no lo
 | `NEXT_PUBLIC_SUPABASE_URL` | Yes | Supabase project URL (pre-configured) |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY` | Yes | Supabase publishable key (pre-configured) |
 | `OPENAI_API_KEY` | Yes | OpenAI API key for AI-powered search parsing |
+| `GOOGLE_CLIENT_ID` | No | Google OAuth client ID — only needed to test Google sign-in locally |
+| `GOOGLE_CLIENT_SECRET` | No | Google OAuth client secret — only needed to test Google sign-in locally |
 
 > Without an OpenAI key, search still works — it falls back to plain text matching instead of AI-structured filters.
+>
+> Google OAuth credentials are configured in Supabase for the hosted environment. You only need `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` locally if you want to test Google sign-in — GitHub and magic link auth work without them.
 
 ---
 
