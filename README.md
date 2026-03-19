@@ -6,9 +6,9 @@ Built as a technical interview challenge to demonstrate full-stack product think
 
 ## How This Was Built
 
-This project was built collaboratively with Claude Code (Anthropic's AI coding assistant) using a structured, plan-first approach:
+This project was built collaboratively with Claude Code using a structured, plan-first approach:
 
-1. **Planning with /gsd** — Used the [GSD (Get Stuff Done)](https://github.com/cyanheads/claude-gsd) skill to break the project into milestones with clear goals, phases, and success criteria before writing any code. This produced a roadmap that the AI then executed phase by phase — scaffolding, data layer, search, booking flow, auth, and polish.
+1. **Planning with /gsd** — Used the [GSD](https://github.com/gsd-build/get-shit-done) skill to break the project into milestones with clear goals, phases, and success criteria before writing any code. This produced a roadmap that the AI then executed phase by phase — scaffolding, data layer, search, booking flow, auth, and polish.
 
 2. **Milestone execution** — Each milestone was planned, implemented, and verified through GSD's structured workflow: research → plan → execute → verify. The AI scaffolded the full project structure, wrote the implementation, and committed atomically per phase.
 

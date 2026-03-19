@@ -19,17 +19,6 @@ export type SearchParserResult = {
   summary: string;
 };
 
-const TRIGGER_WORDS = new Set([
-  'under', 'over', 'below', 'above', 'less', 'more',
-  'with', 'without', 'for', 'near',
-  'who', 'what', 'where', 'how', 'find', 'show', 'get',
-]);
-
-/** Everything goes through the AI — it handles misspellings, ambiguity, etc. */
-export function isSimpleQuery(_input: string): boolean {
-  return false;
-}
-
 export function sanitizeSearchInput(input: string): string {
   return input
     .slice(0, 500)

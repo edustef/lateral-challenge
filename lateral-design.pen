@@ -83,7 +83,8 @@
                       "fill": "$--text-secondary",
                       "content": "Stays",
                       "fontFamily": "Inter",
-                      "fontSize": 14
+                      "fontSize": 14,
+                      "fontWeight": "normal"
                     },
                     {
                       "type": "text",
@@ -92,7 +93,8 @@
                       "fill": "$--text-secondary",
                       "content": "Experiences",
                       "fontFamily": "Inter",
-                      "fontSize": 14
+                      "fontSize": 14,
+                      "fontWeight": "normal"
                     },
                     {
                       "type": "text",
@@ -101,7 +103,8 @@
                       "fill": "$--text-secondary",
                       "content": "Saved",
                       "fontFamily": "Inter",
-                      "fontSize": 14
+                      "fontSize": 14,
+                      "fontWeight": "normal"
                     }
                   ]
                 }
@@ -1248,7 +1251,8 @@
                       "fill": "$--text-secondary",
                       "content": "Experiences",
                       "fontFamily": "Inter",
-                      "fontSize": 14
+                      "fontSize": 14,
+                      "fontWeight": "normal"
                     },
                     {
                       "type": "text",
@@ -1257,7 +1261,8 @@
                       "fill": "$--text-secondary",
                       "content": "Saved",
                       "fontFamily": "Inter",
-                      "fontSize": 14
+                      "fontSize": 14,
+                      "fontWeight": "normal"
                     }
                   ]
                 }
@@ -4366,7 +4371,8 @@
                       "fill": "$--text-secondary",
                       "content": "Stays",
                       "fontFamily": "Inter",
-                      "fontSize": 14
+                      "fontSize": 14,
+                      "fontWeight": "normal"
                     },
                     {
                       "type": "text",
@@ -4375,7 +4381,8 @@
                       "fill": "$--text-secondary",
                       "content": "Experiences",
                       "fontFamily": "Inter",
-                      "fontSize": 14
+                      "fontSize": 14,
+                      "fontWeight": "normal"
                     },
                     {
                       "type": "text",
@@ -4384,7 +4391,8 @@
                       "fill": "$--text-secondary",
                       "content": "Saved",
                       "fontFamily": "Inter",
-                      "fontSize": 14
+                      "fontSize": 14,
+                      "fontWeight": "normal"
                     }
                   ]
                 }
@@ -7661,7 +7669,8 @@
                       "fill": "$--text-secondary",
                       "content": "Stays",
                       "fontFamily": "Inter",
-                      "fontSize": 14
+                      "fontSize": 14,
+                      "fontWeight": "normal"
                     },
                     {
                       "type": "text",

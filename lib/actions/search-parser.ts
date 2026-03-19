@@ -5,7 +5,6 @@ import { serverEnv } from '@/lib/env.server';
 import { logger } from '@/lib/logger';
 import { rateLimit } from '@/lib/rate-limit';
 import {
-  isSimpleQuery,
   OPENAI_FUNCTION_SCHEMA,
   SYSTEM_PROMPT,
   type SearchParserResult,
@@ -18,8 +17,8 @@ export async function parseNaturalQuery(input: string): Promise<SearchParserResu
   const log = logger('parseNaturalQuery');
 
   const trimmed = input.trim();
-  if (!trimmed || isSimpleQuery(trimmed)) {
-    log.info('skipped (simple query)', { input: trimmed });
+  if (!trimmed) {
+    log.info('skipped (empty query)');
     return null;
   }
 
